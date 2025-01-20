@@ -1,0 +1,17 @@
+biomeNoise: noise/Generic
+temperatureRange: ExtremelyHot
+minChildCount: 12
+density:
+  min: 15
+  max: 25
+avoidRadius: 30.0
+sampleBehaviour: PoissonDisk
+biomes:
+  - name: expansion1::biomes/Magma/CooledMagmaBedNoUnobtanium
+    weight: 1
+    #overrides:
+    #  massMultiplier: 50
+tags:
+  - IgnoreCaveOverride
+  - NoGlobalFeatureSpawning
+zoneType: MagmaCore

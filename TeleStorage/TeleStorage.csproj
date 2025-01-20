@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+	<!-- General Package Properties -->
+	<PropertyGroup>
+		<PackageId>TeleStorage</PackageId>
+		<Version>4.0.0.0</Version>
+		<Authors>test447, LegitPanda, Th3Fanbus</Authors>
+	</PropertyGroup>
+
+	<!-- Build Properties -->
+	<PropertyGroup>
+		<RootNamespace>TeleStorage</RootNamespace>
+		<AssemblyName>TeleStorage</AssemblyName>
+		<IsMod>true</IsMod>
+		<GenerateMetadata>true</GenerateMetadata>
+		<IsPacked>true</IsPacked>
+	</PropertyGroup>
+
+	<!-- Mod Info -->
+	<PropertyGroup>
+		<ModName>TeleStorage</ModName>
+		<ModDescription>Infinite capacity liquid/gas reservoirs with a shared inventory</ModDescription>
+		<SupportedContent>ALL</SupportedContent>
+		<MinimumSupportedBuild>$(LatestVersion)</MinimumSupportedBuild>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\RexLib\RexLib.csproj" />
+	</ItemGroup>
+</Project>

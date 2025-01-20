@@ -1,0 +1,25 @@
+name: STRINGS.HELLSEN.WORLD_TRAITS.GEOHYPERACTIVE.NAME
+description: STRINGS.HELLSEN.WORLD_TRAITS.GEOHYPERACTIVE.DESC
+colorHex: 5CD64C
+
+exclusiveWith:
+  - traits/GeoDormant
+
+traitTags:
+  - CGM_OverrideWorldRules_AlwaysAllow
+  - StartWorldOnly
+  - NonStartWorld
+
+additionalWorldTemplateRules:
+  - names:
+      - geysers/generic
+    listRule: TryOne
+    times: 100
+    ruleId: GenericGeysers
+    useRelaxedFiltering: true # Allow placement in feature-heavy biomes
+    allowDuplicates: true
+    priority: 1
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: NotAtTag
+        tag: NoGlobalFeatureSpawning

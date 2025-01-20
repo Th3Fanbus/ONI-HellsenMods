@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+	<!-- General Package Properties -->
+	<PropertyGroup>
+		<PackageId>CycleComma</PackageId>
+		<Version>1.0.0</Version>
+		<Author>Sgt_Imalas</Author>
+		<Authors>Sgt_Imalas</Authors>
+		<Copyright>Copyright ©$(Authors) $(CurrentYear)</Copyright>
+		<RepositoryUrl>https://github.com/Sgt-Imalas/Sgt_Imalas-Oni-Mods</RepositoryUrl>
+	</PropertyGroup>
+
+	<!-- Build Properties -->
+	<PropertyGroup>
+		<LangVersion>preview</LangVersion>
+		<AssemblyName>CycleComma</AssemblyName>
+		<RootNamespace>_1LineCrasher</RootNamespace>
+		<IsMod>false</IsMod>
+		<GenerateMetadata>false</GenerateMetadata>
+		<IsPacked>false</IsPacked>
+	</PropertyGroup>
+
+	<!-- Mod Info -->
+	<PropertyGroup>
+		<ModName>CycleComma</ModName>
+		<ModDescription></ModDescription>
+		<SupportedContent>ALL</SupportedContent> <!-- Use "EXPANSION1_ID" for dlc only -->
+		<MinimumSupportedBuild>581698</MinimumSupportedBuild>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Aze.Publicise.MSBuild.Task" Version="1.1.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+</Project>

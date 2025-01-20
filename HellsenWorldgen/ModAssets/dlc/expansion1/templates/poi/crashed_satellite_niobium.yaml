@@ -1,0 +1,113 @@
+info:
+  size:
+    X: 5
+    Y: 5
+  min:
+    X: -2
+    Y: -2
+  area: 25
+cells:
+  - element: Obsidian
+    mass: 960.934326
+    temperature: 1672.75269
+    location_x: -2
+    location_y: -2
+  - element: Obsidian
+    mass: 967.243652
+    temperature: 1674.09766
+    location_x: -1
+    location_y: -2
+  - element: Obsidian
+    mass: 974.139465
+    temperature: 1675.95105
+    location_y: -2
+  - element: Obsidian
+    mass: 982.195801
+    temperature: 1678.67188
+    location_x: 1
+    location_y: -2
+  - element: Obsidian
+    mass: 993.198059
+    temperature: 1682.41235
+    location_x: 2
+    location_y: -2
+  - element: Obsidian
+    mass: 956.981689
+    temperature: 1679.66345
+    location_x: -2
+    location_y: -1
+  - element: Vacuum
+    location_x: -1
+    location_y: -1
+  - element: Vacuum
+    location_y: -1
+  - element: Vacuum
+    location_x: 1
+    location_y: -1
+  - element: Obsidian
+    mass: 987.026367
+    temperature: 1685.10205
+    location_x: 2
+    location_y: -1
+  - element: Obsidian
+    mass: 955.689941
+    temperature: 1682.98987
+    location_x: -2
+  - element: Vacuum
+    location_x: -1
+  - element: Vacuum
+  - element: Vacuum
+    location_x: 1
+  - element: Obsidian
+    mass: 983.790771
+    temperature: 1686.49597
+    location_x: 2
+  - element: Obsidian
+    mass: 956.020447
+    temperature: 1685.96912
+    location_x: -2
+    location_y: 1
+  - element: Vacuum
+    location_x: -1
+    location_y: 1
+  - element: Vacuum
+    location_y: 1
+  - element: Vacuum
+    location_x: 1
+    location_y: 1
+  - element: Obsidian
+    mass: 982.941895
+    temperature: 1687.28003
+    location_x: 2
+    location_y: 1
+  - element: Obsidian
+    mass: 957.349121
+    temperature: 1687.0708
+    location_x: -2
+    location_y: 2
+  - element: Obsidian
+    mass: 962.269104
+    temperature: 1685.76831
+    location_x: -1
+    location_y: 2
+  - element: Obsidian
+    mass: 967.873718
+    temperature: 1684.77026
+    location_y: 2
+  - element: Obsidian
+    mass: 975.16449
+    temperature: 1684.98535
+    location_x: 1
+    location_y: 2
+  - element: Obsidian
+    mass: 984.431458
+    temperature: 1687.46375
+    location_x: 2
+    location_y: 2
+otherEntities:
+  - id: PropSurfaceSatellite1
+    location_y: -1
+    element: Unobtanium
+    temperature: 294.149994
+    units: 1
+    type: Other

@@ -1,0 +1,147 @@
+name: STRINGS.HELLSEN.CLUSTER_NAMES.MINICLUSTER_FLIPPEDSTART.NAME
+description: STRINGS.HELLSEN.CLUSTER_NAMES.MINICLUSTER_FLIPPEDSTART.DESC
+requiredDlcId: EXPANSION1_ID
+coordinatePrefix: M-HELLSEN-FLIP-C
+menuOrder: 1
+difficulty: 5
+clusterCategory: 2
+
+startWorldIndex: 0
+numRings: 14
+worldPlacements:
+  # Inner Worlds
+  - world: expansion1::worlds/HellsenMoonletFlippedStart # Flipped Moonlet (Start)
+    buffer: 2
+    locationType: StartWorld
+    allowedRings:
+      min: 0
+      max: 4
+  - world: expansion1::worlds/HellsenMoonletRimeWarp # Rime Moonlet (Warp)
+    buffer: 2
+    locationType: InnerCluster
+    allowedRings:
+      min: 0
+      max: 4
+  - world: expansion1::worlds/HellsenMoonletMetallicSwampy # Metallic Swampy Moonlet
+    buffer: 2
+    locationType: InnerCluster
+    allowedRings:
+      min: 0
+      max: 4
+  - world: expansion1::worlds/HellsenMoonletDesolands # The Desolands Moonlet
+    buffer: 2
+    locationType: InnerCluster
+    allowedRings:
+      min: 0
+      max: 4
+  - world: expansion1::worlds/HellsenMoonletForestyWasteland # Glowood Wasteland Moonlet
+    buffer: 2
+    locationType: InnerCluster
+    allowedRings:
+      min: 0
+      max: 4
+
+  # Outer Worlds
+  - world: expansion1::worlds/HellsenMoonletTundra # Fullerene renewable
+    buffer: 2
+    allowedRings:
+      min: 7
+      max: 12
+  - world: expansion1::worlds/HellsenMoonletMarshy # Isoresin renewable
+    buffer: 2
+    allowedRings:
+      min: 6
+      max: 12
+  - world: expansion1::worlds/HellsenMoonletNiobium # Niobium renewable
+    buffer: 2
+    allowedRings:
+      min: 8
+      max: 12
+  - world: expansion1::worlds/HellsenMoonletTinyRegolith # Meteors, voles, regolith
+    buffer: 2
+    allowedRings:
+      min: 6
+      max: 12
+  - world: expansion1::worlds/HellsenMoonletMoo # Farty space cows
+    buffer: 2
+    allowedRings:
+      min: 6
+      max: 13
+
+poiPlacements:
+  - pois:
+      - TemporalTear
+    numToSpawn: 1
+    avoidClumping: true
+    allowedRings:
+      min: 11
+      max: 13
+  - pois:
+      - HarvestableSpacePOI_CarbonAsteroidField
+      - HarvestableSpacePOI_MetallicAsteroidField
+      - HarvestableSpacePOI_SatelliteField
+      - HarvestableSpacePOI_GildedAsteroidField
+      - HarvestableSpacePOI_GlimmeringAsteroidField
+      - HarvestableSpacePOI_HeliumCloud
+      - HarvestableSpacePOI_OilyAsteroidField
+      - HarvestableSpacePOI_FrozenOreField
+      - HarvestableSpacePOI_RadioactiveGasCloud
+      - HarvestableSpacePOI_RadioactiveAsteroidField
+    numToSpawn: 10
+    allowedRings:
+      min: 5
+      max: 12
+  - pois:
+      - HarvestableSpacePOI_CarbonAsteroidField
+      - HarvestableSpacePOI_MetallicAsteroidField
+      - HarvestableSpacePOI_SatelliteField
+      - HarvestableSpacePOI_GildedAsteroidField
+      - HarvestableSpacePOI_GlimmeringAsteroidField
+      - HarvestableSpacePOI_HeliumCloud
+      - HarvestableSpacePOI_OilyAsteroidField
+      - HarvestableSpacePOI_RadioactiveGasCloud
+      - HarvestableSpacePOI_RadioactiveAsteroidField
+      - HarvestableSpacePOI_OxygenRichAsteroidField
+    numToSpawn: 10
+    allowedRings:
+      min: 5
+      max: 12
+  - pois:
+      - HarvestableSpacePOI_RockyAsteroidField
+      - HarvestableSpacePOI_InterstellarIceField
+      - HarvestableSpacePOI_InterstellarOcean
+      - HarvestableSpacePOI_ForestyOreField
+      - HarvestableSpacePOI_SandyOreField
+      - HarvestableSpacePOI_OrganicMassField
+      - HarvestableSpacePOI_SwampyOreField
+      - HarvestableSpacePOI_FrozenOreField
+      - HarvestableSpacePOI_SaltyAsteroidField
+      - HarvestableSpacePOI_GasGiantCloud
+      - HarvestableSpacePOI_ChlorineCloud
+      - HarvestableSpacePOI_IceAsteroidField
+      - HarvestableSpacePOI_OxidizedAsteroidField
+    numToSpawn: 13
+    allowedRings:
+      min: 5
+      max: 12
+  # Artifact POIs
+  - pois:
+      - ArtifactSpacePOI_GravitasSpaceStation1
+      - ArtifactSpacePOI_GravitasSpaceStation2
+      - ArtifactSpacePOI_GravitasSpaceStation3
+      - ArtifactSpacePOI_GravitasSpaceStation4
+      - ArtifactSpacePOI_GravitasSpaceStation5
+      - ArtifactSpacePOI_GravitasSpaceStation6
+      - ArtifactSpacePOI_GravitasSpaceStation7
+      - ArtifactSpacePOI_GravitasSpaceStation8
+    numToSpawn: 8
+    allowedRings:
+      min: 5
+      max: 13
+  - pois:
+      - ArtifactSpacePOI_RussellsTeapot
+    numToSpawn: 1
+    avoidClumping: true
+    allowedRings:
+      min: 11
+      max: 13

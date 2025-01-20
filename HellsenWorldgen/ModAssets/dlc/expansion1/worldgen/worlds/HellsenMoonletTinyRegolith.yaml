@@ -1,0 +1,101 @@
+name: STRINGS.HELLSEN.WORLDS.REGOLITH_MOONLET.NAME # Regolith Moonlet
+description: STRINGS.HELLSEN.WORLDS.REGOLITH_MOONLET.DESC
+nameTables: [REGOLITH]
+asteroidIcon: asteroid_regolith_moonlet_kanim
+
+worldTraitScale: 0.15 # Adjust with worldSize. Traits are tuned to base game world sizes.
+worldsize:
+  X: 72
+  Y: 104
+layoutMethod: PowerTree
+
+disableWorldTraits: true # insufficient traits to support world
+
+fixedTraits:
+  - sunlightVeryVeryVeryHigh
+  - cosmicRadiationMed
+
+defaultsOverrides:
+  data:
+    DrawWorldBorderForce: false
+    DrawWorldBorder: true
+    WorldBorderThickness: 2
+    WorldBorderRange: 0
+    OverworldDensityMin: 15
+    OverworldDensityMax: 15
+    OverworldAvoidRadius: 5
+    OverworldSampleBehaviour: PoissonDisk
+
+# List all the zone files to load
+subworldFiles:
+  - name: subworlds/space/Space
+    overridePower: 1
+  - name: expansion1::subworlds/regolith/BarrenDust
+    overridePower: 1
+  - name: expansion1::subworlds/regolith/DeadOasis
+    overridePower: 1
+  - name: expansion1::subworlds/barren/EmptyCaves
+    overridePower: 1
+
+unknownCellsAllowedSubworlds:
+  - tagcommand: Default
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/regolith/BarrenDust
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 3
+    maxDistance: 3
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/regolith/BarrenDust
+  - tagcommand: DistanceFromTag
+    tag: AtEdge
+    minDistance: 2
+    maxDistance: 2
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/barren/EmptyCaves
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 0
+    maxDistance: 2
+    command: Replace
+    subworldNames:
+      - subworlds/space/Space
+  - tagcommand: DistanceFromTag
+    tag: AtDepths
+    minDistance: 0
+    maxDistance: 0
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/regolith/DeadOasis
+
+seasons:
+  - RegolithMoonMeteorShowers
+
+worldTemplateRules:
+  - names:
+      - expansion1::poi/regolith/bunker_lab
+    listRule: GuaranteeAll
+    allowExtremeTemperatureOverlap: true
+    priority: 120
+    allowedCellsFilter:
+      - command: Replace
+        subworldNames:
+          - expansion1::subworlds/regolith/BarrenDust
+  - names:
+      - geysers/steam
+      - geysers/hot_steam
+    listRule: TryOne
+    times: 2
+    allowDuplicates: true
+    priority: 100
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: DistanceFromTag
+        tag: AtDepths
+        minDistance: 0
+        maxDistance: 0
+      - command: IntersectWith
+        zoneTypes: [FrozenWastes]

@@ -1,0 +1,12 @@
+info:
+  size:
+    X: 3
+    Y: 3
+  area: 9
+otherEntities:
+  - id: WarpReceiver
+    location_y: 0
+    element: Copper
+    temperature: 294.149994
+    units: 1
+    type: Other

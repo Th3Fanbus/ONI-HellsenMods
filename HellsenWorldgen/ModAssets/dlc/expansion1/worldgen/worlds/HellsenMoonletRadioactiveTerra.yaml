@@ -1,0 +1,120 @@
+name: STRINGS.HELLSEN.WORLDS.RADIOACTIVE_TERRA.NAME # Radioactive Terra Moonlet
+description: STRINGS.HELLSEN.WORLDS.RADIOACTIVE_TERRA.DESC
+nameTables: [TERRA]
+asteroidIcon: asteroid_vanilla_forest_warp_kanim
+
+worldTraitScale: 0.20 # Adjust with worldSize. Traits are tuned to base game world sizes.
+worldsize:
+  X: 128
+  Y: 160
+layoutMethod: PowerTree
+
+worldTraitRules:
+  - min: 1
+    max: 2
+    forbiddenTags:
+      - StartWorldOnly # start already a bit random
+      - Oil # no oil here
+      - VeryCold
+      - StartChange
+      - Core
+      - AboveCore
+      - Crust # not for this world layout
+
+fixedTraits:
+  - sunlightLow
+  - cosmicRadiationMedLow
+
+defaultsOverrides:
+  data:
+    WorldBorderThickness: 2
+    WorldBorderRange: 0
+    OverworldDensityMin: 18
+    OverworldDensityMax: 18
+    OverworldSampleBehaviour: PoissonDisk
+
+subworldFiles:
+  - name: subworlds/space/Space
+  - name: expansion1::subworlds/space/SpaceWithSandyBorder
+  - name: expansion1::subworlds/sandstone/med_SandstoneResourceful
+  - name: expansion1::subworlds/barren/BarrenCore
+    overridePower: 1 # Reset their pdWeight
+  - name: expansion1::subworlds/frozen/FrozenMedium
+    minCount: 3
+  - name: expansion1::subworlds/radioactive/med_Radioactive
+    minCount: 3
+  - name: expansion1::subworlds/radioactive/med_UraniumFields
+  - name: expansion1::subworlds/radioactive/med_FrozenUraniumFields
+  - name: expansion1::subworlds/ocean/med_Ocean
+    minCount: 3
+
+unknownCellsAllowedSubworlds:
+  # World Fill
+  - tagcommand: Default
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/barren/BarrenCore
+      - expansion1::subworlds/frozen/FrozenMedium
+      - expansion1::subworlds/ocean/med_Ocean
+      - expansion1::subworlds/sandstone/med_SandstoneResourceful
+  # Space
+  - tagcommand: AtTag
+    tag: AtSurface
+    command: Replace
+    subworldNames:
+      - subworlds/space/Space
+  # Crust
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 1
+    maxDistance: 1
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/space/SpaceWithSandyBorder
+  # Above Core
+  - tagcommand: DistanceFromTag
+    tag: AtDepths
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/radioactive/med_Radioactive
+      - expansion1::subworlds/radioactive/med_UraniumFields
+      - expansion1::subworlds/radioactive/med_FrozenUraniumFields
+
+worldTemplateRules:
+  # AETN-s
+  - names:
+      - poi/frozen/heatsink_a
+      - poi/frozen/heatsink_b
+      - poi/frozen/heatsink_c
+      - poi/frozen/heatsink_d
+    listRule: GuaranteeSomeTryMore
+    someCount: 1
+    moreCount: 3
+    priority: 150
+    allowedCellsFilter:
+      - command: Replace
+        zoneTypes: [FrozenWastes]
+  # Gravitas Artifact POI
+  - names:
+      - expansion1::poi/genericGravitas/directors_room
+    listRule: GuaranteeAll
+    priority: 120
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: NotAtTag
+        tag: NoGlobalFeatureSpawning
+  # Curated energy geysers
+  - names:
+      - geysers/big_volcano
+      - geysers/hot_hydrogen
+      - geysers/methane
+      - expansion1::geysers/liquid_sulfur
+      - geysers/small_volcano
+    listRule: TryOne
+    times: 3
+    useRelaxedFiltering: true # Allow placement in feature-heavy biomes
+    priority: 100
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: NotAtTag
+        tag: NoGlobalFeatureSpawning

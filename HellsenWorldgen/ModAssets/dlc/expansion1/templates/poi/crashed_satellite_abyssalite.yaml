@@ -1,0 +1,113 @@
+info:
+  size:
+    X: 5
+    Y: 5
+  min:
+    X: -2
+    Y: -2
+  area: 25
+cells:
+  - element: Katairite
+    mass: 500
+    temperature: 312.149994
+    location_x: -2
+    location_y: -2
+  - element: Katairite
+    mass: 500
+    temperature: 312.149994
+    location_x: -1
+    location_y: -2
+  - element: Katairite
+    mass: 500
+    temperature: 312.149994
+    location_y: -2
+  - element: Katairite
+    mass: 500
+    temperature: 312.149994
+    location_x: 1
+    location_y: -2
+  - element: Katairite
+    mass: 500
+    temperature: 312.149994
+    location_x: 2
+    location_y: -2
+  - element: Katairite
+    mass: 500
+    temperature: 312.149994
+    location_x: -2
+    location_y: -1
+  - element: Vacuum
+    location_x: -1
+    location_y: -1
+  - element: Vacuum
+    location_y: -1
+  - element: Vacuum
+    location_x: 1
+    location_y: -1
+  - element: Katairite
+    mass: 500
+    temperature: 312.149994
+    location_x: 2
+    location_y: -1
+  - element: Katairite
+    mass: 500
+    temperature: 312.149994
+    location_x: -2
+  - element: Vacuum
+    location_x: -1
+  - element: Vacuum
+  - element: Vacuum
+    location_x: 1
+  - element: Katairite
+    mass: 500
+    temperature: 312.149994
+    location_x: 2
+  - element: Katairite
+    mass: 500
+    temperature: 312.149994
+    location_x: -2
+    location_y: 1
+  - element: Vacuum
+    location_x: -1
+    location_y: 1
+  - element: Vacuum
+    location_y: 1
+  - element: Vacuum
+    location_x: 1
+    location_y: 1
+  - element: Katairite
+    mass: 500
+    temperature: 312.149994
+    location_x: 2
+    location_y: 1
+  - element: Katairite
+    mass: 500
+    temperature: 312.149994
+    location_x: -2
+    location_y: 2
+  - element: Katairite
+    mass: 500
+    temperature: 318
+    location_x: -1
+    location_y: 2
+  - element: Katairite
+    mass: 500
+    temperature: 318
+    location_y: 2
+  - element: Katairite
+    mass: 500
+    temperature: 318
+    location_x: 1
+    location_y: 2
+  - element: Katairite
+    mass: 500
+    temperature: 312.149994
+    location_x: 2
+    location_y: 2
+otherEntities:
+  - id: PropSurfaceSatellite1
+    location_y: -1
+    element: Unobtanium
+    temperature: 294.149994
+    units: 1
+    type: Other

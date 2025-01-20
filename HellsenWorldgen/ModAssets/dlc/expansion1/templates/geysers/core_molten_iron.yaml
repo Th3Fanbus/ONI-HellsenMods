@@ -1,0 +1,107 @@
+info:
+  size:
+    X: 4
+    Y: 5
+  min:
+    X: -1
+    Y: -2
+  area: 20
+cells:
+  - element: Unobtanium
+    mass: 20260
+    temperature: 1
+    location_x: -1
+    location_y: -2
+  - element: Unobtanium
+    mass: 20260
+    temperature: 1
+    location_y: -2
+  - element: Unobtanium
+    mass: 20260
+    temperature: 1
+    location_x: 1
+    location_y: -2
+  - element: Unobtanium
+    mass: 20260
+    temperature: 1
+    location_x: 2
+    location_y: -2
+  - element: MoltenIron
+    mass: 8419.20605
+    temperature: 2001.70532
+    location_x: -1
+    location_y: -1
+  - element: MoltenIron
+    mass: 8419.20605
+    temperature: 2002.55383
+    location_y: -1
+  - element: MoltenIron
+    mass: 8419.20605
+    temperature: 2003.47803
+    location_x: 1
+    location_y: -1
+  - element: MoltenIron
+    mass: 8419.20605
+    temperature: 2003.77405
+    location_x: 2
+    location_y: -1
+  - element: MoltenIron
+    mass: 8340.91797
+    temperature: 2002.71399
+    location_x: -1
+  - element: MoltenIron
+    mass: 8340.91797
+    temperature: 2003.50244
+  - element: MoltenIron
+    mass: 8340.91797
+    temperature: 2004.23669
+    location_x: 1
+  - element: MoltenIron
+    mass: 8340.91797
+    temperature: 2003.77405
+    location_x: 2
+  - element: MoltenIron
+    mass: 8258.33594
+    temperature: 2003.51208
+    location_x: -1
+    location_y: 1
+  - element: MoltenIron
+    mass: 8258.33594
+    temperature: 2003.68469
+    location_y: 1
+  - element: MoltenIron
+    mass: 8258.33594
+    temperature: 2004.60205
+    location_x: 1
+    location_y: 1
+  - element: MoltenIron
+    mass: 8258.33594
+    temperature: 2003.72034
+    location_x: 2
+    location_y: 1
+  - element: MoltenIron
+    mass: 8181.53955
+    temperature: 2004.43213
+    location_x: -1
+    location_y: 2
+  - element: MoltenIron
+    mass: 8181.53955
+    temperature: 2003.7301
+    location_y: 2
+  - element: MoltenIron
+    mass: 8181.53955
+    temperature: 2004.60205
+    location_x: 1
+    location_y: 2
+  - element: MoltenIron
+    mass: 8181.53955
+    temperature: 2004.5863
+    location_x: 2
+    location_y: 2
+otherEntities:
+  - id: GeyserGeneric_molten_iron
+    location_y: -1
+    element: Katairite
+    temperature: 372.149994
+    units: 1
+    type: Other

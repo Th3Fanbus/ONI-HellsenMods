@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+	<!-- General Package Properties -->
+	<PropertyGroup>
+		<PackageId>RenewableAbyssalite</PackageId>
+		<Version>1.0.0.0</Version>
+		<Authors>Daron</Authors>
+	</PropertyGroup>
+
+	<!-- Build Properties -->
+	<PropertyGroup>
+		<RootNamespace>RenewableAbyssalite</RootNamespace>
+		<AssemblyName>RenewableAbyssalite</AssemblyName>
+		<IsMod>true</IsMod>
+		<GenerateMetadata>true</GenerateMetadata>
+		<IsPacked>true</IsPacked>
+	</PropertyGroup>
+
+	<!-- Mod Info -->
+	<PropertyGroup>
+		<ModName>Renewable Abyssalite</ModName>
+		<ModDescription>Make Abyssalite renewable</ModDescription>
+		<SupportedContent>ALL</SupportedContent>
+		<MinimumSupportedBuild>$(LatestVersion)</MinimumSupportedBuild>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\RexLib\RexLib.csproj" />
+	</ItemGroup>
+</Project>
