@@ -7,6 +7,7 @@
 		<Optimize>true</Optimize>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
+		<!--<ResolveAssemblyReferencesSilent>true</ResolveAssemblyReferencesSilent>-->
 	</PropertyGroup>
 
 	<!--C# Language Version-->
@@ -19,7 +20,8 @@
 
 	<!-- Build Properties -->
 	<PropertyGroup>
-		<TargetFramework>net471</TargetFramework>
+		<!--<TargetFramework>net471</TargetFramework>-->
+		<TargetFramework>netstandard2.1</TargetFramework>
 		<Configurations>Debug;Release</Configurations>
 	</PropertyGroup>
 
@@ -54,7 +56,17 @@
 		<QoL2024Feb>596100</QoL2024Feb>
 		<FrostyPlanetBeta>616718</FrostyPlanetBeta>
 		<FrostyPlanetRelease>622222</FrostyPlanetRelease>
-		<LatestVersion>623711</LatestVersion>
+		<QOL2024NovBeta>641371</QOL2024NovBeta>
+		<QOL2024NovRelease>644960</QOL2024NovRelease>
+		<BionicBoostBeta>645088</BionicBoostBeta>
+		<BionicBoosterRelease>646687</BionicBoosterRelease>
+		<JanuaryHotfix1>648807</JanuaryHotfix1>
+		<JanuaryHotfix2>651155</JanuaryHotfix2>
+		<JanuaryHotfix3>652372</JanuaryHotfix3>
+		<FebruaryQOL_Beta>659075</FebruaryQOL_Beta>
+		<FebruaryQOL_Hotfix3>661174</FebruaryQOL_Hotfix3>
+		<!--Latest-->
+		<LatestVersion>663500</LatestVersion>
 	</PropertyGroup>
 
 	<!--Copyright notice-->
@@ -80,10 +92,14 @@
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(IsPacked)' == 'true'">
-		<PackageReference Include="ILRepack.Lib.MSBuild.Task" Version="2.0.18.2" />
+		<!--<PackageReference Include="ILRepack.Lib.MSBuild.Task" Version="2.0.18.2" />-->
+		<PackageReference Include="ILRepack.Lib.MSBuild.Task" Version="2.0.40" />
 	</ItemGroup>
 
 	<ItemGroup>
+		<Reference Include="System.IO.Compression, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+			<SpecificVersion>True</SpecificVersion>
+		</Reference>
 		<Reference Include="Assembly-CSharp">
 			<!--Publicized version, run "Clean" on the 1_CycleComma project once to generate this-->
 			<HintPath>$(AssemblyPublicized)</HintPath>
@@ -144,7 +160,6 @@
 		</Reference>
 		<Reference Include="UnityEngine.UI">
 			<HintPath>$(GameLibsFolder)/UnityEngine.UI.dll</HintPath>
-			<!--<HintPath>$(SolutionDir)/PublicisedAssembly/UnityEngine.UI_public.dll</HintPath>-->
 			<Private>false</Private>
 		</Reference>
 		<Reference Include="UnityEngine.UIModule">

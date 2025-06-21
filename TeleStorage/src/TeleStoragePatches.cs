@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using HarmonyLib;
 using UnityEngine;
 
@@ -69,7 +70,7 @@ namespace TeleStorage
             }
         }
 
-        [HarmonyPatch(typeof(KSerialization.Manager), nameof(KSerialization.Manager.GetType), new[] { typeof(string) })]
+        [HarmonyPatch(typeof(KSerialization.Manager), nameof(KSerialization.Manager.GetType), [typeof(string)])]
         internal static class TeleStorageSerializationPatch
         {
             internal static void Postfix(string type_name, ref Type __result)
@@ -80,13 +81,31 @@ namespace TeleStorage
             }
         }
 
-        [HarmonyPatch(typeof(SaveLoader), nameof(SaveLoader.Load), new[] { typeof(string) })]
+        [HarmonyPatch(typeof(ElementLoader), nameof(ElementLoader.FinaliseElementsTable))]
+        internal static class ElementLoader_FinaliseElementsTable_Patch
+        {
+            internal static void Postfix()
+            {
+                foreach (Element el in ElementLoader.elements) {
+                    if (el == null) {
+                        continue;
+                    }
+
+                    Debug.Log($"HELL: el {el.name} is {el.GetStateString()} ({el.state})");
+                    if (el.IsLiquid || el.IsGas) {
+                        //el.state &= ~Element.State.Unbreakable;
+                    }
+                }
+            }
+        }
+
+        [HarmonyPatch(typeof(SaveLoader), nameof(SaveLoader.Load), [typeof(string)])]
         internal static class SaveLoader_Load_Patch
         {
             internal static void Postfix(string filename) => TeleStorageData.Load(filename);
         }
 
-        [HarmonyPatch(typeof(SaveLoader), nameof(SaveLoader.Save), new[] { typeof(string), typeof(bool), typeof(bool) })]
+        [HarmonyPatch(typeof(SaveLoader), nameof(SaveLoader.Save), [typeof(string), typeof(bool), typeof(bool)])]
         internal static class SaveLoader_Save_Patch
         {
             internal static void Postfix(string filename) => TeleStorageData.Save(filename);

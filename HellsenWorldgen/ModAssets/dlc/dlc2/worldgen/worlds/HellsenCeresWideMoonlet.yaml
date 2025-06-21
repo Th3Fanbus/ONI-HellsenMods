@@ -9,7 +9,7 @@ requiredDlcIds: [EXPANSION1_ID, DLC2_ID]
 worldTraitScale: 0.44 # Adjust with worldSize. Traits are tuned to base game world sizes.
 worldsize:
   X: 160
-  Y: 274
+  Y: 160
 layoutMethod: PowerTree # Note: We need to add weights to the items in the layer in order to use this.
 
 worldTraitRules:
@@ -18,7 +18,8 @@ worldTraitRules:
     forbiddenTags:
       - Surface
       - Oil
-      - NonStartWorld
+      - StartWorldOnly
+      - StartChange
     forbiddenTraits:
       - traits/GeoDormant
       - traits/MagmaVents
@@ -56,32 +57,11 @@ defaultsOverrides:
     - element: OxyRock
       amount: 10000
 
-startSubworldName: dlc2::subworlds/icecaves/IceCavesStart
-startingBaseTemplate: dlc2::bases/ceresBase
-startingBasePositionHorizontal:
-  min: 0.5
-  max: 0.5
-startingBasePositionVertical:
-  min: 0.46
-  max: 0.46
-
 # List all the subworld files to load
 subworldFiles:
   - name: dlc2::subworlds/icecaves/IceCavesStart
-    overridePower: 4
-  - name: dlc2::subworlds/icecaves/IceCavesMiniWater
-    overridePower: 1
-    weight: 0.5
-    minCount: 1
-    maxCount: 1
-  - name: dlc2::subworlds/icecaves/IceCavesMiniOxy
-    overridePower: 1
-    minCount: 1
-    maxCount: 1
-  - name: dlc2::subworlds/icecaves/IceCavesMiniMetal
-    overridePower: 1
-    minCount: 1
-    maxCount: 1
+    minCount: 2
+    maxCount: 3
   - name: dlc2::subworlds/carrotquarry/CarrotQuarryBasic
     weight: 0.5
     minCount: 1
@@ -93,6 +73,7 @@ subworldFiles:
     minCount: 3
   - name: subworlds/rust/RustFrozen
   - name: subworlds/frozen/Frozen
+    weight: 0.5
     minCount: 2
   - name: subworlds/forest/ForestHot
   - name: subworlds/space/SpaceNoBorder
@@ -113,6 +94,8 @@ unknownCellsAllowedSubworlds:
       - subworlds/ocean/OceanFrozen
       - dlc2::subworlds/carrotquarry/CarrotQuarryBasic
       - dlc2::subworlds/carrotquarry/CarrotQuarryEthanolPools
+      - dlc2::subworlds/icecaves/IceCavesStart
+      - subworlds/frozen/Frozen
       - (Mixing1)
       - (Mixing2)
       - (Mixing3)
@@ -156,22 +139,11 @@ unknownCellsAllowedSubworlds:
     subworldNames:
       - dlc2::subworlds/sugarwoods/SugarWoodsBasic
       - dlc2::subworlds/carrotquarry/CarrotQuarryBasic
+      - dlc2::subworlds/icecaves/IceCavesStart
+      - subworlds/frozen/Frozen
       - (Mixing1)
       - (Mixing2)
       - (Mixing3)
-  # Start
-  - tagcommand: DistanceFromTag
-    tag: AtStart
-    minDistance: 1
-    maxDistance: 1
-    command: Replace
-    subworldNames:
-      - dlc2::subworlds/icecaves/IceCavesMiniOxy
-      - dlc2::subworlds/icecaves/IceCavesMiniWater
-      - dlc2::subworlds/icecaves/IceCavesMiniMetal
-      - dlc2::subworlds/carrotquarry/CarrotQuarryBasic
-      - dlc2::subworlds/carrotquarry/CarrotQuarryEthanolPools
-      - subworlds/frozen/Frozen
 
 worldTemplateRules:
   # Geothermal Imperative
@@ -239,10 +211,8 @@ worldTemplateRules:
     priority: 200
     allowedCellsFilter:
       - command: Replace
-        tagcommand: DistanceFromTag
-        tag: AtStart
-        minDistance: 1
-        maxDistance: 1
+        tagcommand: NotAtTag
+        tag: NoGlobalFeatureSpawning
   # Ocean
   - names:
       - poi/poi_ocean_geyser_saltwater
@@ -301,39 +271,6 @@ worldTemplateRules:
     allowedCellsFilter:
       - command: Replace
         zoneTypes: [FrozenWastes, CarrotQuarry]
-      - command: IntersectWith
-        tagcommand: DistanceFromTag
-        tag: AtStart
-        minDistance: 1
-        maxDistance: 3
-  # Gravitas
-  - names:
-      - expansion1::poi/warp/sender
-      - expansion1::poi/warp/receiver
-      - expansion1::poi/warp/teleporter
-    listRule: GuaranteeAll
-    priority: 115
-    allowedCellsFilter:
-      - command: Replace
-        tagcommand: DistanceFromTag
-        tag: AtStart
-        minDistance: 1
-        maxDistance: 3
-      - command: ExceptWith
-        tagcommand: DistanceFromTag
-        tag: AtDepths
-        minDistance: 0
-        maxDistance: 1
-      - command: ExceptWith
-        tagcommand: DistanceFromTag
-        tag: AtSurface
-        minDistance: 0
-        maxDistance: 2
-      - command: ExceptWith
-        zoneTypes: [Space]
-      - command: ExceptWith
-        tagcommand: AtTag
-        tag: NoGravitasFeatures
   - names:
       - expansion1::poi/boon/hellsen_greathall
     listRule: GuaranteeAll
@@ -341,7 +278,7 @@ worldTemplateRules:
     allowedCellsFilter:
       - command: Replace
         tagcommand: DistanceFromTag
-        tag: AtStart
+        tag: AtSurface
         minDistance: 2
         maxDistance: 99
       - command: ExceptWith
@@ -354,7 +291,7 @@ worldTemplateRules:
     allowedCellsFilter:
       - command: Replace
         tagcommand: DistanceFromTag
-        tag: AtStart
+        tag: AtSurface
         minDistance: 2
         maxDistance: 99
       - command: ExceptWith
@@ -363,11 +300,6 @@ worldTemplateRules:
       - command: ExceptWith
         tagcommand: DistanceFromTag
         tag: AtDepths
-        minDistance: 0
-        maxDistance: 2
-      - command: ExceptWith
-        tagcommand: DistanceFromTag
-        tag: AtSurface
         minDistance: 0
         maxDistance: 2
   - names:
@@ -417,14 +349,7 @@ worldTemplateRules:
     priority: 100
     allowedCellsFilter:
       - command: Replace
-        tagcommand: DistanceFromTag
-        tag: AtStart
-        minDistance: 2
-        maxDistance: 10
-      - command: ExceptWith
-        zoneTypes: [Space]
-      - command: ExceptWith
-        tagcommand: AtTag
+        tagcommand: NotAtTag
         tag: NoGlobalFeatureSpawning
   - names:
       - geysers/generic

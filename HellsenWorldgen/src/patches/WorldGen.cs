@@ -22,14 +22,14 @@ namespace HellsenWorldgen
     public static partial class Patches
     {
         private static readonly TemplateSpawnRules EthanolGeyserTemplate = new() {
-            names = new() { "expansion1::geysers/ethanol_geyser_full" },
+            names = ["expansion1::geysers/ethanol_geyser_full"],
             listRule = ListRule.TryOne,
             times = 3,
             priority = 25,
             allowDuplicates = true,
             allowExtremeTemperatureOverlap = false,
             useRelaxedFiltering = true,
-            allowedCellsFilter = new() {
+            allowedCellsFilter = [
                 new() {
                     command = Command.Replace,
                     tagcommand = TagCommand.DistanceFromTag,
@@ -40,43 +40,55 @@ namespace HellsenWorldgen
                 new() {
                     command = Command.IntersectWith,
                     tagcommand = TagCommand.Default,
-                    zoneTypes = new List<SubWorld.ZoneType> {
+                    zoneTypes = [
                         SubWorld.ZoneType.FrozenWastes,
-                    }
+                    ],
                 },
                 new() {
                     command = Command.ExceptWith,
                     tagcommand = TagCommand.AtTag,
                     tag = WorldGenTags.NoGlobalFeatureSpawning.name,
                 },
-            },
+                new() {
+                    command = Command.ExceptWith,
+                    zoneTypes = [
+                        SubWorld.ZoneType.Space,
+                    ],
+                },
+            ],
         };
 
         private static readonly TemplateSpawnRules HellsenTeleporterTemplate = new() {
-            names = new() { "expansion1::poi/warp/hellsen_teleporter_mini" },
+            names = ["expansion1::poi/warp/hellsen_teleporter_mini"],
             listRule = ListRule.GuaranteeAll,
             times = 1,
             priority = 240,
             allowDuplicates = true,
             allowExtremeTemperatureOverlap = false,
             useRelaxedFiltering = true,
-            allowedCellsFilter = new() {
+            allowedCellsFilter = [
                 new() {
                     command = Command.Replace,
                     tagcommand = TagCommand.DistanceFromTag,
                     tag = nameof(WorldGenTags.AtSurface),
-                    minDistance = 1,
+                    minDistance = 2,
                     maxDistance = 99,
+                },
+                new() {
+                    command = Command.ExceptWith,
+                    zoneTypes = [
+                        SubWorld.ZoneType.Space,
+                    ],
                 },
                 new() {
                     command = Command.ExceptWith,
                     tagcommand = TagCommand.AtTag,
                     tag = nameof(WorldGenTags.NoGlobalFeatureSpawning),
                 },
-            },
+            ],
         };
 
-        private static void InjectWorldTemplateRules(Worlds __instance)
+        private static void InjectWorldTemplateRules(Worlds? __instance)
         {
             if (__instance?.worldCache is null) {
                 return;

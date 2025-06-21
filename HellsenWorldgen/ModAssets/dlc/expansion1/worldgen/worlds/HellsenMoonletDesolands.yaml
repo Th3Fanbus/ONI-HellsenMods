@@ -21,8 +21,8 @@ worldTraitRules:
       - expansion1::traits/IrregularOil # already is "irregular"
 
 fixedTraits:
-  - sunlightLow
-  - cosmicRadiationMedLow
+  - sunlightMed
+  - cosmicRadiationMed
 
 defaultsOverrides:
   data:
@@ -49,11 +49,11 @@ subworldFiles:
   - name: expansion1::subworlds/oil/OilSparse
     overridePower: 1.25 # Reset their pdWeight
     minCount: 2
-    maxCount: 4
+    maxCount: 5
   - name: expansion1::subworlds/oil/OilWells
     overridePower: 1.25 # Reset their pdWeight
     minCount: 2
-    maxCount: 4
+    maxCount: 5
   - name: subworlds/space/Space
   - name: expansion1::subworlds/space/SpaceWithSandyBorder
 
@@ -119,18 +119,19 @@ worldTemplateRules:
       - poi/oil/small_oilpockets_geyser_g
       - poi/oil/small_oilpockets_geyser_h
     listRule: GuaranteeSomeTryMore
-    someCount: 2
-    moreCount: 4
+    someCount: 4
+    moreCount: 6
+    useRelaxedFiltering: true # Allow placement in feature-heavy biomes
+    allowDuplicates: true
     priority: 120
     allowedCellsFilter:
       - command: Replace
         zoneTypes: [OilField]
-  # Guaranteed Lead volcano
+  # Guaranteed Lead volcano and Leaky Oil
   - names:
       - expansion1::geysers/molten_lead
-    listRule: GuaranteeSomeTryMore
-    someCount: 1
-    moreCount: 1
+      - geysers/oil_drip
+    listRule: GuaranteeAll
     useRelaxedFiltering: true # Allow placement in feature-heavy biomes
     priority: 115
     allowedCellsFilter:
@@ -160,6 +161,19 @@ worldTemplateRules:
     listRule: TryOne
     times: 4
     useRelaxedFiltering: true # Allow placement in feature-heavy biomes
+    priority: 105
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: NotAtTag
+        tag: NoGlobalFeatureSpawning
+  # Some generic geysers to spruce up the place
+  - names:
+      - geysers/generic
+    listRule: TryOne
+    times: 2
+    ruleId: GenericGeysers
+    useRelaxedFiltering: true # Allow placement in feature-heavy biomes
+    allowDuplicates: true
     priority: 100
     allowedCellsFilter:
       - command: Replace

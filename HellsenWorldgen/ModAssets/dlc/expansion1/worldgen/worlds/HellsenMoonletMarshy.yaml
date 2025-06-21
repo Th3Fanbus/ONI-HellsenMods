@@ -31,7 +31,7 @@ worldTraitRules:
 
 fixedTraits:
   - sunlightMedHigh
-  - cosmicRadiationMedLow
+  - cosmicRadiationMed
 
 seasons:
   - GassyMooteorShowers
@@ -157,8 +157,10 @@ worldTemplateRules:
       - geysers/methane
       - geysers/hot_steam
       - geysers/steam
+      - geysers/hot_water
+      - geysers/filthy_water
     listRule: TryOne
-    times: 2
+    times: 3
     priority: 100
     useRelaxedFiltering: true # Marsh contains a lot of features, this means they can be replaced
     allowedCellsFilter:

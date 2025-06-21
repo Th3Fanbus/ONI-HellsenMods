@@ -11,22 +11,24 @@ namespace HellsenWorldgen
     {
         public static void DumpPortals()
         {
-#if false
-            Debug.Log("HELL: Transmitters:");
-            WarpPortal[] transmitterArray = Object.FindObjectsOfType<WarpPortal>();
-            foreach (WarpPortal transmitter in transmitterArray) {
-                int id = transmitter.GetMyWorldId();
-                WorldContainer world = ClusterManager.Instance.GetWorld(id);
-                Debug.Log($"HELL:\t - id: {id}, world: {world}, name: {world.worldName}, type: {world.worldType}");
+            if (HellsenConfig.DUMP_PORTAL_INFO) {
+#pragma warning disable CS0162 // Unreachable code detected
+                RexLogger.Log("HELL: Transmitters:");
+                WarpPortal[] transmitterArray = Object.FindObjectsOfType<WarpPortal>();
+                foreach (WarpPortal transmitter in transmitterArray) {
+                    int id = transmitter.GetMyWorldId();
+                    WorldContainer world = ClusterManager.Instance.GetWorld(id);
+                    RexLogger.Log($"HELL:\t - id: {id}, world: {world}, name: {world.worldName}, type: {world.worldType}");
+                }
+                RexLogger.Log("HELL: Receivers:");
+                WarpReceiver[] receiverArray = Object.FindObjectsOfType<WarpReceiver>();
+                foreach (WarpReceiver receiver in receiverArray) {
+                    int id = receiver.GetMyWorldId();
+                    WorldContainer world = ClusterManager.Instance.GetWorld(id);
+                    RexLogger.Log($"HELL:\t - id: {id}, world: {world}, name: {world.worldName}, type: {world.worldType}");
+                }
+#pragma warning restore CS0162 // Unreachable code detected
             }
-            Debug.Log("HELL: Receivers:");
-            WarpReceiver[] receiverArray = Object.FindObjectsOfType<WarpReceiver>();
-            foreach (WarpReceiver receiver in receiverArray) {
-                int id = receiver.GetMyWorldId();
-                WorldContainer world = ClusterManager.Instance.GetWorld(id);
-                Debug.Log($"HELL:\t - id: {id}, world: {world}, name: {world.worldName}, type: {world.worldType}");
-            }
-#endif
         }
 
         [HarmonyPatch(typeof(WarpPortal), nameof(WarpPortal.GetTargetWorldID))]
@@ -52,9 +54,9 @@ namespace HellsenWorldgen
                 }
 
                 if (fallbackID >= 0) {
-                    Debug.LogWarning("HELL: No remote receiver world found for warp portal sender");
+                    RexLogger.LogWarning("No remote receiver world found for warp portal sender");
                 } else {
-                    Debug.LogWarning("HELL: No receiver at all found for warp portal sender");
+                    RexLogger.LogWarning("No receiver at all found for warp portal sender");
                 }
                 return fallbackID;
             }
@@ -77,7 +79,6 @@ namespace HellsenWorldgen
                 if (__instance.GetType() != typeof(WarpPortal)) {
                     return true;
                 }
-
                 if (__instance.worker.IsNull()) {
                     return false;
                 }
@@ -102,7 +103,7 @@ namespace HellsenWorldgen
                 }
 
                 if (warpReceiver.IsNull()) {
-                    Debug.LogWarning("HELL: No warp receiver found - maybe POI stomping or failure to spawn?");
+                    RexLogger.LogWarning("No warp receiver found - maybe POI stomping or failure to spawn?");
                     return false;
                 }
 
@@ -136,7 +137,7 @@ namespace HellsenWorldgen
                         return false;
                     }
                     if (Components.LiveMinionIdentities.Count > 0) {
-                        statesInstance.minions = new GameObject[] { Components.LiveMinionIdentities[0].gameObject };
+                        statesInstance.minions = [Components.LiveMinionIdentities[0].gameObject];
                         statesInstance.callback = delegate {
                             ManagementMenu.Instance.OpenClusterMap();
                             ClusterMapScreen.Instance.SetTargetFocusPosition(ClusterManager.Instance.GetWorld(targetID).GetMyWorldLocation());

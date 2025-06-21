@@ -21,8 +21,8 @@ worldTraitRules:
       - Surface
 
 fixedTraits:
-  - sunlightMedLow
-  - cosmicRadiationVeryLow
+  - sunlightMed
+  - cosmicRadiationMed
 
 seasons:
   - ClassicStyleWarpMeteorShowers

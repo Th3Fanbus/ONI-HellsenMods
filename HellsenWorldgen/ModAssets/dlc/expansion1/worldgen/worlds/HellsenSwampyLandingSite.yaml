@@ -29,8 +29,8 @@ subworldMixingRules:
     maxCount: 3
 
 fixedTraits:
-  - sunlightLow
-  - cosmicRadiationVeryLow
+  - sunlightMed
+  - cosmicRadiationMed
 
 seasons:
   - SpacedOutStyleRocketMeteorShowers

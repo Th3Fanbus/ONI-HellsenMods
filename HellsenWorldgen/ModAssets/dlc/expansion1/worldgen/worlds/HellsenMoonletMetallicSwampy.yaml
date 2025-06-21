@@ -19,8 +19,8 @@ worldTraitRules:
       - Oil # no oil here
 
 fixedTraits:
-  - sunlightLow
-  - cosmicRadiationVeryLow
+  - sunlightMed
+  - cosmicRadiationMed
 
 defaultsOverrides:
   data:

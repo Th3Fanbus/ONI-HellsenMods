@@ -27,7 +27,7 @@ worldTraitRules:
 
 fixedTraits:
   - sunlightLow
-  - cosmicRadiationMedLow
+  - cosmicRadiationMed
 
 seasons:
   - MiniFlippedMeteorShowers # unused

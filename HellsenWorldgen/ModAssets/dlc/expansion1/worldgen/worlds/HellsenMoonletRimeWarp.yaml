@@ -149,6 +149,11 @@ worldTemplateRules:
       - command: Replace
         subworldNames:
           - expansion1::subworlds/magma/BottomSmallNoUnobtanium
+      - command: ExceptWith
+        tagcommand: DistanceFromTag
+        tag: AtEdge
+        minDistance: 0
+        maxDistance: 0
   # Guaranteed water geyser
   - names:
       - geysers/hot_steam

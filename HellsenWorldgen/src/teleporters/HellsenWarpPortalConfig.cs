@@ -4,11 +4,13 @@ using UnityEngine;
 
 namespace HellsenWorldgen
 {
-    public class HellsenWarpPortalConfig : IEntityConfig
+    public class HellsenWarpPortalConfig : IHasDlcRestrictions, IEntityConfig
     {
         public const string ID = "HellsenWarpPortal";
 
-        public string[] GetDlcIds() => DlcManager.AVAILABLE_EXPANSION1_ONLY;
+        public string[]? GetRequiredDlcIds() => DlcManager.EXPANSION1;
+
+        public string[]? GetForbiddenDlcIds() => null;
 
         public GameObject CreatePrefab()
         {

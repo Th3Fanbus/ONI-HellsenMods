@@ -86,7 +86,7 @@ namespace TeleStorage
         {
             FilteredTag = tag;
             Element element = ElementLoader.GetElement(FilteredTag);
-            if (element is not null) {
+            if (element != null) {
                 FilteredElement = element.id;
             }
             GetComponent<KSelectable>().ToggleStatusItem(Db.Get().BuildingStatusItems.NoFilterElementSelected, !IsValidFilter, null);
@@ -95,7 +95,7 @@ namespace TeleStorage
         [OnDeserialized]
         private void OnDeserialized()
         {
-            if (ElementLoader.GetElement(FilteredTag) is null)
+            if (ElementLoader.GetElement(FilteredTag) == null)
                 return;
             filterable.SelectedTag = FilteredTag;
             OnFilterChanged(FilteredTag);
@@ -172,6 +172,7 @@ namespace TeleStorage
                     builder.Append(GameUtil.GetFormattedMass(item.mass));
                     builder.Append(" at ");
                     builder.Append(GameUtil.GetFormattedTemperature(item.temperature));
+                    builder.Append($" state {elementObj.state}");
                     string tooltip = "";
                     if (item.diseaseIdx != byte.MaxValue) {
                         builder.Append("\n • ");

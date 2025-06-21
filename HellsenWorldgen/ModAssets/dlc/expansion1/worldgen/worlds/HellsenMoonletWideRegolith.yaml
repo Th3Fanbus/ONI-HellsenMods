@@ -5,11 +5,27 @@ asteroidIcon: asteroid_regolith_moonlet_kanim
 
 worldTraitScale: 0.15 # Adjust with worldSize. Traits are tuned to base game world sizes.
 worldsize:
-  X: 72
+  X: 144
   Y: 104
 layoutMethod: PowerTree
 
-disableWorldTraits: true # insufficient traits to support world
+#disableWorldTraits: true # insufficient traits to support world
+worldTraitRules:
+  - min: 0
+    max: 1
+    forbiddenTags:
+      - StartWorldOnly
+      - Oil
+      - StartChange
+      - GenericGeysers
+      - Surface
+      - Crust
+      - Geodes
+      - LargeWorld
+    forbiddenTraits:
+      - traits/SlimeSplats
+      - traits/MagmaVents
+      - expansion1::traits/Volcanoes
 
 fixedTraits:
   - sunlightVeryVeryVeryHigh
@@ -28,6 +44,11 @@ defaultsOverrides:
     OverworldDensityMax: 15
     OverworldAvoidRadius: 5
     OverworldSampleBehaviour: PoissonDisk
+
+subworldMixingRules:
+  - name: (CoreMixing)
+    minCount: 2
+    maxCount: 4
 
 # List all the zone files to load
 subworldFiles:
@@ -54,8 +75,15 @@ unknownCellsAllowedSubworlds:
       - expansion1::subworlds/regolith/BarrenDust
   - tagcommand: DistanceFromTag
     tag: AtEdge
-    minDistance: 2
-    maxDistance: 2
+    minDistance: 1
+    maxDistance: 1
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/barren/EmptyCaves
+  - tagcommand: DistanceFromTag
+    tag: AtEdge
+    minDistance: 3
+    maxDistance: 3
     command: Replace
     subworldNames:
       - expansion1::subworlds/barren/EmptyCaves
@@ -73,6 +101,12 @@ unknownCellsAllowedSubworlds:
     command: Replace
     subworldNames:
       - expansion1::subworlds/regolith/DeadOasis
+  - tagcommand: AtTag # Mixing Core
+    tag: AtDepths
+    command: UnionWith
+    sortOrder: 100 # order after core world traits
+    subworldNames:
+      - (CoreMixing)
 
 worldTemplateRules:
   - names:
@@ -84,6 +118,23 @@ worldTemplateRules:
       - command: Replace
         subworldNames:
           - expansion1::subworlds/regolith/BarrenDust
+  - names:
+      - expansion1::poi/regolith/landing_pad
+    listRule: GuaranteeAll
+    priority: 110
+    allowExtremeTemperatureOverlap: true
+    overrideOffset:
+      X: 0
+      Y: 16
+    allowedCellsFilter:
+      - command: Replace
+        subworldNames:
+          - expansion1::subworlds/regolith/BarrenDust
+      - command: IntersectWith
+        tagcommand: DistanceFromTag
+        tag: AtSurface
+        minDistance: 3
+        maxDistance: 3
   - names:
       - geysers/steam
       - geysers/hot_steam

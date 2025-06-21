@@ -24,6 +24,11 @@ namespace HellsenWorldgen
                         public static LocString NAME = UI.FormatAsLink("Lead Volcano", "GeyserGeneric_MOLTEN_LEAD");
                         public static LocString DESC = ("A large volcano that periodically erupts with molten " + UI.FormatAsLink("Lead", "MOLTENLEAD") + ".");
                     }
+                    public static class MOLTEN_NICKEL
+                    {
+                        public static LocString NAME = UI.FormatAsLink("Nickel Volcano", "GeyserGeneric_MOLTEN_NICKEL");
+                        public static LocString DESC = ("A large volcano that periodically erupts with molten " + UI.FormatAsLink("Nickel", "MOLTENNICKEL") + ".");
+                    }
                     public static class LIQUID_CHLORINE
                     {
                         public static LocString NAME = UI.FormatAsLink("Liquid Chlorine Geyser", "GeyserGeneric_LIQUID_CHLORINE");
@@ -183,7 +188,7 @@ namespace HellsenWorldgen
                     public static LocString NAME = "Hellsen Irradiated Swampy Asteroid";
                     public static LocString DESC = "A small swampy world with a radioactive core.\n\n<smallcaps>Irradiated Swamps have a high concentration of rare swampy and radioactive resources but are also chocked full of dangers.</smallcaps>";
                 }
-                public class OIL_RICH_WARP_TARGET
+                public static class OIL_RICH_WARP_TARGET
                 {
                     public static LocString NAME = "Hellsen Rusty Oil Asteroid";
                     public static LocString DESC = "A rusty mid-sized world with an oily core.\n\n<smallcaps>Duplicants must sift through a great deal of rust and ocean to reach the prize of this planetoid's oil.</smallcaps>";
@@ -192,6 +197,11 @@ namespace HellsenWorldgen
                 {
                     public static LocString NAME = "Hellsen Ceres Minor";
                     public static LocString DESC = "A smaller frosty starting world with sub-zero temperatures throughout.\n\n<smallcaps>Duplicants who work in Ceres's sub-zero temperatures will need to wear or build warming equipment. Abundant natural fuel sources could lead to a well-powered colony.</smallcaps>";
+                }
+                public static class PREHISTORIC_SPACED_OUT
+                {
+                    public static LocString NAME = "Hellsen Relica Minor";
+                    public static LocString DESC = "A smaller endangered starting world with abundant food resources.\n\n<smallcaps>Relica's biodiversity makes reliable food production more attainable for new colonies. Construction materials and fuels are also ample. Surface defence must be prioritized to minimize damage from an incoming impactor asteroid.</smallcaps>";
                 }
             }
         }

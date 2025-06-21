@@ -8,6 +8,14 @@ using static ComplexRecipe;
 
 namespace HellsenWorldgen
 {
+    public static class HellsenConfig
+    {
+        /* DANGEROUS: Allow continuing after an error (anything could happen afterwards) */
+        public const bool TERMINATE_ON_ERROR = false;
+
+        public const bool DUMP_PORTAL_INFO = false;
+    }
+
     public static partial class Patches
     {
         [HarmonyPatch(typeof(Localization), nameof(Localization.Initialize))]
@@ -66,23 +74,20 @@ namespace HellsenWorldgen
         {
             public static void Postfix()
             {
-                RecipeElement[] input = new RecipeElement[] {
+                RecipeElement[] input = [
                     new(SimHashes.Sulfur.CreateTag(), 500f),
                     new(SimHashes.Aluminum.CreateTag(), 100f),
                     new(SimHashes.Cobalt.CreateTag(), 100f),
-                };
-
-                RecipeElement[] output = new RecipeElement[]
-                {
-                    new(DreamJournalConfig.ID, 1f)
-                };
-
+                ];
+                RecipeElement[] output = [
+                    new(DreamJournalConfig.ID, 1f),
+                ];
                 string recipeID = ComplexRecipeManager.MakeRecipeID(SupermaterialRefineryConfig.ID, input, output);
                 new ComplexRecipe(recipeID, input, output) {
                     time = 40f,
                     description = "Because sleeper dupes are overrated.",
                     nameDisplay = RecipeNameDisplay.Result,
-                    fabricators = new List<Tag> { SupermaterialRefineryConfig.ID }
+                    fabricators = [SupermaterialRefineryConfig.ID],
                 }.requiredTech = "DurableLifeSupport";
             }
         }
@@ -96,21 +101,14 @@ namespace HellsenWorldgen
         [HarmonyPatch(typeof(RotPile), nameof(RotPile.TryCreateNotification))]
         public class RotPile_TryCreateNotification_Patch
         {
-#if false
-            public static bool Prefix(RotPile __instance)
-            {
-                string name = __instance.smi.master.gameObject.GetProperName();
-                return !(name.Contains("COMPOST") || name.Contains("Rot Pile")); // <link="COMPOST">Rot Pile</link>
-            }
-#else
+            /* Do not create "food has decayed" notifications for Exuberant plants' rot piles */
             public static bool Prefix(RotPile __instance) => !__instance.smi.master.gameObject.GetProperName().Contains("Rot Pile"); // <link="COMPOST">Rot Pile</link>
-#endif
         }
 
         [HarmonyPatch(typeof(KCrashReporter), nameof(KCrashReporter.OnEnable))]
         public static class KCrashReporter_OnEnable_Patch
         {
-            public static void Postfix() => KCrashReporter.terminateOnError = false;
+            public static void Postfix() => KCrashReporter.terminateOnError = HellsenConfig.TERMINATE_ON_ERROR;
         }
 
         [HarmonyPatch(typeof(Db), nameof(Db.Initialize))]
@@ -118,22 +116,24 @@ namespace HellsenWorldgen
         {
             public static void BrainTankPostfix(GameObject go)
             {
-                ElementConverter.ConsumedElement[] consumedElements = {
+                ElementConverter.ConsumedElement[] consumedElements = [
                     new(ElementLoader.FindElementByHash(SimHashes.Oxygen).tag, 0.5f),
                     new(DreamJournalConfig.ID, 0f),
-                };
+                ];
                 go.GetComponent<ElementConverter>().consumedElements = consumedElements;
             }
 
             public static void Postfix()
             {
-                KCrashReporter.terminateOnError = false;
+                KCrashReporter.terminateOnError = HellsenConfig.TERMINATE_ON_ERROR;
 
                 var m_TargetMethod = AccessTools.Method(typeof(MegaBrainTankConfig), nameof(MegaBrainTankConfig.DoPostConfigureComplete));
                 var m_Postfix = AccessTools.Method(typeof(Db_Initialize_Patch), nameof(BrainTankPostfix));
 
                 Debug.Assert(HellsenWorldgenMod.harmonyInstance != null, "HellsenWorldgenMod.harmonyInstance is null");
                 HellsenWorldgenMod.harmonyInstance?.Patch(m_TargetMethod, null, new HarmonyMethod(m_Postfix));
+
+                HarvestablePOIConfig_GenerateConfigs_Patch.Prefix();
             }
         }
     }

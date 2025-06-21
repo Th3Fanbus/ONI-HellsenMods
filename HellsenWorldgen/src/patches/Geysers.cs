@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using RexLib;
 using System.Collections.Generic;
 
 using static GeyserConfigurator;
@@ -25,7 +26,7 @@ namespace HellsenWorldgen
                 height = 3;
                 break;
             default:
-                Debug.LogError($"HELL: Unexpected geyser shape for {geyserType.id}!");
+                RexLogger.LogError($"Unexpected geyser shape for {geyserType.id}!");
                 width = 4;
                 height = 2;
                 break;
@@ -56,6 +57,8 @@ namespace HellsenWorldgen
                     minRatePerCycle: RATES.MOLTEN_NORMAL_MIN,
                     maxRatePerCycle: RATES.MOLTEN_NORMAL_MAX,
                     maxPressure: MAX_PRESSURES.MOLTEN,
+                    requiredDlcIds: null,
+                    forbiddenDlcIds: null,
                     minIterationLength: ITERATIONS.FREQUENT_MOLTEN.LEN_MIN,
                     maxIterationLength: ITERATIONS.FREQUENT_MOLTEN.LEN_MAX,
                     minIterationPercent: ITERATIONS.FREQUENT_MOLTEN.PCT_MIN,
@@ -69,7 +72,8 @@ namespace HellsenWorldgen
                     temperature: 203.15f,
                     minRatePerCycle: RATES.LIQUID_SMALL_MIN,
                     maxRatePerCycle: RATES.LIQUID_SMALL_MAX,
-                    maxPressure: MAX_PRESSURES.LIQUID
+                    maxPressure: MAX_PRESSURES.LIQUID,
+                    requiredDlcIds: null
                 ).MakeGeyserParams(category: GeoTunerConfig.Category.ORGANIC_CATEGORY, isGenericGeyser: true));
 
                 __result.Add(new GeyserType(
@@ -79,18 +83,38 @@ namespace HellsenWorldgen
                     temperature: 263.15f,
                     minRatePerCycle: RATES.LIQUID_SMALL_MIN,
                     maxRatePerCycle: RATES.LIQUID_SMALL_MAX,
-                    maxPressure: MAX_PRESSURES.LIQUID
+                    maxPressure: MAX_PRESSURES.LIQUID,
+                    requiredDlcIds: null
                 ).MakeGeyserParams(category: GeoTunerConfig.Category.HYDROCARBON_CATEGORY, isGenericGeyser: false));
 
                 __result.Add(new GeyserType(
                     id: "gas_nuclear_fallout",
                     element: SimHashes.Fallout,
                     shape: GeyserShape.Gas,
-                    temperature: 773.15f,
+                    temperature: 1773.15f,
                     minRatePerCycle: RATES.GAS_SMALL_MIN,
                     maxRatePerCycle: RATES.GAS_SMALL_MAX,
-                    maxPressure: MAX_PRESSURES.GAS_HIGH
+                    maxPressure: MAX_PRESSURES.GAS_HIGH,
+                    requiredDlcIds: DlcManager.EXPANSION1
                 ).MakeGeyserParams(category: GeoTunerConfig.Category.ORGANIC_CATEGORY, isGenericGeyser: false));
+
+                __result.Add(new GeyserType(
+                    id: "molten_nickel",
+                    element: SimHashes.MoltenNickel,
+                    shape: GeyserShape.Molten,
+                    temperature: 2500f,
+                    minRatePerCycle: RATES.MOLTEN_NORMAL_MIN,
+                    maxRatePerCycle: RATES.MOLTEN_NORMAL_MAX,
+                    maxPressure: MAX_PRESSURES.MOLTEN,
+                    requiredDlcIds: DlcManager.DLC4,
+                    forbiddenDlcIds: null,
+                    minIterationLength: ITERATIONS.FREQUENT_MOLTEN.LEN_MIN,
+                    maxIterationLength: ITERATIONS.FREQUENT_MOLTEN.LEN_MAX,
+                    minIterationPercent: ITERATIONS.FREQUENT_MOLTEN.PCT_MIN,
+                    maxIterationPercent: ITERATIONS.FREQUENT_MOLTEN.PCT_MAX
+                ).MakeGeyserParams(category: GeoTunerConfig.Category.METALS_CATEGORY, isGenericGeyser: true));
+
+                __result.RemoveAll(geyser => !DlcManager.IsCorrectDlcSubscribed(geyser.geyserType));
             }
         }
     }

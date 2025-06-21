@@ -350,3 +350,8 @@ worldTemplateRules:
         subworldNames:
           - expansion1::subworlds/magma/VolcanoHoleNoUnobtanium
           - expansion1::subworlds/magma/BottomNoUnobtanium
+      - command: ExceptWith
+        tagcommand: DistanceFromTag
+        tag: AtEdge
+        minDistance: 0
+        maxDistance: 0

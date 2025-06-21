@@ -37,10 +37,24 @@ namespace HellsenPowerTweaks
             __result.Floodable = false;
             __result.Entombable = false;
         }
+        
+        public static void RemoveIndustrialMachinery(GameObject go)
+            => go.GetComponent<KPrefabID>().RemoveTag(RoomConstraints.ConstraintTags.IndustrialMachinery);
 
         /* Patch the overloaded non-virtual helper method */
         [HarmonyPatch(typeof(BaseBatteryConfig), nameof(BaseBatteryConfig.CreateBuildingDef))]
         public static class BaseBatteryConfig_CreateBuildingDef_Patch
+        {
+            public static void Postfix(ref BuildingDef __result)
+            {
+                RelaxBuildingConstraints(ref __result);
+                __result.PermittedRotations = PermittedRotations.R360;
+            }
+        }
+
+        /* Patch the overloaded non-virtual helper method */
+        [HarmonyPatch(typeof(ElectrobankChargerConfig), nameof(ElectrobankChargerConfig.CreateBuildingDef))]
+        public static class ElectrobankChargerConfig_CreateBuildingDef_Patch
         {
             public static void Postfix(ref BuildingDef __result)
             {
@@ -86,7 +100,7 @@ namespace HellsenPowerTweaks
                     typeof(ElectrobankChargerConfig),
                     typeof(LargeElectrobankDischargerConfig));
 
-            public static void Postfix(GameObject go) => go.GetComponent<KPrefabID>().RemoveTag(RoomConstraints.ConstraintTags.IndustrialMachinery);
+            public static void Postfix(GameObject go) => RemoveIndustrialMachinery(go);
         }
 
         public static class MicroTransformerPatches
@@ -102,7 +116,7 @@ namespace HellsenPowerTweaks
 
             private static void Postfix_CreateBuildingDef(ref BuildingDef __result) => RelaxBuildingConstraints(ref __result);
 
-            private static void Postfix_DoPostConfigureComplete(GameObject go) => go.GetComponent<KPrefabID>().RemoveTag(RoomConstraints.ConstraintTags.IndustrialMachinery);
+            private static void Postfix_DoPostConfigureComplete(GameObject go) => RemoveIndustrialMachinery(go);
 
             public static void ExecutePatches(Harmony harmony)
             {

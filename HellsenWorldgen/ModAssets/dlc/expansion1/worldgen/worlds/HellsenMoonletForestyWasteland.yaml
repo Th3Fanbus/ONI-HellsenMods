@@ -25,8 +25,8 @@ worldTraitRules:
       - Crust # not for this world layout
 
 fixedTraits:
-  - sunlightMedLow
-  - cosmicRadiationVeryLow
+  - sunlightLow
+  - cosmicRadiationMed
 
 defaultsOverrides:
   data:
@@ -99,28 +99,21 @@ unknownCellsAllowedSubworlds:
       - expansion1::subworlds/frozen/FrozenCore
 
 worldTemplateRules:
-  # Guaranteed water source
+  # Guaranteed water source in subsurface ocean
   - names:
-      - geysers/steam
-      - geysers/hot_steam
-      - geysers/hot_water
-      - geysers/filthy_water
-      - geysers/salt_water
-      - geysers/slush_water
-      - expansion1::geysers/slush_salt_water
-    listRule: GuaranteeOne
+      - poi/poi_ocean_geyser_saltwater
+    listRule: GuaranteeAll
     useRelaxedFiltering: true # Allow placement in feature-heavy biomes
     priority: 150
     allowedCellsFilter:
       - command: Replace
-        tagcommand: NotAtTag
-        tag: NoGlobalFeatureSpawning
-  # Gravitas Artifact POIs
+        zoneTypes: [Ocean]
+  # Guaranteed chlorine (pufts)
   - names:
-      - expansion1::poi/genericGravitas/directors_room
-      - expansion1::poi/genericGravitas/monument_room
+      - geysers/chlorine_gas
     listRule: GuaranteeAll
-    priority: 120
+    useRelaxedFiltering: true # Allow placement in feature-heavy biomes
+    priority: 140
     allowedCellsFilter:
       - command: Replace
         tagcommand: NotAtTag
@@ -132,7 +125,7 @@ worldTemplateRules:
       - expansion1::poi/radioactive/uranium_fields_liquid_co2_geyser_c
     listRule: TrySome
     someCount: 2
-    priority: 110
+    priority: 130
     allowedCellsFilter:
       - command: Replace
         zoneTypes: [Radioactive]
@@ -142,9 +135,20 @@ worldTemplateRules:
           - expansion1::subworlds/radioactive/med_FrozenUraniumFields
   # Curated geysers
   - names:
+      - geysers/methane
+      - geysers/hot_hydrogen
       - geysers/big_volcano
       - geysers/small_volcano
-      - geysers/methane
+    listRule: TryOne
+    times: 2
+    useRelaxedFiltering: true # Allow placement in feature-heavy biomes
+    priority: 105
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: NotAtTag
+        tag: NoGlobalFeatureSpawning
+  # Extra water sources (compensates lack of water moonlet)
+  - names:
       - geysers/steam
       - geysers/hot_steam
       - geysers/hot_water
@@ -153,17 +157,22 @@ worldTemplateRules:
       - geysers/slush_water
       - expansion1::geysers/slush_salt_water
     listRule: TryOne
-    times: 4
+    times: 3
     useRelaxedFiltering: true # Allow placement in feature-heavy biomes
     priority: 100
     allowedCellsFilter:
       - command: Replace
-        tagcommand: DistanceFromTag
-        tag: AtDepths
-        minDistance: 1
-        maxDistance: 99
-      - command: ExceptWith
-        tagcommand: AtTag
+        tagcommand: NotAtTag
+        tag: NoGlobalFeatureSpawning
+  # Gravitas Artifact POIs
+  - names:
+      - expansion1::poi/genericGravitas/directors_room
+      - expansion1::poi/genericGravitas/monument_room
+    listRule: GuaranteeAll
+    priority: 100
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: NotAtTag
         tag: NoGlobalFeatureSpawning
   # Boons
   - names:

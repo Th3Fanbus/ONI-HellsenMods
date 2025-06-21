@@ -35,7 +35,7 @@ namespace RexLib
                 CreateModLocStringKeys(subtype, prefix);
             }
         }
-        #endregion
+        #endregion Klei_Code
 
         /*
          * Code originally borrowed from Sgt_Imalas
@@ -64,6 +64,6 @@ namespace RexLib
                 Localization.GenerateStringsTemplate(root, Path.Combine(Manager.GetDirectory(), "strings_templates"));
             }
         }
-        #endregion
+        #endregion Sgt_Imalas_Code
     }
 }

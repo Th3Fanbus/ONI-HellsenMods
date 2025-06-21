@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Epic.OnlineServices.TitleStorage;
 using Newtonsoft.Json;
 
 namespace TeleStorage
@@ -28,10 +29,10 @@ namespace TeleStorage
         internal class SaveData
         {
             [JsonProperty]
-            public Dictionary<SimHashes, StoredItem> storedLiquids = new();
+            public Dictionary<SimHashes, StoredItem> storedLiquids = [];
 
             [JsonProperty]
-            public Dictionary<SimHashes, StoredItem> storedGases = new();
+            public Dictionary<SimHashes, StoredItem> storedGases = [];
         }
 
         private static TeleStorageData? instance = null;
@@ -49,7 +50,7 @@ namespace TeleStorage
         public ConcurrentDictionary<SimHashes, StoredItem> storedGases = new();
 
         [JsonIgnore]
-        public List<TeleStorage> storageContainers = new();
+        public List<TeleStorage> storageContainers = [];
 
         public void FireRefresh()
         {
@@ -93,7 +94,7 @@ namespace TeleStorage
             get {
                 lock (_lock) {
                     if (instance is null) {
-                        Debug.Log("HELL: Attempting to access unitialized TeleStorageData. Using default values instead.");
+                        Debug.Log("HELL: Attempting to access uninitialized TeleStorageData. Using default values instead.");
                         instance = new();
                     }
                     return instance;
@@ -108,6 +109,7 @@ namespace TeleStorage
                 if (instance is not null) {
                     Debug.LogWarning($"HELL: instance isn't null");
                 }
+                instance = null;
                 instance = new() {
                     storedLiquids = new(data.storedLiquids.Where(kvp => IsLiquid(kvp.Key))),
                     storedGases = new(data.storedGases.Where(kvp => IsGas(kvp.Key))),

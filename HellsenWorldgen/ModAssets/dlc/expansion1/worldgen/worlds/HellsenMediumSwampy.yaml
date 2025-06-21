@@ -21,8 +21,8 @@ worldTraitRules:
       - GenericGeysers
 
 fixedTraits:
-  - sunlightMedLow
-  - cosmicRadiationVeryLow
+  - sunlightMed
+  - cosmicRadiationMed
 
 seasons:
   - ClassicStyleWarpMeteorShowers

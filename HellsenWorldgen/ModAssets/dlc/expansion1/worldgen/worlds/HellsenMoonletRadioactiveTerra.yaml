@@ -22,8 +22,8 @@ worldTraitRules:
       - Crust # not for this world layout
 
 fixedTraits:
-  - sunlightLow
-  - cosmicRadiationMedLow
+  - sunlightMed
+  - cosmicRadiationMed
 
 defaultsOverrides:
   data:
