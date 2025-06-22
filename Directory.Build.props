@@ -28,7 +28,7 @@
 	<!-- General Package Properties -->
 	<PropertyGroup>
 		<Copyright>$(AssemblyCopyright)</Copyright>
-		<RepositoryUrl>https://github.com/Th3Fanbus/ONI-Mods</RepositoryUrl>
+		<RepositoryUrl>https://github.com/Th3Fanbus/ONI-HellsenMods</RepositoryUrl>
 	</PropertyGroup>
 
 	<!-- Mod Info -->
