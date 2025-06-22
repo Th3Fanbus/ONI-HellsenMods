@@ -5,6 +5,9 @@ using RexLib;
 using TemplateClasses;
 using UnityEngine;
 
+//
+// TODO: Aki says: why is this a prefix skip and not transpilers?
+//
 namespace HellsenWorldgen
 {
     public static partial class Patches

@@ -102,7 +102,7 @@ namespace HellsenWorldgen
         public class RotPile_TryCreateNotification_Patch
         {
             /* Do not create "food has decayed" notifications for Exuberant plants' rot piles */
-            public static bool Prefix(RotPile __instance) => !__instance.smi.master.gameObject.GetProperName().Contains("Rot Pile"); // <link="COMPOST">Rot Pile</link>
+            public static bool Prefix(RotPile __instance) => !__instance.smi.master.gameObject.GetProperName().Equals(STRINGS.ITEMS.FOOD.ROTPILE.NAME);
         }
 
         [HarmonyPatch(typeof(KCrashReporter), nameof(KCrashReporter.OnEnable))]
