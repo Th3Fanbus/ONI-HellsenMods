@@ -28,25 +28,26 @@ namespace TeleStorage
 		internal class SaveData
 		{
 			[JsonProperty]
+			public Dictionary<SimHashes, StoredItem> storedGases = [];
+
+			[JsonProperty]
 			public Dictionary<SimHashes, StoredItem> storedLiquids = [];
 
 			[JsonProperty]
-			public Dictionary<SimHashes, StoredItem> storedGases = [];
+			public Dictionary<SimHashes, StoredItem> storedSolids = [];
 		}
 
 		private static TeleStorageData? instance = null;
 		private static readonly object _lock = new();
 
-		//private readonly static ConcurrentDictionary<SimHashes, object> locks = new(Enum
-		//    .GetValues(typeof(SimHashes))
-		//    .Cast<SimHashes>()
-		//    .Select<SimHashes, KeyValuePair<SimHashes, object>>(h => new(h, new())));
+		[JsonIgnore]
+		public ConcurrentDictionary<SimHashes, StoredItem> storedGases = new();
 
 		[JsonIgnore]
 		public ConcurrentDictionary<SimHashes, StoredItem> storedLiquids = new();
 
 		[JsonIgnore]
-		public ConcurrentDictionary<SimHashes, StoredItem> storedGases = new();
+		public ConcurrentDictionary<SimHashes, StoredItem> storedSolids = new();
 
 		[JsonIgnore]
 		public List<TeleStorage> storageContainers = [];
@@ -62,10 +63,9 @@ namespace TeleStorage
 		{
 		}
 
-		public static ConcurrentDictionary<SimHashes, StoredItem> GetStoredLiquids() => instance?.storedLiquids ?? new();
-
-		public static ConcurrentDictionary<SimHashes, StoredItem> GetStoredGases() => instance?.storedGases ?? new();
-
+		private static ConcurrentDictionary<SimHashes, StoredItem> GetStoredGases() => instance?.storedGases ?? new();
+		private static ConcurrentDictionary<SimHashes, StoredItem> GetStoredLiquids() => instance?.storedLiquids ?? new();
+		private static ConcurrentDictionary<SimHashes, StoredItem> GetStoredSolids() => instance?.storedSolids ?? new();
 		private static ConcurrentDictionary<SimHashes, StoredItem> GetStoredInvalid(ConduitType type)
 		{
 			Debug.LogWarning($"HELL: Invalid ConduitType {type}, returning throwaway dict");
@@ -75,6 +75,7 @@ namespace TeleStorage
 		public static ConcurrentDictionary<SimHashes, StoredItem> GetStoredElements(ConduitType type) => type switch {
 			ConduitType.Gas => GetStoredGases(),
 			ConduitType.Liquid => GetStoredLiquids(),
+			ConduitType.Solid=> GetStoredSolids(),
 			_ => GetStoredInvalid(type),
 		};
 
@@ -110,15 +111,12 @@ namespace TeleStorage
 				}
 				instance = null;
 				instance = new() {
-					storedLiquids = new(data.storedLiquids.Where(kvp => IsLiquid(kvp.Key))),
-					storedGases = new(data.storedGases.Where(kvp => IsGas(kvp.Key))),
+					storedGases = new(data.storedGases.Where(TeleStorageUtils.IsGas)),
+					storedLiquids = new(data.storedLiquids.Where(TeleStorageUtils.IsLiquid)),
+					storedSolids = new(data.storedSolids.Where(TeleStorageUtils.IsSolid)),
 				};
 			}
 		}
-
-		private static bool IsLiquid(SimHashes element) => ElementLoader.FindElementByHash(element)?.IsLiquid ?? false;
-
-		private static bool IsGas(SimHashes element) => ElementLoader.FindElementByHash(element)?.IsGas ?? false;
 
 		public static void Save(string filename)
 		{
@@ -126,8 +124,9 @@ namespace TeleStorage
 				return;
 			}
 			SaveData data = new() {
-				storedLiquids = instance.storedLiquids.ToArray().Where(kvp => IsLiquid(kvp.Key)).ToDictionary(kvp => kvp.Key, kvp => kvp.Value),
-				storedGases = instance.storedGases.ToArray().Where(kvp => IsGas(kvp.Key)).ToDictionary(kvp => kvp.Key, kvp => kvp.Value),
+				storedGases = TeleStorageUtils.FilterByType(instance.storedGases, TeleStorageUtils.IsGas),
+				storedLiquids = TeleStorageUtils.FilterByType(instance.storedLiquids, TeleStorageUtils.IsLiquid),
+				storedSolids = TeleStorageUtils.FilterByType(instance.storedSolids, TeleStorageUtils.IsSolid),
 			};
 			ConfigManager.SaveConfig(data, Assembly.GetExecutingAssembly().Location, "saved", Path.GetFileName(filename));
 		}

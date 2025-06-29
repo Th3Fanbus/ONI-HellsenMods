@@ -76,7 +76,7 @@ namespace TeleStorage
 		public void FireRefresh()
 		{
 			try {
-				Trigger(-1697596308);
+				Trigger((int)GameHashes.OnStorageChange);
 			} catch (Exception ex) {
 				Debug.LogWarning(ex.ToString());
 			}
@@ -117,14 +117,7 @@ namespace TeleStorage
 			};
 		}
 
-		private bool ShowInUtilityOverlay(HashedString mode, object data)
-		{
-			return Type switch {
-				ConduitType.Gas => mode == OverlayModes.GasConduits.ID,
-				ConduitType.Liquid => mode == OverlayModes.LiquidConduits.ID,
-				_ => false,
-			};
-		}
+		private bool ShowInUtilityOverlay(HashedString mode, object data) => TeleStorageUtils.GetViewMode(Type) == mode;
 
 		private void ConduitUpdate(float dt)
 		{
@@ -172,7 +165,8 @@ namespace TeleStorage
 					builder.Append(GameUtil.GetFormattedMass(item.mass));
 					builder.Append(" at ");
 					builder.Append(GameUtil.GetFormattedTemperature(item.temperature));
-					builder.Append($" state {elementObj.state}");
+					builder.Append(" state ");
+					builder.Append(elementObj.state);
 					string tooltip = "";
 					if (item.diseaseIdx != byte.MaxValue) {
 						builder.Append("\n • ");

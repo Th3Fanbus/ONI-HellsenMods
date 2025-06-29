@@ -9,7 +9,7 @@
 				public static class TELESTORAGELIQUID
 				{
 					public static LocString NAME = STRINGS.UI.FormatAsLink("Advanced Liquid Storage", nameof(TELESTORAGELIQUID));
-					public static LocString DESC = "Stores liquid inside an alternate dimension.";
+					public static LocString DESC = "Stores liquids inside an alternate dimension.";
 					public static LocString EFFECT = "Compresses liquids into an alternate dimension for more effective storage.";
 				}
 				public static class TELESTORAGEGAS
