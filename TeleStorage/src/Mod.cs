@@ -2,7 +2,7 @@
 
 namespace TeleStorage
 {
-    public sealed class TeleStorageMod : UserMod2
-    {
-    }
+	public sealed class TeleStorageMod : UserMod2
+	{
+	}
 }
