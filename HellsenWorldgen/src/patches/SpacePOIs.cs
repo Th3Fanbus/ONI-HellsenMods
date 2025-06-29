@@ -1,14 +1,40 @@
 ﻿using HarmonyLib;
+using RexLib;
 using System.Collections.Generic;
 
 namespace HellsenWorldgen
 {
     public static partial class Patches
     {
-        //[HarmonyPatch(typeof(HarvestablePOIConfig), nameof(HarvestablePOIConfig.GenerateConfigs))]
-        //[HarmonyPatch(typeof(AutoMinerConfig), nameof(AutoMinerConfig.CreateBuildingDef))]
         public static class HarvestablePOIConfig_GenerateConfigs_Patch
         {
+            private static float SubtractAmountFromPOI(HarvestablePOIConfig.HarvestablePOIParams harvestable, SimHashes element, float amountToRemove)
+            {
+                if (harvestable.poiType.harvestableElements.TryGetValue(element, out float currentAmount)) {
+                    if (currentAmount > amountToRemove) {
+                        harvestable.poiType.harvestableElements[element] -= amountToRemove;
+                        return amountToRemove;
+                    } else {
+                        harvestable.poiType.harvestableElements.Remove(element);
+                        return currentAmount;
+                    }
+                } else {
+                    Element elementObj = ElementLoader.FindElementByHash(element);
+                    RexLogger.LogWarning($"Could not find element '{elementObj.name}' in POI '{harvestable.poiType.id}'");
+                    return 0;
+                }
+            }
+
+            private static void TransferAmountFromPOI(HarvestablePOIConfig.HarvestablePOIParams harvestable, SimHashes fromElement, SimHashes toElement, float amountToTransfer)
+            {
+                float amount = SubtractAmountFromPOI(harvestable, fromElement, amountToTransfer);
+                if (harvestable.poiType.harvestableElements.ContainsKey(toElement)) {
+                    harvestable.poiType.harvestableElements[toElement] += amount;
+                } else {
+                    harvestable.poiType.harvestableElements[toElement] = amount;
+                }
+            }
+
             public static void StarMapPostfix(List<HarvestablePOIConfig.HarvestablePOIParams> __result)
             {
 #if false
@@ -30,25 +56,15 @@ namespace HellsenWorldgen
                     requiredDlcIds: DlcManager.EXPANSION1)));
 #endif
                 foreach (HarvestablePOIConfig.HarvestablePOIParams harvestable in __result) {
-                    if (harvestable.poiType.id.Equals(HarvestablePOIConfig.GlimmeringAsteroidField)) {
-#if !false
-                        harvestable.poiType.harvestableElements.Clear();
-                        harvestable.poiType.harvestableElements[SimHashes.MoltenTungsten] = 2f;
-                        harvestable.poiType.harvestableElements[SimHashes.Wolframite] = 6f;
-                        harvestable.poiType.harvestableElements[SimHashes.Carbon] = 1f;
-                        harvestable.poiType.harvestableElements[SimHashes.CarbonDioxide] = 0f;
-                        harvestable.poiType.harvestableElements[SimHashes.Katairite] = 1f;
-#else
-                        harvestable.poiType.harvestableElements[SimHashes.CarbonDioxide] = 0f;
-                        harvestable.poiType.harvestableElements[SimHashes.Katairite] = 1f;
-#endif
-                    } else if (harvestable.poiType.id.Equals(HarvestablePOIConfig.MetallicAsteroidField)) {
-                        harvestable.poiType.harvestableElements.Clear();
-                        harvestable.poiType.harvestableElements[SimHashes.Obsidian] = 6f;
-                        harvestable.poiType.harvestableElements[SimHashes.Katairite] = 1f;
+                    switch (harvestable.poiType.id) {
+                    case HarvestablePOIConfig.GlimmeringAsteroidField:
+                        TransferAmountFromPOI(harvestable, SimHashes.CarbonDioxide, SimHashes.Katairite, 1f);
+                        break;
+                    case HarvestablePOIConfig.MetallicAsteroidField:
+                        TransferAmountFromPOI(harvestable, SimHashes.Obsidian, SimHashes.Katairite, 1f);
+                        break;
                     }
                 }
-
                 __result.RemoveAll(poi => !DlcManager.IsCorrectDlcSubscribed(poi.poiType));
             }
 
