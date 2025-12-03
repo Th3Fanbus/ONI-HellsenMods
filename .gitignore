@@ -256,6 +256,5 @@ paket-files/
 /*.pptx
 /*.zip
 *.cmd
-Assets/
 *.lnk
 PublicisedAssembly/
