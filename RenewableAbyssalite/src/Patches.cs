@@ -10,9 +10,9 @@ namespace RenewableAbyssalite
 		{
 			public static void Postfix(Tag poopTag, float caloriesPerKg, float producedConversionRate, string diseaseId, float diseasePerKgProduced, ref List<Diet.Info> __result)
 			{
-				__result.Add(new Diet.Info([
-					SimHashes.Tungsten.CreateTag()
-				], SimHashes.Katairite.CreateTag(), caloriesPerKg, producedConversionRate, diseaseId, diseasePerKgProduced));
+				//__result.Add(new Diet.Info([
+				//	SimHashes.Tungsten.CreateTag()
+				//], SimHashes.Katairite.CreateTag(), caloriesPerKg, producedConversionRate, diseaseId, diseasePerKgProduced));
 			}
 		}
 
