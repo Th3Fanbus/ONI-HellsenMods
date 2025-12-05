@@ -1,4 +1,4 @@
-name: STRINGS.HELLSEN.WORLDS.NIOBIUM_MOONLET.NAME # Superconductive Moonlet
+name: STRINGS.HELLSEN.WORLDS.NIOBIUM_MOONLET.NAME # Hellsen Superconductive Moonlet
 description: STRINGS.HELLSEN.WORLDS.NIOBIUM_MOONLET.DESC
 nameTables: [MAGMA]
 asteroidIcon: asteroid_niobium_planet_kanim
@@ -36,17 +36,6 @@ fixedTraits:
 seasons:
   - NiobiumMoonletMeteorShowers # unused
 
-# List all the subworld files to load
-subworldFiles:
-  - name: subworlds/space/Space
-  - name: expansion1::subworlds/magma/MagmaSurfaceNoUnobtanium
-  - name: expansion1::subworlds/space/SpaceWithNoBorder
-  - name: expansion1::subworlds/niobium/NiobiumPatch
-    minCount: 2
-    maxCount: 3
-    overridePower: 1.25
-  - name: expansion1::subworlds/magma/BottomSmallNoUnobtanium
-
 defaultsOverrides:
   data:
     DrawWorldBorderForce: false
@@ -58,6 +47,22 @@ defaultsOverrides:
     OverworldAvoidRadius: 5
     OverworldSampleBehaviour: PoissonDisk
     POIPadding: 0
+
+subworldMixingRules:
+ - name: (CoreMixing)
+   minCount: 2
+   maxCount: 2
+
+# List all the subworld files to load
+subworldFiles:
+  - name: subworlds/space/Space
+  - name: expansion1::subworlds/magma/MagmaSurfaceNoUnobtanium
+  - name: expansion1::subworlds/space/SpaceWithNoBorder
+  - name: expansion1::subworlds/niobium/NiobiumPatch
+    minCount: 2
+    maxCount: 3
+    overridePower: 1.25
+  - name: expansion1::subworlds/magma/BottomSmallNoUnobtanium
 
 unknownCellsAllowedSubworlds:
   - tagcommand: Default
@@ -91,6 +96,12 @@ unknownCellsAllowedSubworlds:
     subworldNames:
       - expansion1::subworlds/magma/BottomSmallNoUnobtanium
       - expansion1::subworlds/niobium/NiobiumPatch
+  - tagcommand: AtTag # Mixing Core
+    tag: AtDepths
+    command: UnionWith
+    sortOrder: 100 # order after core world traits
+    subworldNames:
+      - (CoreMixing)
 
 worldTemplateRules:
   - names:
@@ -121,7 +132,8 @@ worldTemplateRules:
         tagcommand: AtTag
         tag: NoGravitasFeatures
   - names:
-      - expansion1::geysers/molten_niobium_twins_2 # - expansion1::geysers/molten_niobium_twins
+      - expansion1::geysers/molten_niobium      
+      #- expansion1::geysers/molten_niobium_twins_2 # - expansion1::geysers/molten_niobium_twins
     listRule: GuaranteeAll
     priority: 100 # placed later than the mining room since this is easier to fit
     allowedCellsFilter:

@@ -48,7 +48,7 @@ namespace HellsenWorldgen
 		public void OnPrefabInit(GameObject inst)
 		{
 			inst.GetComponent<HellsenWarpReceiver>().workLayer = Grid.SceneLayer.Building;
-			inst.GetComponent<OccupyArea>().objectLayers = new ObjectLayer[] { ObjectLayer.Building };
+			inst.GetComponent<OccupyArea>().objectLayers = [ObjectLayer.Building];
 			inst.GetComponent<Deconstructable>();
 		}
 

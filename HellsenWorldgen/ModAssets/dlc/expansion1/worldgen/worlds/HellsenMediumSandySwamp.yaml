@@ -49,6 +49,14 @@ startingBasePositionVertical:
   min: 0.4
   max: 0.45
 
+subworldMixingRules:
+ - name: (Mixing1)
+   minCount: 2
+   maxCount: 3
+ - name: (Mixing2)
+   minCount: 2
+   maxCount: 3
+
 # List all the subworld files to load
 subworldFiles:
   - name: expansion1::subworlds/space/SpaceWithFrozenBorder
@@ -78,11 +86,21 @@ unknownCellsAllowedSubworlds:
   - tagcommand: DistanceFromTag
     tag: AtStart
     minDistance: 1
+    maxDistance: 1
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/sandstone/med_SandstoneWarp
+      - expansion1::subworlds/swamp/Swamp
+  - tagcommand: DistanceFromTag
+    tag: AtStart
+    minDistance: 2
     maxDistance: 2
     command: Replace
     subworldNames:
       - expansion1::subworlds/sandstone/med_SandstoneWarp
       - expansion1::subworlds/swamp/Swamp
+      - (Mixing1)
+      - (Mixing2)
   - tagcommand: DistanceFromTag
     tag: AtStart
     minDistance: 3
@@ -92,6 +110,8 @@ unknownCellsAllowedSubworlds:
       - expansion1::subworlds/swamp/Swamp
       - expansion1::subworlds/sandstone/med_SandstoneWarp
       - expansion1::subworlds/barren/CoalyGranite
+      - (Mixing1)
+      - (Mixing2)
   # Crust
   - tagcommand: DistanceFromTag
     tag: AtSurface
@@ -110,6 +130,8 @@ unknownCellsAllowedSubworlds:
       - expansion1::subworlds/frozen/FrozenSlush
       - expansion1::subworlds/barren/CoalyGranite
       - expansion1::subworlds/sandstone/med_SandstoneWarp
+      - (Mixing1)
+      - (Mixing2)
   # Above Core
   - tagcommand: DistanceFromTag
     tag: AtDepths
@@ -243,12 +265,9 @@ worldTemplateRules:
         minDistance: 0
         maxDistance: 2
   - names:
-      - geysers/slimy_po2
       - geysers/methane
       - geysers/chlorine_gas
-      - geysers/hot_co2
       - geysers/hot_hydrogen
-      - geysers/hot_po2
       - expansion1::geysers/liquid_sulfur
       - geysers/liquid_co2
       - geysers/small_volcano

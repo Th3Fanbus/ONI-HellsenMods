@@ -40,6 +40,26 @@ startingBasePositionVertical:
   min: 0.45
   max: 0.55
 
+subworldMixingRules:
+ - name: (Mixing1)
+   minCount: 2
+   maxCount: 4
+ - name: (Mixing2)
+   minCount: 2
+   maxCount: 4
+ - name: (Mixing3)
+   minCount: 2
+   maxCount: 4
+ - name: (Mixing4)
+   minCount: 2
+   maxCount: 4
+ - name: (Mixing5)
+   minCount: 2
+   maxCount: 4
+ - name: (Mixing6)
+   minCount: 2
+   maxCount: 4
+
 # List all the subworld files to load
 subworldFiles:
   - name: subworlds/sandstone/SandstoneStartCold
@@ -119,6 +139,12 @@ unknownCellsAllowedSubworlds:
       - subworlds/ocean/OceanSlush
       - subworlds/sandstone/SandstoneFrozen
       - subworlds/rust/RustFrozen
+      - (Mixing1)
+      - (Mixing2)
+      - (Mixing3)
+      - (Mixing4)
+      - (Mixing5)
+      - (Mixing6)
   # Ring-3
   - tagcommand: DistanceFromTag
     tag: AtStart
@@ -132,6 +158,12 @@ unknownCellsAllowedSubworlds:
       - subworlds/rust/RustFrozen
       - expansion1::subworlds/radioactive/med_Radioactive
       - expansion1::subworlds/radioactive/med_UraniumFields
+      - (Mixing1)
+      - (Mixing2)
+      - (Mixing3)
+      - (Mixing4)
+      - (Mixing5)
+      - (Mixing6)
   # Ring-4
   - tagcommand: DistanceFromTag
     tag: AtStart
@@ -150,6 +182,12 @@ unknownCellsAllowedSubworlds:
       - expansion1::subworlds/radioactive/med_Radioactive
       - expansion1::subworlds/radioactive/med_UraniumFields
       - expansion1::subworlds/radioactive/med_FrozenUraniumFields
+      - (Mixing1)
+      - (Mixing2)
+      - (Mixing3)
+      - (Mixing4)
+      - (Mixing5)
+      - (Mixing6)
   # Core
   - tagcommand: AtTag
     tag: AtDepths
@@ -222,6 +260,7 @@ worldTemplateRules:
       - poi/frozen/heatsink_c
       - poi/frozen/heatsink_d
     listRule: TryOne
+    times: 2
     priority: 100
     allowedCellsFilter:
       - command: Replace
@@ -245,7 +284,7 @@ worldTemplateRules:
       - poi/oil/small_oilpockets_geyser_g
       - poi/oil/small_oilpockets_geyser_h
     listRule: TryOne
-    times: 5
+    times: 8
     allowDuplicates: true # be more flexible due to high temperature borders
     priority: 100
     allowedCellsFilter:
@@ -349,7 +388,7 @@ worldTemplateRules:
       - command: Replace
         subworldNames:
           - expansion1::subworlds/magma/VolcanoHoleNoUnobtanium
-          - expansion1::subworlds/magma/BottomNoUnobtanium
+          #- expansion1::subworlds/magma/BottomNoUnobtanium
       - command: ExceptWith
         tagcommand: DistanceFromTag
         tag: AtEdge

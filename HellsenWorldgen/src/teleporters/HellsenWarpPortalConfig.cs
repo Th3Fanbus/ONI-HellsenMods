@@ -38,7 +38,7 @@ namespace HellsenWorldgen
 			placedEntity.AddOrGet<UserNameable>();
 			placedEntity.AddOrGet<LoopingSounds>();
 			placedEntity.AddOrGet<Ownable>().tintWhenUnassigned = false;
-			LoreBearerUtil.AddLoreTo(placedEntity, LoreBearerUtil.UnlockSpecificEntry("notes_teleportation", (string)UI.USERMENUACTIONS.READLORE.SEARCH_TELEPORTER_SENDER));
+			LoreBearerUtil.AddLoreTo(placedEntity, LoreBearerUtil.UnlockSpecificEntry("notes_teleportation", UI.USERMENUACTIONS.READLORE.SEARCH_TELEPORTER_SENDER));
 			placedEntity.AddOrGet<Prioritizable>();
 			KBatchedAnimController kbatchedAnimController = placedEntity.AddOrGet<KBatchedAnimController>();
 			kbatchedAnimController.sceneLayer = Grid.SceneLayer.BuildingBack;
@@ -50,7 +50,7 @@ namespace HellsenWorldgen
 		{
 			inst.GetComponent<HellsenWarpPortal>().workLayer = Grid.SceneLayer.Building;
 			inst.GetComponent<Ownable>().slotID = Db.Get().AssignableSlots.WarpPortal.Id;
-			inst.GetComponent<OccupyArea>().objectLayers = new ObjectLayer[] { ObjectLayer.Building };
+			inst.GetComponent<OccupyArea>().objectLayers = [ObjectLayer.Building];
 			inst.GetComponent<Deconstructable>();
 		}
 

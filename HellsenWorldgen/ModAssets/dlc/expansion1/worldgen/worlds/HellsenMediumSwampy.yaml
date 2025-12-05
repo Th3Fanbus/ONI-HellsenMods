@@ -49,6 +49,14 @@ startingBasePositionVertical:
   min: 0.4
   max: 0.45
 
+subworldMixingRules:
+ - name: (Mixing1)
+   minCount: 2
+   maxCount: 3
+ - name: (Mixing2)
+   minCount: 2
+   maxCount: 3
+
 # List all the subworld files to load
 subworldFiles:
   - name: subworlds/space/Space
@@ -60,7 +68,7 @@ subworldFiles:
   - name: expansion1::subworlds/wasteland/WastelandBeetle
     minCount: 4
   - name: expansion1::subworlds/wasteland/WastelandWorm
-  - name: expansion1::subworlds/magma/BottomSmall
+  - name: expansion1::subworlds/magma/BottomSmallNoUnobtanium
   - name: expansion1::subworlds/barren/CoalyGranite
     overridePower: 1 # by default these are 'uge
     maxCount: 3
@@ -92,6 +100,8 @@ unknownCellsAllowedSubworlds:
       - expansion1::subworlds/wasteland/WastelandBeetle
       - expansion1::subworlds/swamp/Swamp
       - expansion1::subworlds/jungle/JungleGassy
+      - (Mixing1)
+      - (Mixing2)
   # Ring-2
   - tagcommand: DistanceFromTag
     tag: AtStart
@@ -103,6 +113,8 @@ unknownCellsAllowedSubworlds:
       - expansion1::subworlds/frozen/FrozenMedium
       - expansion1::subworlds/jungle/JungleGassy
       - expansion1::subworlds/barren/CoalyGranite
+      - (Mixing1)
+      - (Mixing2)
   # Ring-3
   - tagcommand: DistanceFromTag
     tag: AtStart
@@ -114,6 +126,8 @@ unknownCellsAllowedSubworlds:
       - expansion1::subworlds/frozen/FrozenMedium
       - expansion1::subworlds/jungle/JungleGassy
       - expansion1::subworlds/barren/CoalyGranite
+      - (Mixing1)
+      - (Mixing2)
   # Space
   - tagcommand: AtTag
     tag: AtSurface
@@ -137,6 +151,8 @@ unknownCellsAllowedSubworlds:
     subworldNames:
       - expansion1::subworlds/marsh/HotMarshSteamy
       - expansion1::subworlds/jungle/JungleGassy
+      - (Mixing1)
+      - (Mixing2)
   # Above Core
   - tagcommand: DistanceFromTag
     tag: AtDepths
@@ -147,6 +163,8 @@ unknownCellsAllowedSubworlds:
       - expansion1::subworlds/wasteland/WastelandBeetle
       - expansion1::subworlds/wasteland/WastelandWorm
       - expansion1::subworlds/barren/CoalyGranite
+      - (Mixing1)
+      - (Mixing2)
   # Core
   - tagcommand: DistanceFromTag
     tag: AtDepths
@@ -154,7 +172,7 @@ unknownCellsAllowedSubworlds:
     maxDistance: 0
     command: Replace
     subworldNames:
-      - expansion1::subworlds/magma/BottomSmall
+      - expansion1::subworlds/magma/BottomSmallNoUnobtanium
 
 worldTemplateRules:
   # Jungle
@@ -274,12 +292,9 @@ worldTemplateRules:
         minDistance: 0
         maxDistance: 2
   - names:
-      - geysers/slimy_po2
       - geysers/methane
       - geysers/chlorine_gas
-      - geysers/hot_co2
       - geysers/hot_hydrogen
-      - geysers/hot_po2
       - expansion1::geysers/liquid_sulfur
       - geysers/liquid_co2
       - geysers/small_volcano
