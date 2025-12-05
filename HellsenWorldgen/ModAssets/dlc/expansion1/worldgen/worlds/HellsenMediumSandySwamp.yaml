@@ -227,6 +227,9 @@ worldTemplateRules:
         tag: AtSurface
         minDistance: 0
         maxDistance: 2
+      - command: ExceptWith
+        tagcommand: AtTag
+        tag: NoGlobalFeatureSpawning
   - names:
       - geysers/steam
       - geysers/hot_steam
@@ -245,6 +248,9 @@ worldTemplateRules:
         tag: AtSurface
         minDistance: 0
         maxDistance: 2
+      - command: ExceptWith
+        tagcommand: AtTag
+        tag: NoGlobalFeatureSpawning
   - names:
       - geysers/filthy_water
       - geysers/salt_water
@@ -264,6 +270,9 @@ worldTemplateRules:
         tag: AtSurface
         minDistance: 0
         maxDistance: 2
+      - command: ExceptWith
+        tagcommand: AtTag
+        tag: NoGlobalFeatureSpawning
   - names:
       - geysers/methane
       - geysers/chlorine_gas
@@ -286,6 +295,9 @@ worldTemplateRules:
         tag: AtSurface
         minDistance: 0
         maxDistance: 2
+      - command: ExceptWith
+        tagcommand: AtTag
+        tag: NoGlobalFeatureSpawning
   # Boons
   - names:
       - expansion1::poi/boon/bedroom
@@ -304,3 +316,6 @@ worldTemplateRules:
         tag: AtSurface
         minDistance: 2
         maxDistance: 99
+      - command: ExceptWith
+        tagcommand: AtTag
+        tag: NoGlobalFeatureSpawning

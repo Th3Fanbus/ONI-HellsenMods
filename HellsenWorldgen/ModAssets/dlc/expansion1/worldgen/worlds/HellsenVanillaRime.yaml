@@ -364,6 +364,9 @@ worldTemplateRules:
         tag: AtSurface
         minDistance: 0
         maxDistance: 2
+      - command: ExceptWith
+        tagcommand: AtTag
+        tag: NoGlobalFeatureSpawning
   # Uranium Geode
   - names:
       - expansion1::poi/radioactive/uranium_geode1
@@ -377,6 +380,9 @@ worldTemplateRules:
         tag: AtStart
         minDistance: 1
         maxDistance: 1
+      - command: ExceptWith
+        tagcommand: AtTag
+        tag: NoGlobalFeatureSpawning
   # Volcano Hole
   - names:
       - geysers/volcanohole
