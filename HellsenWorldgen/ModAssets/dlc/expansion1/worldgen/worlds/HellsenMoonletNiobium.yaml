@@ -3,10 +3,10 @@ description: STRINGS.HELLSEN.WORLDS.NIOBIUM_MOONLET.DESC
 nameTables: [MAGMA]
 asteroidIcon: asteroid_niobium_planet_kanim
 
-worldTraitScale: 0.15 # Adjust with worldSize. Traits are tuned to base game world sizes.
+worldTraitScale: 0.12 # Adjust with worldSize. Traits are tuned to base game world sizes.
 worldsize:
-  X: 72
-  Y: 104
+  X: 80
+  Y: 96
 layoutMethod: PowerTree
 
 worldTraitRules:

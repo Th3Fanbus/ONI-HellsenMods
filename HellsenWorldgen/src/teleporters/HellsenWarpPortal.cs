@@ -60,7 +60,7 @@ public class HellsenWarpPortal : WarpPortal
 		//HellsenWarpReceiver[] receiverList = FindObjectsOfType<HellsenWarpReceiver>();
 		Components.Cmps<HellsenWarpReceiver> receiverList = HellsenComponents.HellsenWarpReceivers;
 		if (receiverList.Count() == 0) {
-			Debug.LogWarning("HELL: No hellsen receiver at all found");
+			Debug.LogWarning("HELL: No hellsen receiver at all found???");
 			return null;
 		}
 		/* World ID is valid, try to find any receiver in said world */
@@ -68,7 +68,7 @@ public class HellsenWarpPortal : WarpPortal
 			try {
 				return receiverList.First(r => r.GetMyWorldId() == targetID);
 			} catch (InvalidOperationException) {
-				Debug.LogWarning("HELL: Invalid target hellsen receiver");
+				Debug.LogWarning("HELL: Invalid target hellsen receiver, breaking link");
 				/* Break the link */
 				targetID = -1;
 			}
@@ -102,6 +102,7 @@ public class HellsenWarpPortal : WarpPortal
 		} catch (InvalidOperationException) {
 			Debug.LogWarning("HELL: No remote hellsen portal/receiver pair found");
 		}
+		/* Fall back to a portal in the same world we are in */
 		try {
 			HellsenWarpReceiver receiver = receiverList.First(r => r.GetMyWorldId() == myID);
 			targetID = myID;

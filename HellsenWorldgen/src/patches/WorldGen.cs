@@ -10,12 +10,23 @@ namespace HellsenWorldgen
 {
 	public static partial class Extensions
 	{
-		public static void InjectTemplateRule(this List<TemplateSpawnRules> worldTemplateRules, TemplateSpawnRules template)
+		public static bool ShouldSkip(this ProcGen.World world) => world.moduleInterior;
+
+		public static void InjectTemplateRule(this ProcGen.World world, TemplateSpawnRules template)
 		{
-			string name = template.names.FirstOrDefault();
-			if (!worldTemplateRules.Any(x => x.names.Contains(name))) {
-				worldTemplateRules.Add(template);
+			if (template.names.Count == 0) {
+				return;
 			}
+			string name = template.names.FirstOrDefault();
+			if (!world.worldTemplateRules.Any(x => x.names.Contains(name))) {
+				world.worldTemplateRules.Add(template);
+			}
+		}
+
+		public static void InjectCleanNeutroniumEdges(this ProcGen.World world)
+		{
+			world.defaultsOverrides.data["WorldBorderThickness"] = 2;
+			world.defaultsOverrides.data["WorldBorderRange"] = 0;
 		}
 	}
 
@@ -24,8 +35,8 @@ namespace HellsenWorldgen
 		private static readonly TemplateSpawnRules EthanolGeyserTemplate = new() {
 			names = ["expansion1::geysers/ethanol_geyser_full"],
 			listRule = ListRule.TryOne,
-			times = 3,
-			priority = 25,
+			times = 2,
+			priority = 75,
 			allowDuplicates = true,
 			allowExtremeTemperatureOverlap = false,
 			useRelaxedFiltering = true,
@@ -34,7 +45,7 @@ namespace HellsenWorldgen
 					command = Command.Replace,
 					tagcommand = TagCommand.DistanceFromTag,
 					tag = WorldGenTags.AtSurface.name,
-					minDistance = 1,
+					minDistance = 2,
 					maxDistance = 99,
 				},
 				new() {
@@ -93,12 +104,17 @@ namespace HellsenWorldgen
 			if (__instance?.worldCache is null) {
 				return;
 			}
-			foreach (KeyValuePair<string, ProcGen.World> keyValuePair in __instance.worldCache) {
-				if (keyValuePair.Value.moduleInterior) {
+			foreach (ProcGen.World world in __instance.worldCache.Values) {
+				if (world.ShouldSkip()) {
 					continue;
 				}
-				keyValuePair.Value.worldTemplateRules.InjectTemplateRule(EthanolGeyserTemplate);
-				//keyValuePair.Value.worldTemplateRules.InjectTemplateRule(HellsenTeleporterTemplate);
+				if (ModOptions.Instance.CleanNeutroniumEdges) {
+					world.InjectCleanNeutroniumEdges();
+				}
+				if (ModOptions.Instance.InjectEthanolGeysers) {
+					world.InjectTemplateRule(EthanolGeyserTemplate);
+				}
+				//world.InjectTemplateRule(HellsenTeleporterTemplate);
 			}
 		}
 

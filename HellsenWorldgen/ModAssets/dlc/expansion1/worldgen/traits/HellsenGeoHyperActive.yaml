@@ -14,7 +14,7 @@ additionalWorldTemplateRules:
   - names:
       - geysers/generic
     listRule: TryOne
-    times: 100
+    times: 20
     ruleId: GenericGeysers
     useRelaxedFiltering: true # Allow placement in feature-heavy biomes
     allowDuplicates: true

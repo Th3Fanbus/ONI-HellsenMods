@@ -2,7 +2,7 @@ name: STRINGS.HELLSEN.CLUSTER_NAMES.PREHISTORIC_CERES_SPACED_OUT_CLUSTER.NAME
 description: STRINGS.HELLSEN.CLUSTER_NAMES.PREHISTORIC_CERES_SPACED_OUT_CLUSTER.DESC
 welcomeMessage: STRINGS.UI.WELCOMEMESSAGEBODY_DLC4_PREHISTORIC
 dlcIdFrom: DLC4_ID
-requiredDlcIds: [EXPANSION1_ID, DLC4_ID, DLC2_ID]
+requiredDlcIds: [EXPANSION1_ID, DLC2_ID, DLC4_ID]
 coordinatePrefix: M-HELLSEN-PRE-C
 menuOrder: 0
 difficulty: 5
@@ -42,7 +42,7 @@ worldPlacements:
   # -----------------------------------------------------------------------------------------
   # Inner Worlds
   # -----------------------------------------------------------------------------------------
-  - world: dlc4::worlds/HellsenPrehistoricSpacedOutAsteroid # Relica Minor (Start)
+  - world: dlc4::worlds/HellsenMoonletPrehistoricStart # Curio (Start)
     locationType: StartWorld
     buffer: 2
     allowedRings:
@@ -56,7 +56,7 @@ worldPlacements:
       min: 0
       max: 4
   # -----------------------------------------------------------------------------------------
-  - world: dlc2::worlds/HellsenCeresWideMoonlet # Ceres Minor Moonlet
+  - world: dlc2::worlds/HellsenMoonletCeres # Ceres Moonlet
     buffer: 2
     locationType: InnerCluster
     allowedRings:
@@ -79,6 +79,44 @@ worldPlacements:
 
   # -----------------------------------------------------------------------------------------
   # Outer Worlds
+  # -----------------------------------------------------------------------------------------
+  - world: expansion1::worlds/HellsenMoonletMarshy # Isoresin renewable
+    buffer: 2
+    allowedRings:
+      min: 6
+      max: 12
+    worldMixing:
+      requiredTags:
+        - Mixing
+        - SmallWorld
+      forbiddenTags:
+        - Challenge
+      additionalWorldTemplateRules:
+        - names:
+            - expansion1::poi/worldmixing/sap_tree_room # Experiment 52B
+          listRule: GuaranteeAll
+          priority: 500
+          allowExtremeTemperatureOverlap: true # has Abyssalite border
+          allowedCellsFilter:
+            - command: All
+            - command: ExceptWith
+              tagcommand: AtTag
+              tag: NoGlobalFeatureSpawning
+            - command: ExceptWith
+              tagcommand: AtTag
+              tag: NoMixingTemplateSpawning
+        - names:
+            - expansion1::geysers/molten_tungsten_compact
+          listRule: GuaranteeAll
+          priority: 150
+          allowedCellsFilter:
+            - command: All
+            - command: ExceptWith
+              tagcommand: AtTag
+              tag: NoGlobalFeatureSpawning
+            - command: ExceptWith
+              tagcommand: AtTag
+              tag: NoMixingTemplateSpawning
   # -----------------------------------------------------------------------------------------
   - world: expansion1::worlds/HellsenMoonletTundra # Fullerene renewable
     buffer: 2
@@ -110,44 +148,6 @@ worldPlacements:
             - expansion1::poi/genericGravitas/poi_gift_shop # artifacts
           listRule: GuaranteeAll
           priority: 200
-          allowedCellsFilter:
-            - command: All
-            - command: ExceptWith
-              tagcommand: AtTag
-              tag: NoGlobalFeatureSpawning
-            - command: ExceptWith
-              tagcommand: AtTag
-              tag: NoMixingTemplateSpawning
-  # -----------------------------------------------------------------------------------------
-  - world: expansion1::worlds/HellsenMoonletMarshy # Isoresin renewable
-    buffer: 2
-    allowedRings:
-      min: 6
-      max: 12
-    worldMixing:
-      requiredTags:
-        - Mixing
-        - SmallWorld
-      forbiddenTags:
-        - Challenge
-      additionalWorldTemplateRules:
-        - names:
-            - expansion1::poi/worldmixing/sap_tree_room # Experiment 52B
-          listRule: GuaranteeAll
-          priority: 500
-          allowExtremeTemperatureOverlap: true # has Abyssalite border
-          allowedCellsFilter:
-            - command: All
-            - command: ExceptWith
-              tagcommand: AtTag
-              tag: NoGlobalFeatureSpawning
-            - command: ExceptWith
-              tagcommand: AtTag
-              tag: NoMixingTemplateSpawning
-        - names:
-            - expansion1::geysers/molten_tungsten_compact
-          listRule: GuaranteeAll
-          priority: 150
           allowedCellsFilter:
             - command: All
             - command: ExceptWith

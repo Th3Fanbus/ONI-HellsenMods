@@ -6,7 +6,7 @@ asteroidIcon: asteroid_swamp_teleport_kanim
 worldTraitScale: 0.20 # Adjust with worldSize. Traits are tuned to base game world sizes.
 worldsize:
   X: 128
-  Y: 160
+  Y: 153
 layoutMethod: PowerTree
 
 worldTraitRules:
@@ -207,7 +207,7 @@ worldTemplateRules:
     allowedCellsFilter:
       - command: Replace
         zoneTypes: [Ocean]
-  # Gravitas
+  # Gravitas Teleporters
   - names:
       - expansion1::poi/warp/sender
       - expansion1::poi/warp/receiver

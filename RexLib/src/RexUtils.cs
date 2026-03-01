@@ -12,15 +12,17 @@ namespace RexLib
 {
 	public static partial class Extensions
 	{
-#pragma warning disable IDE0029 // Null check cannot be simplified because Unity is cursed
+		/* Reason: null check cannot be simplified because Unity is cursed (overrides equals) */
+#pragma warning disable IDE0029
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static T? GetValid<T>(this T? obj) where T : class? => obj == null ? null : obj;
 #pragma warning restore IDE0029
-		public static bool IsNull(this WorkerBase? worker) => worker == null || worker.HasTag(GameTags.Dying) || worker.HasTag(GameTags.Dead);
-		public static bool IsValid(this WorkerBase? worker) => !IsNull(worker);
 		public static bool IsNull(this UnityEngine.Object? obj) => obj == null;
 		public static bool IsValid(this UnityEngine.Object? obj) => !IsNull(obj);
+		public static bool IsNull(this WorkerBase? worker) => worker == null || worker.HasTag(GameTags.Dying) || worker.HasTag(GameTags.Dead);
+		public static bool IsValid(this WorkerBase? worker) => !IsNull(worker);
 
+		/* When this function returns true, the annotated output parameter is not null */
 		public static bool TryGetDef<DefType>(this GameObject go, [NotNullWhen(true)] out DefType? def) where DefType : StateMachine.BaseDef
 			=> (def = go.TryGetComponent(out StateMachineController smc) ? smc.GetDef<DefType>() : null) != null;
 	}

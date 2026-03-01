@@ -6,7 +6,7 @@ asteroidIcon: asteroid_hellsen_foresty_wasteland_kanim
 worldTraitScale: 0.20 # Adjust with worldSize. Traits are tuned to base game world sizes.
 worldsize:
   X: 128
-  Y: 160
+  Y: 153
 layoutMethod: PowerTree
 
 worldTraitRules:
@@ -36,25 +36,28 @@ defaultsOverrides:
     WorldBorderRange: 0
     OverworldDensityMin: 18
     OverworldDensityMax: 18
+    OverworldAvoidRadius: 5
     OverworldSampleBehaviour: PoissonDisk
 
 # List all the subworld files to load
 subworldFiles:
-  - name: expansion1::subworlds/space/SpaceWithSandyBorder
-  - name: expansion1::subworlds/radioactive/med_Radioactive
-    minCount: 2
-  - name: expansion1::subworlds/radioactive/med_UraniumFields
-    minCount: 2
-  - name: expansion1::subworlds/radioactive/med_FrozenUraniumFields
+  - name: subworlds/space/Space
+  - name: expansion1::subworlds/space/SpaceWithBorder
+  - name: expansion1::subworlds/ocean/med_Ocean
     minCount: 3
-  - name: expansion1::subworlds/frozen/FrozenCore
-    minCount: 2
   - name: expansion1::subworlds/forest/med_Forest
     minCount: 3
   - name: expansion1::subworlds/rust/med_Rust_NoSpirals
     minCount: 3
-  - name: expansion1::subworlds/ocean/med_OceanDeep
+  - name: expansion1::subworlds/radioactive/med_Radioactive
+    minCount: 3
+  - name: expansion1::subworlds/radioactive/med_UraniumFields
     minCount: 2
+  - name: expansion1::subworlds/radioactive/med_FrozenUraniumFields
+    minCount: 2
+  - name: expansion1::subworlds/frozen/FrozenCore
+    weight: 0.4
+    maxCount: 2
 
 unknownCellsAllowedSubworlds:
   # World Fill
@@ -63,14 +66,20 @@ unknownCellsAllowedSubworlds:
     subworldNames:
       - expansion1::subworlds/forest/med_Forest
       - expansion1::subworlds/rust/med_Rust_NoSpirals
+  # Space
+  - tagcommand: AtTag
+    tag: AtSurface
+    command: Replace
+    subworldNames:
+      - subworlds/space/Space
   # Crust
   - tagcommand: DistanceFromTag
     tag: AtSurface
-    minDistance: 0
+    minDistance: 1
     maxDistance: 1
     command: Replace
     subworldNames:
-      - expansion1::subworlds/space/SpaceWithSandyBorder
+      - expansion1::subworlds/space/SpaceWithBorder
   # Subsurface Ocean
   - tagcommand: DistanceFromTag
     tag: AtSurface
@@ -78,8 +87,17 @@ unknownCellsAllowedSubworlds:
     maxDistance: 2
     command: Replace
     subworldNames:
-      - expansion1::subworlds/ocean/med_OceanDeep
-  # Above Core
+      - expansion1::subworlds/ocean/med_Ocean
+  # Above Mantle
+  - tagcommand: DistanceFromTag
+    tag: AtDepths
+    minDistance: 2
+    maxDistance: 2
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/forest/med_Forest
+      - expansion1::subworlds/rust/med_Rust_NoSpirals
+  # Mantle
   - tagcommand: DistanceFromTag
     tag: AtDepths
     minDistance: 1
@@ -89,10 +107,8 @@ unknownCellsAllowedSubworlds:
       - expansion1::subworlds/radioactive/med_Radioactive
       - expansion1::subworlds/radioactive/med_UraniumFields
   # Core
-  - tagcommand: DistanceFromTag
+  - tagcommand: AtTag
     tag: AtDepths
-    minDistance: 0
-    maxDistance: 0
     command: Replace
     subworldNames:
       - expansion1::subworlds/radioactive/med_FrozenUraniumFields
@@ -104,20 +120,10 @@ worldTemplateRules:
       - poi/poi_ocean_geyser_saltwater
     listRule: GuaranteeAll
     useRelaxedFiltering: true # Allow placement in feature-heavy biomes
-    priority: 150
+    priority: 160
     allowedCellsFilter:
       - command: Replace
         zoneTypes: [Ocean]
-  # Guaranteed chlorine (pufts)
-  - names:
-      - geysers/chlorine_gas
-    listRule: GuaranteeAll
-    useRelaxedFiltering: true # Allow placement in feature-heavy biomes
-    priority: 140
-    allowedCellsFilter:
-      - command: Replace
-        tagcommand: NotAtTag
-        tag: NoGlobalFeatureSpawning
   # Frozen Uranium
   - names:
       - expansion1::poi/radioactive/uranium_fields_liquid_co2_geyser
@@ -125,14 +131,35 @@ worldTemplateRules:
       - expansion1::poi/radioactive/uranium_fields_liquid_co2_geyser_c
     listRule: TrySome
     someCount: 2
-    priority: 130
+    priority: 150
     allowedCellsFilter:
       - command: Replace
         zoneTypes: [Radioactive]
-      - command: IntersectWith
-        subworldNames:
-          - expansion1::subworlds/radioactive/med_UraniumFields
-          - expansion1::subworlds/radioactive/med_FrozenUraniumFields
+  # Gravitas Artifact POIs
+  - names:
+      - expansion1::poi/genericGravitas/directors_room
+      - expansion1::poi/genericGravitas/monument_room
+    listRule: GuaranteeAll
+    priority: 140
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: NotAtTag
+        tag: NoGlobalFeatureSpawning
+      - command: ExceptWith
+        tagcommand: DistanceFromTag
+        tag: AtDepths
+        minDistance: 0
+        maxDistance: 1
+  # Guaranteed chlorine (pufts)
+  - names:
+      - geysers/chlorine_gas
+    listRule: GuaranteeAll
+    useRelaxedFiltering: true # Allow placement in feature-heavy biomes
+    priority: 130
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: NotAtTag
+        tag: NoGlobalFeatureSpawning
   # Curated geysers
   - names:
       - geysers/methane
@@ -142,7 +169,7 @@ worldTemplateRules:
     listRule: TryOne
     times: 2
     useRelaxedFiltering: true # Allow placement in feature-heavy biomes
-    priority: 105
+    priority: 120
     allowedCellsFilter:
       - command: Replace
         tagcommand: NotAtTag
@@ -159,16 +186,19 @@ worldTemplateRules:
     listRule: TryOne
     times: 3
     useRelaxedFiltering: true # Allow placement in feature-heavy biomes
-    priority: 100
+    priority: 110
     allowedCellsFilter:
       - command: Replace
         tagcommand: NotAtTag
         tag: NoGlobalFeatureSpawning
-  # Gravitas Artifact POIs
+  # Some generic geysers to spruce up the place
   - names:
-      - expansion1::poi/genericGravitas/directors_room
-      - expansion1::poi/genericGravitas/monument_room
-    listRule: GuaranteeAll
+      - geysers/generic
+    listRule: TryOne
+    times: 2
+    ruleId: GenericGeysers
+    useRelaxedFiltering: true # Allow placement in feature-heavy biomes
+    allowDuplicates: true
     priority: 100
     allowedCellsFilter:
       - command: Replace
@@ -176,19 +206,15 @@ worldTemplateRules:
         tag: NoGlobalFeatureSpawning
   # Boons
   - names:
-      - expansion1::poi/boon/bedroom
-      - expansion1::poi/boon/washroom
-      - expansion1::poi/boon/power
-      - expansion1::poi/boon/kitchen
-      - expansion1::poi/boon/well
-      - expansion1::poi/boon/farm
       - expansion1::poi/boon/hellsen_greathall
-    listRule: TrySome
-    someCount: 2
-    priority: 50
+    listRule: GuaranteeAll
+    priority: 75
     allowedCellsFilter:
       - command: Replace
+        tagcommand: NotAtTag
+        tag: NoGlobalFeatureSpawning
+      - command: ExceptWith
         tagcommand: DistanceFromTag
-        tag: AtSurface
-        minDistance: 2
-        maxDistance: 99
+        tag: AtDepths
+        minDistance: 0
+        maxDistance: 1

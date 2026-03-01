@@ -24,15 +24,15 @@ worldPlacements:
       max: 3
 
   # Outer Worlds
-  - world: expansion1::worlds/HellsenMoonletTundra # Fullerene renewable
-    buffer: 2
-    allowedRings:
-      min: 5
-      max: 13
   - world: expansion1::worlds/HellsenMoonletMarshy # Isoresin renewable
     buffer: 2
     allowedRings:
       min: 6
+      max: 13
+  - world: expansion1::worlds/HellsenMoonletTundra # Fullerene renewable
+    buffer: 2
+    allowedRings:
+      min: 5
       max: 13
   - world: expansion1::worlds/HellsenMoonletNiobium # Niobium renewable
     buffer: 2

@@ -3,7 +3,7 @@ TerrainBiomeLookupTable:
   remove: []
   # elements to add from in-memory structure when this file is loaded
   add:
-    FerricCore:
+    Basic:
       - content: MoltenIron
         bandSize: 0.5
         overrides:

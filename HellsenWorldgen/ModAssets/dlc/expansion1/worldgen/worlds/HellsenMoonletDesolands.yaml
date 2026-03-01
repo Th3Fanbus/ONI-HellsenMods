@@ -6,7 +6,7 @@ asteroidIcon: asteroid_mini_badlands_kanim
 worldTraitScale: 0.20 # Adjust with worldSize. Traits are tuned to base game world sizes.
 worldsize:
   X: 128
-  Y: 160
+  Y: 153
 layoutMethod: PowerTree
 
 worldTraitRules:
@@ -181,19 +181,10 @@ worldTemplateRules:
         tag: NoGlobalFeatureSpawning
   # Boons
   - names:
-      - expansion1::poi/boon/bedroom
-      - expansion1::poi/boon/washroom
-      - expansion1::poi/boon/power
-      - expansion1::poi/boon/kitchen
-      - expansion1::poi/boon/well
-      - expansion1::poi/boon/farm
       - expansion1::poi/boon/hellsen_greathall
-    listRule: TrySome
-    someCount: 2
-    priority: 50
+    listRule: GuaranteeAll
+    priority: 75
     allowedCellsFilter:
       - command: Replace
-        tagcommand: DistanceFromTag
-        tag: AtSurface
-        minDistance: 2
-        maxDistance: 99
+        tagcommand: NotAtTag
+        tag: NoGlobalFeatureSpawning

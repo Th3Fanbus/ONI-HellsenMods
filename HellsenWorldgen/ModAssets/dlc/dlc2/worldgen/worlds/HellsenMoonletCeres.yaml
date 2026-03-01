@@ -1,20 +1,20 @@
-name: STRINGS.HELLSEN.WORLDS.CERES_SPACED_OUT.NAME # Ceres (Spaced Out)
-description: STRINGS.HELLSEN.WORLDS.CERES_SPACED_OUT.DESC
+name: STRINGS.HELLSEN.WORLDS.MINI_CERES.NAME # Ceres Moonlet
+description: STRINGS.HELLSEN.WORLDS.MINI_CERES.DESC
 nameTables: [CERES]
 asteroidIcon: asteroid_classic_mini_ceres_so_kanim # asteroid_classic_so_kanim
 worldTags: [Ceres]
 dlcIdFrom: DLC2_ID
 requiredDlcIds: [EXPANSION1_ID, DLC2_ID]
 
-worldTraitScale: 0.44 # Adjust with worldSize. Traits are tuned to base game world sizes.
+worldTraitScale: 0.20 # Adjust with worldSize. Traits are tuned to base game world sizes.
 worldsize:
-  X: 160
-  Y: 160
+  X: 128
+  Y: 153
 layoutMethod: PowerTree # Note: We need to add weights to the items in the layer in order to use this.
 
 worldTraitRules:
-  - min: 2
-    max: 4
+  - min: 1
+    max: 2
     forbiddenTags:
       - Surface
       - Oil
@@ -23,17 +23,6 @@ worldTraitRules:
     forbiddenTraits:
       - traits/GeoDormant
       - traits/MagmaVents
-
-subworldMixingRules:
-  - name: (Mixing1)
-    minCount: 2
-    maxCount: 3
-  - name: (Mixing2)
-    minCount: 2
-    maxCount: 3
-  - name: (Mixing3)
-    minCount: 2
-    maxCount: 3
 
 fixedTraits:
   - sunlightVeryVeryLow
@@ -51,6 +40,7 @@ defaultsOverrides:
     WorldBorderRange: 0
     OverworldDensityMin: 18
     OverworldDensityMax: 18
+    OverworldAvoidRadius: 5
     OverworldSampleBehaviour: PoissonDisk
     POIPadding: 1
   startingWorldElements:
@@ -96,9 +86,6 @@ unknownCellsAllowedSubworlds:
       - dlc2::subworlds/carrotquarry/CarrotQuarryEthanolPools
       - dlc2::subworlds/icecaves/IceCavesStart
       - subworlds/frozen/Frozen
-      - (Mixing1)
-      - (Mixing2)
-      - (Mixing3)
   # Above core
   - tagcommand: DistanceFromTag
     tag: AtDepths
@@ -141,9 +128,6 @@ unknownCellsAllowedSubworlds:
       - dlc2::subworlds/carrotquarry/CarrotQuarryBasic
       - dlc2::subworlds/icecaves/IceCavesStart
       - subworlds/frozen/Frozen
-      - (Mixing1)
-      - (Mixing2)
-      - (Mixing3)
 
 worldTemplateRules:
   # Geothermal Imperative
@@ -162,7 +146,7 @@ worldTemplateRules:
         tagcommand: DistanceFromTag
         tag: AtEdge
         minDistance: 0
-        maxDistance: 1
+        maxDistance: 0
   - names:
       - dlc2::poi/geothermal/geothermal_vent_1
       - dlc2::poi/geothermal/geothermal_vent_2
@@ -180,19 +164,16 @@ worldTemplateRules:
     priority: 250
     allowedCellsFilter:
       - command: Replace
-        tagcommand: DistanceFromTag
+        tagcommand: AtTag
         tag: AtDepths
-        minDistance: 0
-        maxDistance: 0
-      - command: ExceptWith
-        tagcommand: DistanceFromTag
-        tag: AtEdge
-        minDistance: 0
-        maxDistance: 0
+      #- command: ExceptWith
+      #  tagcommand: DistanceFromTag
+      #  tag: AtEdge
+      #  minDistance: 0
+      #  maxDistance: 0
   # Ice Caves - Start
   - names:
       - dlc2::poi/icecaves/ceres_research_unlock
-      - dlc2::poi/icecaves/ceres_cozy_cabin
     listRule: GuaranteeAll
     priority: 225
     allowNearStart: true
@@ -200,29 +181,6 @@ worldTemplateRules:
       - command: Replace
         subworldNames:
           - dlc2::subworlds/icecaves/IceCavesStart
-  # Uranium Geode
-  - names:
-      - expansion1::poi/radioactive/uranium_geode1
-    listRule: GuaranteeSomeTryMore
-    someCount: 1
-    moreCount: 1
-    useRelaxedFiltering: true
-    allowExtremeTemperatureOverlap: true # has Abyssalite border
-    priority: 200
-    allowedCellsFilter:
-      - command: Replace
-        tagcommand: NotAtTag
-        tag: NoGlobalFeatureSpawning
-  # Ocean
-  - names:
-      - poi/poi_ocean_geyser_saltwater
-    listRule: GuaranteeSomeTryMore
-    someCount: 1
-    moreCount: 1
-    priority: 150
-    allowedCellsFilter:
-      - command: Replace
-        zoneTypes: [Ocean]
   # Frozen
   - names:
       - poi/frozen/heatsink_a
@@ -231,12 +189,12 @@ worldTemplateRules:
       - poi/frozen/heatsink_d
     listRule: GuaranteeSomeTryMore
     someCount: 1
-    moreCount: 1
+    moreCount: 2
     priority: 140
     allowedCellsFilter:
       - command: Replace
         zoneTypes: [FrozenWastes]
-  # Ceres
+  # Ceres Showroom
   - names:
       - dlc2::poi/ceres/showroom
     listRule: GuaranteeAll
@@ -250,49 +208,17 @@ worldTemplateRules:
         tag: AtSurface
         minDistance: 2
         maxDistance: 4
-  # Guaranteed sulfur geyser
+  # POIs
   - names:
-      - expansion1::geysers/liquid_sulfur
-    listRule: GuaranteeAll
-    priority: 125
-    allowedCellsFilter:
-      - command: Replace
-        tagcommand: DistanceFromTag
-        tag: AtDepths
-        minDistance: 1
-        maxDistance: 1
-        #zoneTypes: [Wasteland, Forest]
-  # Cold geysers
-  - names:
-      - geysers/liquid_co2
-      - expansion1::poi/poi_frozen_salt_water_geyser
+      - expansion1::poi/boon/hellsen_greathall
+      - expansion1::poi/genericGravitas/poi_office
     listRule: GuaranteeAll
     priority: 120
     allowedCellsFilter:
       - command: Replace
-        zoneTypes: [FrozenWastes, CarrotQuarry]
-  - names:
-      - expansion1::poi/boon/hellsen_greathall
-    listRule: GuaranteeAll
-    priority: 110
-    allowedCellsFilter:
-      - command: Replace
         tagcommand: DistanceFromTag
         tag: AtSurface
-        minDistance: 2
-        maxDistance: 99
-      - command: ExceptWith
-        tagcommand: AtTag
-        tag: NoGravitasFeatures
-  - names:
-      - expansion1::poi/genericGravitas/poi_office
-    listRule: GuaranteeAll
-    priority: 105
-    allowedCellsFilter:
-      - command: Replace
-        tagcommand: DistanceFromTag
-        tag: AtSurface
-        minDistance: 2
+        minDistance: 3
         maxDistance: 99
       - command: ExceptWith
         tagcommand: AtTag
@@ -302,63 +228,44 @@ worldTemplateRules:
         tag: AtDepths
         minDistance: 0
         maxDistance: 2
-  - names:
-      - dlc2::poi/ceres/jorge_campsite
-    listRule: GuaranteeAll
-    priority: 104
-    allowedCellsFilter:
-      - command: Replace
-        zoneTypes: [CarrotQuarry]
   # Curated Geysers
   - names:
+      - expansion1::geysers/liquid_sulfur
       - expansion1::geysers/liquid_chlorine
+      - geysers/liquid_co2
       - geysers/oil_drip
     listRule: GuaranteeAll
     useRelaxedFiltering: true # Allow placement in feature-heavy biomes
-    priority: 102
+    priority: 110
     allowedCellsFilter:
       - command: Replace
         tagcommand: NotAtTag
         tag: NoGlobalFeatureSpawning
+  # Water source
   - names:
-      - expansion1::geysers/molten_aluminum
-      - expansion1::geysers/molten_cobalt
-      - geysers/molten_copper
-      - geysers/molten_gold
-      - geysers/molten_iron
-    listRule: TryOne
-    times: 2
-    useRelaxedFiltering: true # Allow placement in feature-heavy biomes
-    allowDuplicates: true
-    priority: 101
-    allowedCellsFilter:
-      - command: Replace
-        tagcommand: NotAtTag
-        tag: NoGlobalFeatureSpawning
-  - names:
-      - geysers/steam
-      - geysers/methane
       - geysers/filthy_water
+      - geysers/hot_steam
       - geysers/hot_water
-      - expansion1::poi/poi_geyser_dirty_slush
-      - geysers/hot_hydrogen
       - geysers/salt_water
+      - geysers/slush_water
+      - geysers/steam
+      - expansion1::geysers/slush_salt_water
     listRule: TryOne
-    times: 6
-    allowDuplicates: true
-    priority: 100
+    times: 3
+    priority: 105
     allowedCellsFilter:
       - command: Replace
         tagcommand: NotAtTag
         tag: NoGlobalFeatureSpawning
+  # Some generic geysers to spruce up the place
   - names:
       - geysers/generic
     listRule: TryOne
-    times: 6
+    times: 2
     ruleId: GenericGeysers
     useRelaxedFiltering: true # Allow placement in feature-heavy biomes
     allowDuplicates: true
-    priority: 20
+    priority: 100
     allowedCellsFilter:
       - command: Replace
         tagcommand: NotAtTag

@@ -6,10 +6,10 @@ asteroidIcon: asteroid_marshy_moonlet_kanim
 # Notes:
 # - Marsh/Jungle do not have their default geysers
 
-worldTraitScale: 0.15 # Adjust with worldSize. Traits are tuned to base game world sizes.
+worldTraitScale: 0.12 # Adjust with worldSize. Traits are tuned to base game world sizes.
 worldsize:
-  X: 72
-  Y: 104
+  X: 80
+  Y: 128
 layoutMethod: PowerTree
 
 worldTraitRules:
@@ -34,6 +34,7 @@ fixedTraits:
   - cosmicRadiationMed
 
 seasons:
+  - MarshyMoonletMeteorShowers # unused
   - GassyMooteorShowers
 
 defaultsOverrides:

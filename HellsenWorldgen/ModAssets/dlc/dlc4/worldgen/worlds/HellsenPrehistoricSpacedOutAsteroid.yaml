@@ -19,8 +19,8 @@ worldTraitRules:
       - Surface
       - Oil
       - NonStartWorld
+      - StartChange
     forbiddenTraits:
-      - traits/MisalignedStart
       - expansion1::traits/CrashedSatellites
       - traits/GeoDormant
 
@@ -38,6 +38,7 @@ subworldMixingRules:
 fixedTraits:
   - sunlightVeryLow
   - cosmicRadiationVeryLow
+  - largeImpactorFragmentsAllowed
 
 seasons:
   - LargeImpactor

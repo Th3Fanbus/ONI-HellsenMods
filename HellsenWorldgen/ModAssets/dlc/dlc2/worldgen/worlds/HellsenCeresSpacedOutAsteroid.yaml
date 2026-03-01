@@ -231,9 +231,7 @@ worldTemplateRules:
   # Uranium Geode
   - names:
       - expansion1::poi/radioactive/uranium_geode1
-    listRule: GuaranteeSomeTryMore
-    someCount: 1
-    moreCount: 1
+    listRule: GuaranteeOne
     useRelaxedFiltering: true
     allowExtremeTemperatureOverlap: true # has Abyssalite border
     priority: 200
@@ -246,9 +244,7 @@ worldTemplateRules:
   # Ocean
   - names:
       - poi/poi_ocean_geyser_saltwater
-    listRule: GuaranteeSomeTryMore
-    someCount: 1
-    moreCount: 1
+    listRule: GuaranteeAll
     priority: 150
     allowedCellsFilter:
       - command: Replace

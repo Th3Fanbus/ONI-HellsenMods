@@ -6,7 +6,7 @@ asteroidIcon: asteroid_vanilla_forest_warp_kanim
 worldTraitScale: 0.20 # Adjust with worldSize. Traits are tuned to base game world sizes.
 worldsize:
   X: 128
-  Y: 160
+  Y: 153
 layoutMethod: PowerTree
 
 worldTraitRules:
@@ -27,11 +27,15 @@ fixedTraits:
 
 defaultsOverrides:
   data:
+    DrawWorldBorderForce: false
+    DrawWorldBorder: true
     WorldBorderThickness: 2
     WorldBorderRange: 0
     OverworldDensityMin: 18
     OverworldDensityMax: 18
+    OverworldAvoidRadius: 5
     OverworldSampleBehaviour: PoissonDisk
+    POIPadding: 1
 
 subworldFiles:
   - name: subworlds/space/Space

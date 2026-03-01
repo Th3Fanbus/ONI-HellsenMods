@@ -1,0 +1,287 @@
+name: STRINGS.HELLSEN.WORLDS.MINI_PREHISTORIC.NAME
+description: STRINGS.HELLSEN.WORLDS.MINI_PREHISTORIC.DESC
+nameTables: [PREHISTORIC]
+asteroidIcon: asteroid_prehistoric_kanim
+worldTags: [Prehistoric]
+dlcIdFrom: DLC4_ID
+requiredDlcIds: [EXPANSION1_ID, DLC4_ID]
+
+worldTraitScale: 0.20 # Adjust with worldSize. Traits are tuned to base game world sizes.
+worldsize:
+  X: 128
+  Y: 153
+layoutMethod: PowerTree
+
+worldTraitRules:
+  - min: 2
+    max: 4
+    forbiddenTags:
+      - LargeWorld
+      - Oil # no oil here
+      - StartChange
+      - AboveCore # no room
+      - Surface
+      - Crust
+      - NonStartWorld
+    forbiddenTraits:
+      - expansion1::traits/CrashedSatellites
+      - expansion1::traits/Volcanoes # no room
+      - traits/GeoDormant
+
+fixedTraits:
+  - sunlightVeryLow
+  - cosmicRadiationVeryLow
+  - largeImpactorFragmentsAllowed
+
+seasons:
+  - LargeImpactor
+  - PrehistoricMeteorShowers
+
+defaultsOverrides:
+  data:
+    DrawWorldBorderForce: false
+    DrawWorldBorder: true
+    WorldBorderThickness: 2
+    WorldBorderRange: 0
+    OverworldDensityMin: 18
+    OverworldDensityMax: 18
+    OverworldAvoidRadius: 5
+    OverworldSampleBehaviour: PoissonDisk
+    POIPadding: 1
+  startingWorldElements:
+    - element: OxyRock
+      amount: 10000
+
+startSubworldName: dlc4::subworlds/garden/GardenStart
+startingBaseTemplate: dlc4::bases/gardenBase
+startingBasePositionHorizontal:
+  min: 0.5
+  max: 0.5
+startingBasePositionVertical:
+  min: 0.3
+  max: 0.3
+
+# List all the subworld files to load
+subworldFiles:
+  #-[DLC4]---------------------------------------------
+  - name: dlc4::subworlds/garden/GardenStart
+    overridePower: 2
+  - name: dlc4::subworlds/garden/GardenBasic
+  - name: dlc4::subworlds/garden/GardenMiniMetal
+    minCount: 1
+  - name: dlc4::subworlds/garden/GardenMiniWater
+    minCount: 1
+  - name: dlc4::subworlds/garden/GardenMiniOxygen
+    minCount: 1
+  - name: dlc4::subworlds/raptor/RaptorBasic
+    minCount: 4
+  - name: dlc4::subworlds/wetlands/WetlandsBasic
+    minCount: 4
+  #-[Standard]-----------------------------------------
+  - name: subworlds/space/Space
+  - name: dlc4::subworlds/space/SpaceWithPrehistoricBorder
+  - name: expansion1::subworlds/magma/BottomSmallNoUnobtanium
+
+# Specify where subworlds can spawn. These rules are processed in order and their effects are cumulative.
+unknownCellsAllowedSubworlds:
+  - tagcommand: Default
+    command: Replace
+    subworldNames:
+      - dlc4::subworlds/wetlands/WetlandsBasic
+      - dlc4::subworlds/raptor/RaptorBasic
+  # Space
+  - tagcommand: AtTag
+    tag: AtSurface
+    command: Replace
+    subworldNames:
+      - subworlds/space/Space
+  # Crust
+  - tagcommand: DistanceFromTag
+    tag: AtSurface
+    minDistance: 1
+    maxDistance: 1
+    command: Replace
+    subworldNames:
+      - dlc4::subworlds/space/SpaceWithPrehistoricBorder
+  # Start
+  - tagcommand: DistanceFromTag
+    tag: AtStart
+    minDistance: 1
+    maxDistance: 1
+    command: Replace
+    subworldNames:
+      - dlc4::subworlds/garden/GardenMiniMetal
+      - dlc4::subworlds/garden/GardenMiniWater
+      - dlc4::subworlds/garden/GardenMiniOxygen
+  # Core
+  - tagcommand: AtTag
+    tag: AtDepths
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/magma/BottomSmallNoUnobtanium
+
+worldTemplateRules:
+  # Blaster Ruins
+  - names:
+      - dlc4::poi/blaster_ruins
+    listRule: GuaranteeOne
+    priority: 500
+    useRelaxedFiltering: true
+    allowExtremeTemperatureOverlap: true
+    overrideOffset:
+      X: 0
+      Y: -7
+    allowedCellsFilter:
+      - command: Replace
+        subworldNames:
+          - dlc4::subworlds/space/SpaceWithPrehistoricBorder
+      - command: ExceptWith
+        tagcommand: AtTag
+        tag: AtEdge
+  # Gravitas Teleporters
+  - names:
+      - expansion1::poi/warp/sender_mini
+      - expansion1::poi/warp/receiver_mini
+      - expansion1::poi/warp/teleporter_mini # START
+    listRule: GuaranteeAll
+    priority: 200
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: DistanceFromTag
+        tag: AtStart
+        minDistance: 1
+        maxDistance: 99
+      - command: ExceptWith
+        zoneTypes: [Space, MagmaCore]
+      - command: ExceptWith
+        tagcommand: AtTag
+        tag: NoGravitasFeatures
+      - command: ExceptWith
+        tagcommand: DistanceFromTag
+        tag: AtSurface
+        minDistance: 0
+        maxDistance: 4
+  # Gravitas POIs
+  - names:
+      - expansion1::poi/genericGravitas/poi_office
+    listRule: GuaranteeAll
+    priority: 180
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: DistanceFromTag
+        tag: AtStart
+        minDistance: 2
+        maxDistance: 99
+      - command: ExceptWith
+        tagcommand: AtTag
+        tag: NoGlobalFeatureSpawning
+      - command: ExceptWith
+        tagcommand: DistanceFromTag
+        tag: AtSurface
+        minDistance: 0
+        maxDistance: 3
+  # Uranium Geode
+  - names:
+      - expansion1::poi/radioactive/uranium_geode1
+    listRule: GuaranteeOne
+    useRelaxedFiltering: true
+    allowExtremeTemperatureOverlap: true # has Abyssalite border
+    priority: 170
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: DistanceFromTag
+        tag: AtStart
+        minDistance: 1
+        maxDistance: 1
+      - command: ExceptWith
+        zoneTypes: [Space, MagmaCore]
+  # Garden - Start
+  - names:
+      - dlc4::poi/garden/prehistoric_research_unlock
+    listRule: GuaranteeAll
+    priority: 160
+    allowNearStart: true
+    useRelaxedFiltering: true # not recommended to use with allowNearStart unless features are non-critical
+    allowedCellsFilter:
+      - command: Replace
+        subworldNames:
+          - dlc4::subworlds/garden/GardenStart
+  # Raptor
+  - names:
+      - dlc4::poi/raptor/cool_chlorine_vent
+    listRule: GuaranteeOne
+    priority: 150
+    allowedCellsFilter:
+      - command: Replace
+        zoneTypes: [PrehistoricRaptor]
+      - command: ExceptWith
+        tagcommand: DistanceFromTag
+        tag: AtSurface
+        minDistance: 0
+        maxDistance: 2
+  # Wetlands
+  - names:
+      - dlc4::poi/wetlands/pwater_geyser
+    listRule: GuaranteeOne
+    priority: 140
+    allowedCellsFilter:
+      - command: Replace
+        zoneTypes: [PrehistoricWetlands]
+      - command: ExceptWith
+        tagcommand: DistanceFromTag
+        tag: AtSurface
+        minDistance: 0
+        maxDistance: 2
+  # Curated Geysers
+  - names:
+      - dlc4::geysers/molten_nickel
+      - expansion1::geysers/liquid_chlorine
+      - geysers/oil_drip
+    listRule: GuaranteeAll
+    useRelaxedFiltering: true # Allow placement in feature-heavy biomes
+    priority: 130
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: NotAtTag
+        tag: NoGlobalFeatureSpawning
+  - names:
+      - geysers/filthy_water
+      - geysers/hot_water
+      - expansion1::poi/poi_geyser_dirty_slush
+      - geysers/salt_water
+    listRule: TryOne
+    times: 2
+    useRelaxedFiltering: true # Allow placement in feature-heavy biomes
+    priority: 120
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: NotAtTag
+        tag: NoGlobalFeatureSpawning
+  # Volcano Hole
+  - names:
+      - geysers/volcanohole
+    listRule: TryOne
+    times: 3
+    priority: 110
+    useRelaxedFiltering: true # Allow placement in feature-heavy biomes
+    allowDuplicates: true
+    allowedCellsFilter:
+      - command: Replace
+        subworldNames:
+          - expansion1::subworlds/magma/BottomSmallNoUnobtanium
+      - command: ExceptWith
+        tagcommand: AtTag
+        tag: AtEdge
+  # Some generic geysers to spruce up the place
+  - names:
+      - geysers/generic
+    listRule: TryOne
+    times: 2
+    ruleId: GenericGeysers
+    useRelaxedFiltering: true # Allow placement in feature-heavy biomes
+    allowDuplicates: true
+    priority: 100
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: NotAtTag
+        tag: NoGlobalFeatureSpawning

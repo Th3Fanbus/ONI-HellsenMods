@@ -6,6 +6,8 @@ density:
   max: 45
 avoidRadius: 50.0
 sampleBehaviour: PoissonDisk
+borderOverride: hardToDig
+borderOverridePriority: 10 # must be guaranteed
 biomes:
   - name: expansion1::biomes/Magma/MagmaBedNoUnobtanium
     weight: 1

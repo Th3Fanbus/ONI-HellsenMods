@@ -6,7 +6,7 @@ asteroidIcon: asteroid_forest_rocket_kanim
 worldTraitScale: 0.20 # Adjust with worldSize. Traits are tuned to base game world sizes.
 worldsize:
   X: 128
-  Y: 160
+  Y: 153
 layoutMethod: PowerTree
 
 worldTraitRules:

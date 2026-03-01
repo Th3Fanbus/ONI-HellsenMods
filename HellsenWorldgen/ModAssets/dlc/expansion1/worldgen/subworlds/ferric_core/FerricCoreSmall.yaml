@@ -4,12 +4,12 @@ minChildCount: 15 # Improve spawning of iron geysers
 density:
   min: 5
   max: 15
-avoidRadius: 8.0
+avoidRadius: 12.0
 borderOverride: hardToDig
 borderOverridePriority: 10 # must be guaranteed
 sampleBehaviour: PoissonDisk
 biomes:
-  - name: expansion1::biomes/FerricCore/FerricCore
+  - name: expansion1::biomes/FerricCore/Basic
     weight: 1
 tags:
   - IgnoreCaveOverride

@@ -6,7 +6,7 @@ asteroidIcon: asteroid_vanilla_volcanic_kanim
 worldTraitScale: 0.20 # Adjust with worldSize. Traits are tuned to base game world sizes.
 worldsize:
   X: 128
-  Y: 160
+  Y: 153
 layoutMethod: PowerTree
 
 worldTraitRules:
@@ -21,8 +21,8 @@ worldTraitRules:
       - AboveCore
       - Surface
       - Crust
+      - NonStartWorld
     forbiddenTraits:
-      - traits/MisalignedStart
       - expansion1::traits/Volcanoes
 
 fixedTraits:
@@ -54,6 +54,14 @@ startingBasePositionVertical:
   min: 0.2
   max: 0.2
 
+subworldMixingRules:
+ - name: (Mixing1)
+   minCount: 2
+   maxCount: 3
+ - name: (Mixing2)
+   minCount: 2
+   maxCount: 3
+
 # List all the subworld files to load
 subworldFiles:
   # Start ----------
@@ -68,6 +76,7 @@ subworldFiles:
     minCount: 4
   - name: expansion1::subworlds/wasteland/WastelandWorm
   - name: expansion1::subworlds/frozen/FrozenMedium
+    minCount: 2
   - name: subworlds/space/Space
   - name: expansion1::subworlds/space/SpaceWithAbyssaliteBorder
   - name: expansion1::subworlds/magma/BottomSmallNoUnobtanium
@@ -119,6 +128,8 @@ unknownCellsAllowedSubworlds:
     command: Replace
     subworldNames:
       - expansion1::subworlds/frozen/FrozenMedium
+      - (Mixing1)
+      - (Mixing2)
   # START ----------
   # Ring-1
   - tagcommand: DistanceFromTag
@@ -155,16 +166,9 @@ worldTemplateRules:
         tag: AtSurface
         minDistance: 1
         maxDistance: 1
-  # Guaranteed sulfur geyser
+  # Guaranteed sulfur geyser and volcano in the magma
   - names:
       - expansion1::geysers/liquid_sulfur
-    listRule: GuaranteeAll
-    priority: 200
-    allowedCellsFilter:
-      - command: Replace
-        zoneTypes: [MagmaCore]
-  # Guaranteed volcano
-  - names:
       - geysers/volcanohole
     listRule: GuaranteeAll
     priority: 200

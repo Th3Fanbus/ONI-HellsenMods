@@ -4,6 +4,22 @@ namespace HellsenWorldgen
 {
 	public static class MOD_STRINGS
 	{
+		public static class MOD_OPTIONS
+		{
+			public static class WORLDGEN
+			{
+				public static class CLEAN_NEUTRONIUM_EDGES
+				{
+					public static LocString NAME = "Clean Neutronium Edges";
+					public static LocString TOOLTIP = "Enable to make all worlds have \"clean\" Neutronium edges, i.e. perfectly flat with no protrusions. Thickness of the Neutronium is 2 cells, matching the shadow rendered by the game.";
+				}
+				public static class INJECT_ETHANOL_GEYSERS
+				{
+					public static LocString NAME = "Inject Ethanol Geysers";
+					public static LocString TOOLTIP = "Enable to inject Ethanol Geysers into worldgen. These usually spawn in the Tundra Moonlet.";
+				}
+			}
+		}
 		public static class SUBWORLDS
 		{
 			public static class FERRICCORE
@@ -88,22 +104,37 @@ namespace HellsenWorldgen
 				public static class MINICLUSTER_FLIPPEDSTART
 				{
 					public static LocString NAME = "Moonlet Cluster - Hellsen Flipped";
-					public static LocString DESC = "A cluster of visitable planetoids with an inverted starting world.";
+					public static LocString DESC = "A cluster of visitable moonlets with a small, inverted starting world.";
 				}
 				public static class VANILLA_ARIDIO_CLUSTER
 				{
 					public static LocString NAME = "Hellsen Aridio Cluster";
-					public static LocString DESC = "A cluster of planets with a hot foresty planetoid to start on.";
+					public static LocString DESC = "A cluster of visitable planetoids with a large, hot foresty starting world.";
 				}
 				public static class VANILLA_RIME_CLUSTER
 				{
 					public static LocString NAME = "Hellsen Rime Cluster";
-					public static LocString DESC = "A cluster of planets with a frozen planetoid to start on.";
+					public static LocString DESC = "A cluster of visitable planetoids with a large, frozen planetoid starting world.";
 				}
-				public static class CERES_SPACED_OUT_CLUSTER
+				public static class CERES_STANDARD_SPACED_OUT_CLUSTER
 				{
 					public static LocString NAME = "Hellsen Ceres Minor Cluster";
-					public static LocString DESC = "A cluster of visitable planetoids with an Ice Cave starting world.";
+					public static LocString DESC = "A cluster of visitable planetoids with a medium-sized, Ice Caves starting world.";
+				}
+				public static class CERES_MOONLET_STYLE_CLUSTER
+				{
+					public static LocString NAME = "Hellsen Ceres Minor Cluster";
+					public static LocString DESC = "A cluster of visitable planetoids with a medium-sized, Ice Caves starting world.";
+				}
+				public static class PREHISTORIC_CERES_SPACED_OUT_CLUSTER
+				{
+					public static LocString NAME = "Hellsen Relica Minor Cluster";
+					public static LocString DESC = "A cluster of visitable planetoids with a medium-sized, prehistoric starting world.";
+				}
+				public static class MINICLUSTER_PREHISTORIC_CERES
+				{
+					public static LocString NAME = "Moonlet Cluster - Hellsen Curio";
+					public static LocString DESC = "A cluster of visitable moonlets with a small, prehistoric starting world.";
 				}
 			}
 			public static class WORLDS
@@ -198,10 +229,20 @@ namespace HellsenWorldgen
 					public static LocString NAME = "Hellsen Ceres Minor";
 					public static LocString DESC = "A smaller frosty starting world with sub-zero temperatures throughout.\n\n<smallcaps>Duplicants who work in Ceres's sub-zero temperatures will need to wear or build warming equipment. Abundant natural fuel sources could lead to a well-powered colony.</smallcaps>";
 				}
+				public static class MINI_CERES
+				{
+					public static LocString NAME = "Hellsen Ceres Moonlet";
+					public static LocString DESC = "The smallest frosty starting world with sub-zero temperatures throughout.\n\n<smallcaps>Duplicants who work in Ceres's sub-zero temperatures will need to wear or build warming equipment. Abundant natural fuel sources could lead to a well-powered colony.</smallcaps>";
+				}
 				public static class PREHISTORIC_SPACED_OUT
 				{
 					public static LocString NAME = "Hellsen Relica Minor";
 					public static LocString DESC = "A smaller endangered starting world with abundant food resources.\n\n<smallcaps>Relica's biodiversity makes reliable food production more attainable for new colonies. Construction materials and fuels are also ample. Surface defence must be prioritized to minimize damage from an incoming impactor asteroid.</smallcaps>";
+				}
+				public static class MINI_PREHISTORIC
+				{
+					public static LocString NAME = "Hellsen Curio Moonlet";
+					public static LocString DESC = "The smallest endangered starting world with abundant food resources.\n\n<smallcaps>Relica's biodiversity makes reliable food production more attainable for new colonies. Construction materials and fuels are also ample. Surface defence must be prioritized to minimize damage from an incoming impactor asteroid.</smallcaps>";
 				}
 			}
 		}

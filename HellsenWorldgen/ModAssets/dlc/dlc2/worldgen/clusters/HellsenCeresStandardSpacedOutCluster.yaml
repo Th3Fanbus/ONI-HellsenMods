@@ -1,5 +1,5 @@
-name: STRINGS.HELLSEN.CLUSTER_NAMES.CERES_SPACED_OUT_CLUSTER.NAME
-description: STRINGS.HELLSEN.CLUSTER_NAMES.CERES_SPACED_OUT_CLUSTER.DESC
+name: STRINGS.HELLSEN.CLUSTER_NAMES.CERES_STANDARD_SPACED_OUT_CLUSTER.NAME
+description: STRINGS.HELLSEN.CLUSTER_NAMES.CERES_STANDARD_SPACED_OUT_CLUSTER.DESC
 welcomeMessage: STRINGS.UI.WELCOMEMESSAGEBODY_DLC2_CERES
 dlcIdFrom: DLC2_ID
 requiredDlcIds: [EXPANSION1_ID, DLC2_ID]
@@ -59,6 +59,44 @@ worldPlacements:
   # -----------------------------------------------------------------------------------------
   # Outer Worlds
   # -----------------------------------------------------------------------------------------
+  - world: expansion1::worlds/HellsenMoonletMarshy # Isoresin renewable
+    buffer: 2
+    allowedRings:
+      min: 6
+      max: 12
+    worldMixing:
+      requiredTags:
+        - Mixing
+        - SmallWorld
+      forbiddenTags:
+        - Challenge
+      additionalWorldTemplateRules:
+        - names:
+            - expansion1::poi/worldmixing/sap_tree_room # Experiment 52B
+          listRule: GuaranteeAll
+          priority: 500
+          allowExtremeTemperatureOverlap: true # has Abyssalite border
+          allowedCellsFilter:
+            - command: All
+            - command: ExceptWith
+              tagcommand: AtTag
+              tag: NoGlobalFeatureSpawning
+            - command: ExceptWith
+              tagcommand: AtTag
+              tag: NoMixingTemplateSpawning
+        - names:
+            - expansion1::geysers/molten_tungsten_compact
+          listRule: GuaranteeAll
+          priority: 150
+          allowedCellsFilter:
+            - command: All
+            - command: ExceptWith
+              tagcommand: AtTag
+              tag: NoGlobalFeatureSpawning
+            - command: ExceptWith
+              tagcommand: AtTag
+              tag: NoMixingTemplateSpawning
+  # -----------------------------------------------------------------------------------------
   - world: expansion1::worlds/HellsenMoonletTundra # Fullerene renewable
     buffer: 2
     allowedRings:
@@ -89,44 +127,6 @@ worldPlacements:
             - expansion1::poi/genericGravitas/poi_gift_shop # artifacts
           listRule: GuaranteeAll
           priority: 200
-          allowedCellsFilter:
-            - command: All
-            - command: ExceptWith
-              tagcommand: AtTag
-              tag: NoGlobalFeatureSpawning
-            - command: ExceptWith
-              tagcommand: AtTag
-              tag: NoMixingTemplateSpawning
-  # -----------------------------------------------------------------------------------------
-  - world: expansion1::worlds/HellsenMoonletMarshy # Isoresin renewable
-    buffer: 2
-    allowedRings:
-      min: 6
-      max: 12
-    worldMixing:
-      requiredTags:
-        - Mixing
-        - SmallWorld
-      forbiddenTags:
-        - Challenge
-      additionalWorldTemplateRules:
-        - names:
-            - expansion1::poi/worldmixing/sap_tree_room # Experiment 52B
-          listRule: GuaranteeAll
-          priority: 500
-          allowExtremeTemperatureOverlap: true # has Abyssalite border
-          allowedCellsFilter:
-            - command: All
-            - command: ExceptWith
-              tagcommand: AtTag
-              tag: NoGlobalFeatureSpawning
-            - command: ExceptWith
-              tagcommand: AtTag
-              tag: NoMixingTemplateSpawning
-        - names:
-            - expansion1::geysers/molten_tungsten_compact
-          listRule: GuaranteeAll
-          priority: 150
           allowedCellsFilter:
             - command: All
             - command: ExceptWith
@@ -226,7 +226,7 @@ worldPlacements:
               tagcommand: AtTag
               tag: NoMixingTemplateSpawning
   # -----------------------------------------------------------------------------------------
-  - world: expansion1::worlds/HellsenMoonletTinyRegolith # Meteors, voles, regolith
+  - world: expansion1::worlds/HellsenMoonletWideRegolith # Meteors, voles, regolith
     buffer: 2
     allowedRings:
       min: 6

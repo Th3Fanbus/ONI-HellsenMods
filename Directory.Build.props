@@ -10,12 +10,17 @@
 		<!--<ResolveAssemblyReferencesSilent>true</ResolveAssemblyReferencesSilent>-->
 	</PropertyGroup>
 
-	<!--C# Language Version-->
+	<!-- C# Language Version -->
 	<PropertyGroup>
 		<RootNamespace>OxygenNotIncluded</RootNamespace>
 		<Nullable>enable</Nullable>
-		<!--<LangVersion>12.0</LangVersion>-->
 		<LangVersion>preview</LangVersion>
+	</PropertyGroup>
+
+	<!-- Build Flags -->
+	<PropertyGroup>
+		<!--Marks Deprecated warnings as errors-->
+		<WarningsAsErrors>CS0618,CS0612</WarningsAsErrors>
 	</PropertyGroup>
 
 	<!-- Build Properties -->
@@ -65,8 +70,12 @@
 		<JanuaryHotfix3>652372</JanuaryHotfix3>
 		<FebruaryQOL_Beta>659075</FebruaryQOL_Beta>
 		<FebruaryQOL_Hotfix3>661174</FebruaryQOL_Hotfix3>
-		<!--Latest-->
-		<LatestVersion>663500</LatestVersion>
+		<PrehistoricRelease>674504</PrehistoricRelease>
+		<QOL2025NovBeta>699556</QOL2025NovBeta>
+		<QOL2025NovRelease>700386</QOL2025NovRelease>
+		<!--<TargetGameVersion>$(QOL2025NovRelease)</TargetGameVersion>-->
+		<!-- Latest -->
+		<LatestVersion>707956</LatestVersion>
 	</PropertyGroup>
 
 	<!--Copyright notice-->
@@ -77,13 +86,20 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<!--Normal Versions of the main dlls-->
+		<!-- Normal Versions of the main dlls -->
 		<AssemblyNormal>$(GameLibsFolder)/Assembly-CSharp.dll</AssemblyNormal>
 		<AssemblyFirstpassNormal>$(GameLibsFolder)/Assembly-CSharp-firstpass.dll</AssemblyFirstpassNormal>
-		<!--Publicized Versions of the main dlls, everything here is made public-->
+		<!-- Publicised Versions of the main dlls, everything here is made public -->
 		<AssemblyPublicized>$(SolutionDir)/PublicisedAssembly/Assembly-CSharp_public.dll</AssemblyPublicized>
 		<AssemblyFirstpassPublicized>$(SolutionDir)/PublicisedAssembly/Assembly-CSharp-firstpass_public.dll</AssemblyFirstpassPublicized>
 	</PropertyGroup>
+
+	<ItemGroup Condition="'$(IsPacked)' == 'true'">
+		<PackageReference Include="ILRepack.Lib.MSBuild.Task" Version="*">
+			<!--<PrivateAssets>all</PrivateAssets>-->
+			<!--<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>-->
+		</PackageReference>
+	</ItemGroup>
 
 	<ItemGroup Condition="'$(GenerateMetadata)' == 'true' ">
 		<PackageReference Include="Cairath.ONIMetadataFileGenerator" Version="1.0.0">
@@ -91,44 +107,40 @@
 		</PackageReference>
 	</ItemGroup>
 
-	<ItemGroup Condition="'$(IsPacked)' == 'true'">
-		<!--<PackageReference Include="ILRepack.Lib.MSBuild.Task" Version="2.0.18.2" />-->
-		<PackageReference Include="ILRepack.Lib.MSBuild.Task" Version="2.0.40" />
-	</ItemGroup>
-
 	<ItemGroup>
+		<!-- Workaround to reduce warnings when targeting NetStandard2.1 -->
 		<Reference Include="System.IO.Compression, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-			<SpecificVersion>True</SpecificVersion>
+			<SpecificVersion>true</SpecificVersion>
 		</Reference>
 		<Reference Include="Assembly-CSharp">
-			<!--Publicized version, run "Clean" on the 1_CycleComma project once to generate this-->
+			<!--Publicised version, run "Clean" on the 1_CycleComma project once to generate this-->
 			<HintPath>$(AssemblyPublicized)</HintPath>
-			<Private>False</Private>
+			<Private>false</Private>
 		</Reference>
 		<Reference Include="Assembly-CSharp-firstpass">
-			<!--Publicized version, run "Clean" on the 1_CycleComma project once to generate this-->
+			<!--Publicised version, run "Clean" on the 1_CycleComma project once to generate this-->
 			<HintPath>$(AssemblyFirstpassPublicized)</HintPath>
-			<Private>False</Private>
+			<Private>false</Private>
 		</Reference>
 		<Reference Include="0Harmony">
 			<HintPath>$(GameLibsFolder)/0Harmony.dll</HintPath>
-			<Private>False</Private>
+			<Private>false</Private>
 		</Reference>
 		<Reference Include="FMODUnity">
 			<HintPath>$(GameLibsFolder)/FMODUnity.dll</HintPath>
-			<Private>False</Private>
+			<Private>false</Private>
 		</Reference>
 		<Reference Include="UnityEngine">
 			<HintPath>$(GameLibsFolder)/UnityEngine.dll</HintPath>
-			<Private>False</Private>
+			<Private>false</Private>
 		</Reference>
 		<Reference Include="UnityEngine.CoreModule">
 			<HintPath>$(GameLibsFolder)/UnityEngine.CoreModule.dll</HintPath>
-			<Private>False</Private>
+			<Private>false</Private>
 		</Reference>
 		<Reference Include="Newtonsoft.Json">
 			<HintPath>$(GameLibsFolder)/Newtonsoft.Json.dll</HintPath>
-			<Private>False</Private>
+			<Private>false</Private>
 		</Reference>
 		<Reference Include="Unity.TextMeshPro">
 			<HintPath>$(GameLibsFolder)/Unity.TextMeshPro.dll</HintPath>

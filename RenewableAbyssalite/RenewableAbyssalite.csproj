@@ -14,6 +14,7 @@
 		<IsMod>true</IsMod>
 		<GenerateMetadata>true</GenerateMetadata>
 		<IsPacked>true</IsPacked>
+		<!--<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>-->
 	</PropertyGroup>
 
 	<!-- Mod Info -->
