@@ -22,7 +22,7 @@
 		<ModName>Hellsen Power Tweaks</ModName>
 		<ModDescription>Hellsen power tweaks</ModDescription>
 		<SupportedContent>ALL</SupportedContent>
-		<MinimumSupportedBuild>$(LatestVersion)</MinimumSupportedBuild>
+		<MinimumSupportedBuild>$(TargetGameVersion)</MinimumSupportedBuild>
 	</PropertyGroup>
 
 	<ItemGroup>

@@ -22,7 +22,7 @@
 		<ModName>Temperature Resistant Pips</ModName>
 		<ModDescription>Increase Pips' temperature range to ease pip planting in extreme temperatures</ModDescription>
 		<SupportedContent>ALL</SupportedContent>
-		<MinimumSupportedBuild>$(LatestVersion)</MinimumSupportedBuild>
+		<MinimumSupportedBuild>$(TargetGameVersion)</MinimumSupportedBuild>
 	</PropertyGroup>
 
 	<ItemGroup>

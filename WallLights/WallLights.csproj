@@ -22,7 +22,7 @@
 		<ModName>Wall Lights</ModName>
 		<ModDescription>Just some wall-mounted lights</ModDescription>
 		<SupportedContent>ALL</SupportedContent>
-		<MinimumSupportedBuild>$(LatestVersion)</MinimumSupportedBuild>
+		<MinimumSupportedBuild>$(TargetGameVersion)</MinimumSupportedBuild>
 	</PropertyGroup>
 
 	<ItemGroup>

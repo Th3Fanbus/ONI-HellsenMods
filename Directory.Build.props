@@ -73,9 +73,9 @@
 		<PrehistoricRelease>674504</PrehistoricRelease>
 		<QOL2025NovBeta>699556</QOL2025NovBeta>
 		<QOL2025NovRelease>700386</QOL2025NovRelease>
-		<!--<TargetGameVersion>$(QOL2025NovRelease)</TargetGameVersion>-->
+		<QOL2026MarchRelease>719533</QOL2026MarchRelease>
 		<!-- Latest -->
-		<LatestVersion>707956</LatestVersion>
+		<TargetGameVersion>$(QOL2026MarchRelease)</TargetGameVersion>
 	</PropertyGroup>
 
 	<!--Copyright notice-->
@@ -99,6 +99,10 @@
 			<!--<PrivateAssets>all</PrivateAssets>-->
 			<!--<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>-->
 		</PackageReference>
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(IsMod)' == 'true'">
+		<PackageReference Include="Lib.Harmony.Ref" Version="2.4.2"/>
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(GenerateMetadata)' == 'true' ">

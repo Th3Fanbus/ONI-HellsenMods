@@ -22,7 +22,7 @@
 		<ModName>Hellsen Worldgen</ModName>
 		<ModDescription>Hellsen Worldgen stuff</ModDescription>
 		<SupportedContent>EXPANSION1_ID</SupportedContent>
-		<MinimumSupportedBuild>$(LatestVersion)</MinimumSupportedBuild>
+		<MinimumSupportedBuild>$(TargetGameVersion)</MinimumSupportedBuild>
 	</PropertyGroup>
 
 	<ItemGroup>

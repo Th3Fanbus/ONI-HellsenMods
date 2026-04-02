@@ -22,7 +22,7 @@
 		<ModName>Renewable Abyssalite</ModName>
 		<ModDescription>Make Abyssalite renewable</ModDescription>
 		<SupportedContent>ALL</SupportedContent>
-		<MinimumSupportedBuild>$(LatestVersion)</MinimumSupportedBuild>
+		<MinimumSupportedBuild>$(TargetGameVersion)</MinimumSupportedBuild>
 	</PropertyGroup>
 
 	<ItemGroup>
