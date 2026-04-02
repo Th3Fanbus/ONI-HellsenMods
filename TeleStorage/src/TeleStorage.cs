@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text;
-using UnityEngine;
 
 namespace TeleStorage
 {
@@ -13,9 +12,9 @@ namespace TeleStorage
 	{
 		private static StatusItem? filterStatusItem = null;
 
-		[SerializeField]
 		public ConduitType Type;
 
+		/* TODO: Figure out a way to initialise this properly */
 		[Serialize]
 		public float Flow = 100000f;
 
@@ -34,7 +33,7 @@ namespace TeleStorage
 		{
 			base.OnPrefabInit();
 			filterable = GetComponent<Filterable>();
-			InitializeStatusItems();
+			InitialiseStatusItems();
 		}
 
 		public override void OnSpawn()
@@ -51,13 +50,13 @@ namespace TeleStorage
 			filterable.onFilterChanged += new Action<Tag>(OnFilterChanged);
 			GetComponent<KSelectable>().SetStatusItem(Db.Get().StatusItemCategories.Main, filterStatusItem, this);
 
-			TeleStorageData.Instance.storageContainers.Add(this);
+			TeleStorageData.Instance?.storageContainers.Add(this);
 		}
 
 		public override void OnCleanUp()
 		{
 			Conduit.GetFlowManager(Type).RemoveConduitUpdater(ConduitUpdate);
-			TeleStorageData.Instance.storageContainers.Remove(this);
+			TeleStorageData.Instance?.storageContainers.Remove(this);
 			base.OnCleanUp();
 		}
 
@@ -101,7 +100,7 @@ namespace TeleStorage
 			OnFilterChanged(FilteredTag);
 		}
 
-		private void InitializeStatusItems()
+		private void InitialiseStatusItems()
 		{
 			filterStatusItem ??= new StatusItem("Filter", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, false, OverlayModes.LiquidConduits.ID, true, 129022) {
 				resolveStringCallback = (str, data) => {
@@ -126,7 +125,7 @@ namespace TeleStorage
 				return;
 			}
 			ConduitFlow.ConduitContents inputContents = flowManager.GetContents(inputCell);
-			TeleStorageData.AddOrUpdateStored(Type, inputContents.element, (element, inputStored) => {
+			TeleStorageData.Instance?.AddOrUpdateStored(Type, inputContents.element, (element, inputStored) => {
 				if (inputContents.mass > 0.0f && !float.IsNaN(inputStored.temperature) && !float.IsNaN(inputContents.temperature)) {
 					inputStored.temperature = GameUtil.GetFinalTemperature(inputStored.temperature, inputStored.mass, inputContents.temperature, inputContents.mass);
 					inputStored.mass += inputContents.mass;
@@ -141,7 +140,7 @@ namespace TeleStorage
 			if (!IsOperational) {
 				return;
 			}
-			TeleStorageData.AddOrUpdateStored(Type, FilteredElement, (element, outputStored) => {
+			TeleStorageData.Instance?.AddOrUpdateStored(Type, FilteredElement, (element, outputStored) => {
 				float possibleOutput = Math.Min(outputStored.mass, Flow / TeleStorageFlowControl.GramsPerKilogram);
 				if (possibleOutput > 0.0f) {
 					var delta = flowManager.AddElement(outputCell, FilteredElement, possibleOutput, outputStored.temperature, 0, 0);
@@ -154,7 +153,7 @@ namespace TeleStorage
 
 		public int AddStorageItems(CollapsibleDetailContentPanel targetPanel, int num = 0)
 		{
-			foreach (KeyValuePair<SimHashes, StoredItem> pair in TeleStorageData.GetStoredElements(Type)) {
+			foreach (KeyValuePair<SimHashes, StoredItem> pair in TeleStorageData.Instance?.GetStoredElements(Type) ?? new()) {
 				SimHashes element = pair.Key;
 				StoredItem item = pair.Value;
 				if (item.mass > 0.0f) {

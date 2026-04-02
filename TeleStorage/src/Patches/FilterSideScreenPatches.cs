@@ -1,7 +1,7 @@
 ﻿using HarmonyLib;
 using UnityEngine;
 
-namespace TeleStorage
+namespace TeleStorage.Patches
 {
 	public class FilterSideScreenPatches
 	{

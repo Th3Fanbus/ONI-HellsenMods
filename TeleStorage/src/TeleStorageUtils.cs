@@ -33,5 +33,12 @@ namespace TeleStorage
 			ConduitType.Solid => OverlayModes.SolidConveyor.ID,
 			_ => OverlayModes.None.ID,
 		};
+
+		public static HashSet<Tag> GetOverlayTags(ConduitType type) => type switch {
+			ConduitType.Gas => OverlayScreen.GasVentIDs,
+			ConduitType.Liquid => OverlayScreen.LiquidVentIDs,
+			ConduitType.Solid => OverlayScreen.SolidConveyorIDs,
+			_ => [],
+		};
 	}
 }

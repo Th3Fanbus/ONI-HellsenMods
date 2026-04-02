@@ -14,7 +14,6 @@ public static partial class HellsenComponents
 public class HellsenWarpPortal : WarpPortal
 {
 	[Serialize]
-	[SerializeField]
 	public int targetID = -1;
 
 	public override void OnSpawn()

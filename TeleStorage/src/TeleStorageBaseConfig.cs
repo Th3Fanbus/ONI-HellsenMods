@@ -1,5 +1,4 @@
-﻿using TUNING;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace TeleStorage
 {
@@ -45,23 +44,22 @@ namespace TeleStorage
 				width: tele.width,
 				height: tele.height,
 				anim: tele.anim,
-				hitpoints: BUILDINGS.HITPOINTS.TIER2,
-				construction_time: BUILDINGS.CONSTRUCTION_TIME_SECONDS.TIER4,
+				hitpoints: TUNING.BUILDINGS.HITPOINTS.TIER2,
+				construction_time: TUNING.BUILDINGS.CONSTRUCTION_TIME_SECONDS.TIER4,
 				construction_mass: [
-					BUILDINGS.CONSTRUCTION_MASS_KG.TIER4[0],
-					BUILDINGS.CONSTRUCTION_MASS_KG.TIER3[0],
-					BUILDINGS.CONSTRUCTION_MASS_KG.TIER5[0],
+					TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER4[0],
+					TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER3[0],
+					TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER5[0],
 				],
 				construction_materials: [
-					"Steel",
-					"Plastic",
-					"Diamond",
+					SimHashes.Steel.ToString(),
+					TUNING.MATERIALS.PLASTIC,
+					SimHashes.Diamond.ToString(),
 				],
-				melting_point: BUILDINGS.MELTING_POINT_KELVIN.TIER0,
+				melting_point: TUNING.BUILDINGS.MELTING_POINT_KELVIN.TIER0,
 				build_location_rule: BuildLocationRule.Anywhere,
-				decor: BUILDINGS.DECOR.PENALTY.TIER1,
-				noise: NOISE_POLLUTION.NOISY.TIER0,
-				0.2f
+				decor: TUNING.BUILDINGS.DECOR.PENALTY.TIER1,
+				noise: TUNING.NOISE_POLLUTION.NOISY.TIER0
 			);
 			def.PermittedRotations = PermittedRotations.R360;
 			def.InputConduitType = tele.conduitType;
@@ -71,6 +69,8 @@ namespace TeleStorage
 			def.AudioCategory = "HollowMetal";
 			def.UtilityInputOffset = tele.utilityInputOffset;
 			def.UtilityOutputOffset = tele.utilityOutputOffset;
+			GeneratedBuildings.RegisterWithOverlay(TeleStorageUtils.GetOverlayTags(tele.conduitType), tele.id);
+			def.AddSearchTerms(STRINGS.SEARCH_TERMS.STORAGE);
 			return def;
 		}
 

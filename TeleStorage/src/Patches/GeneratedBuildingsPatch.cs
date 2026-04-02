@@ -1,6 +1,6 @@
 ﻿using HarmonyLib;
 
-namespace TeleStorage
+namespace TeleStorage.Patches
 {
 	public class GeneratedBuildingsPatch
 	{

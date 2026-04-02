@@ -1,7 +1,7 @@
 ﻿using HarmonyLib;
 using System;
 
-namespace TeleStorage
+namespace TeleStorage.Patches
 {
 	public class KSerializationManagerPatch
 	{

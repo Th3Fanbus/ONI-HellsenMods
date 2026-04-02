@@ -16,7 +16,6 @@
 		{
 			ConduitFlow flowManager = Conduit.GetFlowManager(GetComponent<TeleStorage>().Type);
 			return (flowManager?.MaxMass ?? 1) * GramsPerKilogram * Multiplier;
-			//return Traverse.Create(flowManager).Field("MaxMass").GetValue<float>() * GramsPerKilogram * Multiplier;
 		}
 
 		public float GetSliderValue(int index) => GetComponent<TeleStorage>().Flow;

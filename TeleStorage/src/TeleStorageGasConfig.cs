@@ -6,7 +6,7 @@
 
 		public override TeleStorageProperties GetProperties() => new(
 			id: Id,
-			anim: "gasstorage_kanim",
+			anim: "telestorage_gas_kanim",
 			width: 5,
 			height: 3,
 			conduitType: ConduitType.Gas,

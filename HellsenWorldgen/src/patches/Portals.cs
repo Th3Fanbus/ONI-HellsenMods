@@ -17,14 +17,14 @@ namespace HellsenWorldgen
 			if (HellsenConfig.DUMP_PORTAL_INFO) {
 #pragma warning disable CS0162 // Unreachable code detected
 				RexLogger.Log("HELL: Transmitters:");
-				WarpPortal[] transmitterArray = Object.FindObjectsOfType<WarpPortal>();
+				WarpPortal[] transmitterArray = RexUtils.FindObjectsOfType<WarpPortal>();
 				foreach (WarpPortal transmitter in transmitterArray) {
 					int id = transmitter.GetMyWorldId();
 					WorldContainer world = ClusterManager.Instance.GetWorld(id);
 					RexLogger.Log($"HELL:\t - id: {id}, world: {world}, name: {world.worldName}, type: {world.worldType}");
 				}
 				RexLogger.Log("HELL: Receivers:");
-				WarpReceiver[] receiverArray = Object.FindObjectsOfType<WarpReceiver>();
+				WarpReceiver[] receiverArray = RexUtils.FindObjectsOfType<WarpReceiver>();
 				foreach (WarpReceiver receiver in receiverArray) {
 					int id = receiver.GetMyWorldId();
 					WorldContainer world = ClusterManager.Instance.GetWorld(id);
@@ -44,7 +44,7 @@ namespace HellsenWorldgen
 				SaveGame.Instance.GetComponent<WorldGenSpawner>().SpawnTag(WarpReceiverConfig.ID);
 
 				int fallbackID = -1;
-				WarpReceiver[] array = Object.FindObjectsOfType<WarpReceiver>();
+				WarpReceiver[] array = RexUtils.FindObjectsOfType<WarpReceiver>();
 				foreach (WarpReceiver receiver in array) {
 					if (receiver.GetType() != typeof(WarpReceiver)) {
 						continue;
@@ -89,7 +89,7 @@ namespace HellsenWorldgen
 				DumpPortals();
 
 				WarpReceiver? warpReceiver = null;
-				WarpReceiver[] array = Object.FindObjectsOfType<WarpReceiver>();
+				WarpReceiver[] array = RexUtils.FindObjectsOfType<WarpReceiver>();
 				foreach (WarpReceiver receiver in array) {
 					if (receiver.GetType() != typeof(WarpReceiver)) {
 						continue;
@@ -102,7 +102,7 @@ namespace HellsenWorldgen
 
 				if (warpReceiver.IsNull()) {
 					SaveGame.Instance.GetComponent<WorldGenSpawner>().SpawnTag(WarpReceiverConfig.ID);
-					warpReceiver = Object.FindObjectOfType<WarpReceiver>();
+					warpReceiver = Object.FindAnyObjectByType<WarpReceiver>();
 				}
 
 				if (warpReceiver.IsNull()) {

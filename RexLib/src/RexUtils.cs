@@ -17,9 +17,14 @@ namespace RexLib
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static T? GetValid<T>(this T? obj) where T : class? => obj == null ? null : obj;
 #pragma warning restore IDE0029
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static bool IsNull(this UnityEngine.Object? obj) => obj == null;
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static bool IsValid(this UnityEngine.Object? obj) => !IsNull(obj);
+
 		public static bool IsNull(this WorkerBase? worker) => worker == null || worker.HasTag(GameTags.Dying) || worker.HasTag(GameTags.Dead);
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static bool IsValid(this WorkerBase? worker) => !IsNull(worker);
 
 		/* When this function returns true, the annotated output parameter is not null */
@@ -31,6 +36,8 @@ namespace RexLib
 	{
 		public static string AssemblyName => Assembly.GetExecutingAssembly().GetName().Name;
 		public static string ModPath => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
+		public static T[] FindObjectsOfType<T>(FindObjectsSortMode mode = FindObjectsSortMode.None) where T : UnityEngine.Object => UnityEngine.Object.FindObjectsByType<T>(mode);
 
 		public static IEnumerable<MethodBase> MethodFromTypes(string methodName, params Type?[] targets)
 			=> targets.Select(tgt => AccessTools.Method(tgt, methodName)).Where(tgt => tgt is not null);

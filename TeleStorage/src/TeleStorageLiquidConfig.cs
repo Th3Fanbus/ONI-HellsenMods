@@ -6,7 +6,7 @@
 
 		public override TeleStorageProperties GetProperties() => new(
 			id: Id,
-			anim: "liquidreservoir_kanim",
+			anim: "telestorage_liquid_kanim",
 			width: 2,
 			height: 3,
 			conduitType: ConduitType.Liquid,
