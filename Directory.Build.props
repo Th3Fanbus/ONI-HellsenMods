@@ -116,6 +116,9 @@
 		<Reference Include="System.IO.Compression, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
 			<SpecificVersion>true</SpecificVersion>
 		</Reference>
+		<Reference Include="System.Net.Http, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+			<SpecificVersion>true</SpecificVersion>
+		</Reference>
 		<Reference Include="Assembly-CSharp">
 			<!--Publicised version, run "Clean" on the 1_CycleComma project once to generate this-->
 			<HintPath>$(AssemblyPublicized)</HintPath>
