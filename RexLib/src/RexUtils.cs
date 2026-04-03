@@ -37,6 +37,7 @@ namespace RexLib
 		public static string AssemblyName => Assembly.GetExecutingAssembly().GetName().Name;
 		public static string ModPath => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static T[] FindObjectsOfType<T>(FindObjectsSortMode mode = FindObjectsSortMode.None) where T : UnityEngine.Object => UnityEngine.Object.FindObjectsByType<T>(mode);
 
 		public static IEnumerable<MethodBase> MethodFromTypes(string methodName, params Type?[] targets)
