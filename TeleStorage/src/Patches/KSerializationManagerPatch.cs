@@ -3,6 +3,7 @@ using System;
 
 namespace TeleStorage.Patches
 {
+#if false
 	public class KSerializationManagerPatch
 	{
 		[HarmonyPatch(typeof(KSerialization.Manager), nameof(KSerialization.Manager.GetType), [typeof(string)])]
@@ -16,4 +17,5 @@ namespace TeleStorage.Patches
 			}
 		}
 	}
+#endif
 }

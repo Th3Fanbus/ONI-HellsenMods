@@ -2,16 +2,14 @@
 {
 	public class TeleStorageGasConfig : TeleStorageBaseConfig
 	{
-		public const string Id = "TeleStorageGas";
+		public const string ID = "TeleStorageGas";
 
-		public override TeleStorageProperties GetProperties() => new(
-			id: Id,
-			anim: "telestorage_gas_kanim",
-			width: 5,
-			height: 3,
-			conduitType: ConduitType.Gas,
-			utilityInputOffset: new CellOffset(1, 2),
-			utilityOutputOffset: new CellOffset(0, 0)
-		);
+		public override string Id => ID;
+		public override string Anim => "telestorage_gas_kanim";
+		public override int Width => 5;
+		public override int Height => 3;
+		public override ConduitType ConduitType => ConduitType.Gas;
+		public override CellOffset UtilityInputOffset => new(1, 2);
+		public override CellOffset UtilityOutputOffset => new(0, 0);
 	}
 }

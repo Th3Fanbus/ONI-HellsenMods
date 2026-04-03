@@ -5,7 +5,10 @@
 		public const int GramsPerKilogram = 1000;
 		public const int Multiplier = 10;
 
-		public string SliderTitleKey => nameof(MOD_STRINGS.UI.UISIDESCREENS.TELESTORAGE.FLOW.TITLE);
+		public const string TITLE_KEY = "STRINGS.UI.UISIDESCREENS.TELESTORAGESIDESCREEN.TITLE";
+		public const string TOOLTIP_KEY = "STRINGS.UI.UISIDESCREENS.TELESTORAGESIDESCREEN.TOOLTIP";
+
+		public string SliderTitleKey => TITLE_KEY;
 
 		public string SliderUnits => STRINGS.UI.UNITSUFFIXES.MASS.GRAM + "/" + STRINGS.UI.UNITSUFFIXES.SECOND;
 
@@ -22,8 +25,8 @@
 
 		public void SetSliderValue(float percent, int index) => GetComponent<TeleStorage>().Flow = percent;
 
-		public string GetSliderTooltipKey(int index) => nameof(MOD_STRINGS.UI.UISIDESCREENS.TELESTORAGE.FLOW.TOOLTIP);
+		public string GetSliderTooltipKey(int index) => TOOLTIP_KEY;
 
-		public string GetSliderTooltip(int index) => Strings.Get(GetSliderTooltipKey(index));
+		public string GetSliderTooltip(int index) => Strings.Get(TOOLTIP_KEY);
 	}
 }

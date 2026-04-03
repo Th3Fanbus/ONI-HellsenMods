@@ -1,4 +1,5 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -20,25 +21,32 @@ namespace TeleStorage
 		public static Dictionary<K, V> FilterByType<K, V>(ConcurrentDictionary<K, V> input, System.Func<KeyValuePair<K, V>, bool> func)
 			=> input.ToArray().Where(func).ToDictionary(GetKey, GetValue);
 
+		public static IConduitFlow GetFlowManager(ConduitType type) => type switch {
+			ConduitType.Gas => Conduit.GetFlowManager(type),
+			ConduitType.Liquid => Conduit.GetFlowManager(type),
+			ConduitType.Solid => SolidConduit.GetFlowManager(),
+			_ => throw new ArgumentOutOfRangeException(),
+		};
+
 		public static Filterable.ElementState GetElementState(ConduitType type) => type switch {
 			ConduitType.Gas => Filterable.ElementState.Gas,
 			ConduitType.Liquid => Filterable.ElementState.Liquid,
 			ConduitType.Solid => Filterable.ElementState.Solid,
-			_ => Filterable.ElementState.None,
+			_ => throw new ArgumentOutOfRangeException(),
 		};
 
 		public static HashedString GetViewMode(ConduitType type) => type switch {
 			ConduitType.Gas => OverlayModes.GasConduits.ID,
 			ConduitType.Liquid => OverlayModes.LiquidConduits.ID,
 			ConduitType.Solid => OverlayModes.SolidConveyor.ID,
-			_ => OverlayModes.None.ID,
+			_ => throw new ArgumentOutOfRangeException(),
 		};
 
 		public static HashSet<Tag> GetOverlayTags(ConduitType type) => type switch {
 			ConduitType.Gas => OverlayScreen.GasVentIDs,
 			ConduitType.Liquid => OverlayScreen.LiquidVentIDs,
 			ConduitType.Solid => OverlayScreen.SolidConveyorIDs,
-			_ => [],
+			_ => throw new ArgumentOutOfRangeException(),
 		};
 	}
 }

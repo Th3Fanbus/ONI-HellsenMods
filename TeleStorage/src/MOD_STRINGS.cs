@@ -24,13 +24,10 @@
 		{
 			public static class UISIDESCREENS
 			{
-				public static class TELESTORAGE
+				public static class TELESTORAGESIDESCREEN
 				{
-					public static class FLOW
-					{
-						public static LocString TITLE = "Flow rate";
-						public static LocString TOOLTIP = "Flow rate";
-					}
+					public static LocString TITLE = "Flow rate";
+					public static LocString TOOLTIP = "Flow rate";
 				}
 			}
 		}

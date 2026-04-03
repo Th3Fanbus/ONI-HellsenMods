@@ -8,13 +8,17 @@ namespace TeleStorage.Patches
 		[HarmonyPatch(typeof(FilterSideScreen), nameof(FilterSideScreen.IsValidForTarget))]
 		public static class FilterSideScreen_IsValidForTarget
 		{
-			public static bool Prefix(GameObject target, FilterSideScreen __instance, ref bool __result)
+			public static void Postfix(FilterSideScreen __instance, GameObject target, ref bool __result)
 			{
-				if (target.TryGetComponent<TeleStorageFlowControl>(out _)) {
-					__result = !__instance.isLogicFilter;
-					return false;
+				if (__result || __instance.isLogicFilter) {
+					return;
 				}
-				return true;
+				if (target == null) {
+					return;
+				}
+				if (target.TryGetComponent<TeleStorageFlowControl>(out _) && target.TryGetComponent<Filterable>(out _)) {
+					__result = true;
+				}
 			}
 		}
 	}

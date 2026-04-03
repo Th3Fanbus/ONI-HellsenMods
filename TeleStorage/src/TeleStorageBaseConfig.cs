@@ -4,46 +4,21 @@ namespace TeleStorage
 {
 	public abstract class TeleStorageBaseConfig : IBuildingConfig
 	{
-		public readonly struct TeleStorageProperties
-		{
-			public readonly string id;
-			public readonly string anim;
-			public readonly int width;
-			public readonly int height;
-			public readonly ConduitType conduitType;
-			public readonly CellOffset utilityInputOffset;
-			public readonly CellOffset utilityOutputOffset;
-
-			public TeleStorageProperties(
-				string id,
-				string anim,
-				int width,
-				int height,
-				ConduitType conduitType,
-				CellOffset utilityInputOffset,
-				CellOffset utilityOutputOffset)
-			{
-				this.id = id;
-				this.anim = anim;
-				this.width = width;
-				this.height = height;
-				this.conduitType = conduitType;
-				this.utilityInputOffset = utilityInputOffset;
-				this.utilityOutputOffset = utilityOutputOffset;
-			}
-		};
-
-		public abstract TeleStorageProperties GetProperties();
+		public abstract string Id { get; }
+		public abstract string Anim { get; }
+		public abstract int Width { get; }
+		public abstract int Height { get; }
+		public abstract ConduitType ConduitType { get; }
+		public abstract CellOffset UtilityInputOffset { get; }
+		public abstract CellOffset UtilityOutputOffset { get; }
 
 		public override BuildingDef CreateBuildingDef()
 		{
-			TeleStorageProperties tele = GetProperties();
-
 			BuildingDef def = BuildingTemplates.CreateBuildingDef(
-				id: tele.id,
-				width: tele.width,
-				height: tele.height,
-				anim: tele.anim,
+				id: Id,
+				width: Width,
+				height: Height,
+				anim: Anim,
 				hitpoints: TUNING.BUILDINGS.HITPOINTS.TIER2,
 				construction_time: TUNING.BUILDINGS.CONSTRUCTION_TIME_SECONDS.TIER4,
 				construction_mass: [
@@ -62,25 +37,24 @@ namespace TeleStorage
 				noise: TUNING.NOISE_POLLUTION.NOISY.TIER0
 			);
 			def.PermittedRotations = PermittedRotations.R360;
-			def.InputConduitType = tele.conduitType;
-			def.OutputConduitType = tele.conduitType;
+			def.InputConduitType = ConduitType;
+			def.OutputConduitType = ConduitType;
 			def.Floodable = false;
-			def.ViewMode = TeleStorageUtils.GetViewMode(tele.conduitType);
+			def.ViewMode = TeleStorageUtils.GetViewMode(ConduitType);
 			def.AudioCategory = "HollowMetal";
-			def.UtilityInputOffset = tele.utilityInputOffset;
-			def.UtilityOutputOffset = tele.utilityOutputOffset;
-			GeneratedBuildings.RegisterWithOverlay(TeleStorageUtils.GetOverlayTags(tele.conduitType), tele.id);
+			def.UtilityInputOffset = UtilityInputOffset;
+			def.UtilityOutputOffset = UtilityOutputOffset;
+			GeneratedBuildings.RegisterWithOverlay(TeleStorageUtils.GetOverlayTags(ConduitType), Id);
 			def.AddSearchTerms(STRINGS.SEARCH_TERMS.STORAGE);
 			return def;
 		}
 
 		public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
 		{
-			TeleStorageProperties tele = GetProperties();
-
-			go.AddOrGet<Filterable>().filterElementState = TeleStorageUtils.GetElementState(tele.conduitType);
+			go.AddOrGet<Filterable>().filterElementState = TeleStorageUtils.GetElementState(ConduitType);
+			go.AddOrGet<CopyBuildingSettings>();
 			go.AddOrGet<TeleStorageFlowControl>();
-			go.AddOrGet<TeleStorage>().Type = tele.conduitType;
+			go.AddOrGet<TeleStorage>().Type = ConduitType;
 		}
 
 		public override void DoPostConfigurePreview(BuildingDef def, GameObject go) => GeneratedBuildings.RegisterSingleLogicInputPort(go);
@@ -91,12 +65,11 @@ namespace TeleStorage
 			GeneratedBuildings.RegisterSingleLogicInputPort(go);
 			go.AddOrGet<LogicOperationalController>();
 			go.AddOrGet<Operational>();
+			go.GetComponent<KPrefabID>().AddTag(GameTags.OverlayBehindConduits);
 
 			Object.DestroyImmediate(go.GetComponent<RequireInputs>());
 			Object.DestroyImmediate(go.GetComponent<ConduitConsumer>());
 			Object.DestroyImmediate(go.GetComponent<ConduitDispenser>());
-
-			BuildingTemplates.DoPostConfigure(go);
 		}
 	}
 }

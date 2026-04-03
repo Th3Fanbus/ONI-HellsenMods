@@ -1,7 +1,6 @@
 ﻿using KSerialization;
 using Newtonsoft.Json;
 using RexLib;
-using Steamworks;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -72,7 +71,7 @@ namespace TeleStorage
 		public string SerialisedData {
 			get {
 				try {
-					Debug.Log($"HELL: Serialising!");
+					Debug.Log($"HELL: Serialising save data!");
 					return JsonConvert.SerializeObject(MySaveData);
 				} catch (Exception ex) {
 					Debug.LogWarning($"HELL: Could not serialise save data: {ex}");
@@ -81,7 +80,7 @@ namespace TeleStorage
 			}
 			set {
 				try {
-					Debug.Log($"HELL: Deserialising!");
+					Debug.Log($"HELL: Deserialising save data!");
 					MySaveData = JsonConvert.DeserializeObject<SaveData>(value);
 				} catch (Exception ex) {
 					Debug.LogWarning($"HELL: Could not deserialise save data: {ex}");

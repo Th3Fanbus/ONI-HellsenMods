@@ -2,15 +2,16 @@
 using KSerialization;
 using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 using System.Text;
+using UnityEngine;
 
 namespace TeleStorage
 {
 	[SerializationConfig(MemberSerialization.OptIn)]
-	public class TeleStorage : KMonoBehaviour, ISaveLoadable
+	public class TeleStorage : KMonoBehaviour
 	{
-		private static StatusItem? filterStatusItem = null;
+		private static readonly StringBuilder builder = new(256);
+		private static StatusItem? filterStatusItem;
 
 		public ConduitType Type;
 
@@ -18,22 +19,44 @@ namespace TeleStorage
 		[Serialize]
 		public float Flow = 100000f;
 
-		[Serialize]
-		public Tag FilteredTag;
+		[MyCmpReq]
+		public Filterable? filterable;
 
-		private static readonly StringBuilder builder = new(128);
-
-		private Filterable filterable = new();
 		private int inputCell = -1;
 		private int outputCell = -1;
 
 		public SimHashes FilteredElement { get; private set; } = SimHashes.Void;
 
+		public static readonly EventSystem.IntraObjectHandler<TeleStorage> OnCopySettingsDelegate = new(static delegate (TeleStorage component, object data) {
+			component.OnCopySettings(data);
+		});
+
+		public void OnCopySettings(object data)
+		{
+			TeleStorage component = ((GameObject)data).GetComponent<TeleStorage>();
+			if (component != null) {
+				Flow = component.Flow;
+			}
+		}
+
 		public override void OnPrefabInit()
 		{
 			base.OnPrefabInit();
-			filterable = GetComponent<Filterable>();
+			Subscribe((int)GameHashes.CopySettings, OnCopySettingsDelegate);
 			InitialiseStatusItems();
+		}
+
+		private void InitialiseStatusItems()
+		{
+			filterStatusItem ??= new StatusItem("Filter", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, false, OverlayModes.LiquidConduits.ID) {
+				resolveStringCallback = (str, data) => {
+					str = data is TeleStorage tele && tele.IsValidFilter
+						? ElementLoader.FindElementByHash(tele.FilteredElement).name
+						: STRINGS.BUILDINGS.PREFABS.GASFILTER.ELEMENT_NOT_SPECIFIED;
+					return string.Format(STRINGS.BUILDINGS.PREFABS.GASFILTER.STATUS_ITEM, str);
+				},
+				conditionalOverlayCallback = new Func<HashedString, object, bool>((mode, data) => TeleStorageUtils.GetViewMode(Type) == mode)
+			};
 		}
 
 		public override void OnSpawn()
@@ -44,10 +67,12 @@ namespace TeleStorage
 			inputCell = building.GetUtilityInputCell();
 			outputCell = building.GetUtilityOutputCell();
 
-			Conduit.GetFlowManager(Type).AddConduitUpdater(ConduitUpdate);
+			TeleStorageUtils.GetFlowManager(Type).AddConduitUpdater(ConduitUpdate);
 
-			OnFilterChanged(ElementLoader.FindElementByHash(FilteredElement).tag);
-			filterable.onFilterChanged += new Action<Tag>(OnFilterChanged);
+			if (filterable != null) {
+				OnFilterChanged(filterable.SelectedTag);
+				filterable.onFilterChanged += new Action<Tag>(OnFilterChanged);
+			}
 			GetComponent<KSelectable>().SetStatusItem(Db.Get().StatusItemCategories.Main, filterStatusItem, this);
 
 			TeleStorageData.Instance?.storageContainers.Add(this);
@@ -55,22 +80,14 @@ namespace TeleStorage
 
 		public override void OnCleanUp()
 		{
-			Conduit.GetFlowManager(Type).RemoveConduitUpdater(ConduitUpdate);
+			TeleStorageUtils.GetFlowManager(Type).RemoveConduitUpdater(ConduitUpdate);
 			TeleStorageData.Instance?.storageContainers.Remove(this);
 			base.OnCleanUp();
 		}
 
-		private bool IsValidFilter {
-			get {
-				return (FilteredTag != null) && (FilteredElement != SimHashes.Void) && (FilteredElement != SimHashes.Vacuum);
-			}
-		}
+		private bool IsValidFilter => FilteredElement != SimHashes.Void && FilteredElement != SimHashes.Vacuum;
 
-		private bool IsOperational {
-			get {
-				return IsValidFilter && GetComponent<Operational>().IsOperational;
-			}
-		}
+		private bool IsOperational => IsValidFilter && GetComponent<Operational>().IsOperational;
 
 		public void FireRefresh()
 		{
@@ -83,40 +100,12 @@ namespace TeleStorage
 
 		private void OnFilterChanged(Tag tag)
 		{
-			FilteredTag = tag;
-			Element element = ElementLoader.GetElement(FilteredTag);
+			Element element = ElementLoader.GetElement(tag);
 			if (element != null) {
 				FilteredElement = element.id;
 			}
 			GetComponent<KSelectable>().ToggleStatusItem(Db.Get().BuildingStatusItems.NoFilterElementSelected, !IsValidFilter, null);
 		}
-
-		[OnDeserialized]
-		private void OnDeserialized()
-		{
-			if (ElementLoader.GetElement(FilteredTag) == null)
-				return;
-			filterable.SelectedTag = FilteredTag;
-			OnFilterChanged(FilteredTag);
-		}
-
-		private void InitialiseStatusItems()
-		{
-			filterStatusItem ??= new StatusItem("Filter", "BUILDING", "", StatusItem.IconType.Info, NotificationType.Neutral, false, OverlayModes.LiquidConduits.ID, true, 129022) {
-				resolveStringCallback = (str, data) => {
-					if (data is not TeleStorage infiniteSource || infiniteSource.FilteredElement == SimHashes.Void) {
-						str = string.Format(STRINGS.BUILDINGS.PREFABS.GASFILTER.STATUS_ITEM, STRINGS.BUILDINGS.PREFABS.GASFILTER.ELEMENT_NOT_SPECIFIED);
-					} else {
-						Element elementByHash = ElementLoader.FindElementByHash(infiniteSource.FilteredElement);
-						str = string.Format(STRINGS.BUILDINGS.PREFABS.GASFILTER.STATUS_ITEM, elementByHash.name);
-					}
-					return str;
-				},
-				conditionalOverlayCallback = new Func<HashedString, object, bool>(ShowInUtilityOverlay)
-			};
-		}
-
-		private bool ShowInUtilityOverlay(HashedString mode, object data) => TeleStorageUtils.GetViewMode(Type) == mode;
 
 		private void ConduitUpdate(float dt)
 		{
@@ -143,7 +132,7 @@ namespace TeleStorage
 			TeleStorageData.Instance?.AddOrUpdateStored(Type, FilteredElement, (element, outputStored) => {
 				float possibleOutput = Math.Min(outputStored.mass, Flow / TeleStorageFlowControl.GramsPerKilogram);
 				if (possibleOutput > 0.0f) {
-					var delta = flowManager.AddElement(outputCell, FilteredElement, possibleOutput, outputStored.temperature, 0, 0);
+					float delta = flowManager.AddElement(outputCell, FilteredElement, possibleOutput, outputStored.temperature, 0, 0);
 					outputStored.mass -= delta;
 					TeleStorageData.Instance.FireRefresh();
 				}
