@@ -40,18 +40,38 @@ namespace RexLib
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static T[] FindObjectsOfType<T>(FindObjectsSortMode mode = FindObjectsSortMode.None) where T : UnityEngine.Object => UnityEngine.Object.FindObjectsByType<T>(mode);
 
-		public static IEnumerable<MethodBase> MethodFromTypes(string methodName, params Type?[] targets)
-			=> targets.Select(tgt => AccessTools.Method(tgt, methodName)).Where(tgt => tgt is not null);
+		public static IEnumerable<MethodBase> MethodFromTypes(string method_name, params Type?[] targets)
+			=> targets.Select(tgt => AccessTools.Method(tgt, method_name)).Where(method => method is not null);
 
-		private static Texture2D LoadTexture(string assetPath)
+		public static HashedString GetCategoryForBuilding(string building_id, HashedString fallback_category)
 		{
-			string filepath = Path.Combine(ModPath, assetPath);
-			Texture2D texture = new(1, 1);
-			if (File.Exists(filepath)) {
-				Debug.Log($"Found texture at: {filepath}");
-				texture.LoadImage(File.ReadAllBytes(filepath));
+			try {
+				return TUNING.BUILDINGS.PLANORDER.First(info => info.buildingAndSubcategoryData.Exists(pair => pair.Key == building_id)).category;
+			} catch (InvalidOperationException) {
+				return fallback_category;
+			}
+		}
+
+		public static void AddBuildingToPlanScreenBehindNext(HashedString fallback_category, string building_id, string other_building_id)
+		{
+			HashedString category = GetCategoryForBuilding(other_building_id, fallback_category);
+			if (TUNING.BUILDINGS.PLANSUBCATEGORYSORTING.TryGetValue(other_building_id, out string subcategory_id)) {
+				TUNING.BUILDINGS.PLANSUBCATEGORYSORTING[building_id] = subcategory_id;
+				ModUtil.AddBuildingToPlanScreen(category, building_id, subcategory_id, other_building_id);
 			} else {
-				Debug.LogWarning($"Texture does not exist at: {filepath}");
+				ModUtil.AddBuildingToPlanScreen(category, building_id);
+			}
+		}
+
+		private static Texture2D LoadTexture(string texture_path)
+		{
+			string full_path = Path.Combine(ModPath, texture_path);
+			Texture2D texture = new(1, 1);
+			if (File.Exists(full_path)) {
+				Debug.Log($"Found texture at: {full_path}");
+				texture.LoadImage(File.ReadAllBytes(full_path));
+			} else {
+				Debug.LogWarning($"Could not find texture at: {full_path}");
 			}
 			return texture;
 		}
