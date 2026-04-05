@@ -23,6 +23,9 @@ worldTraitRules:
       - Core
       - AboveCore
       - Crust # not for this world layout
+    forbiddenTraits:
+      - traits/MagmaVents # difficult to place guaranteed POIs
+      - expansion1::traits/Volcanoes # Takes up too much space
 
 fixedTraits:
   - sunlightLow
@@ -30,14 +33,13 @@ fixedTraits:
 
 defaultsOverrides:
   data:
-    DrawWorldBorderForce: false
-    DrawWorldBorder: true
-    WorldBorderThickness: 2
-    WorldBorderRange: 0
+    WorldBorderThickness: 3
+    WorldBorderRange: 1
     OverworldDensityMin: 18
     OverworldDensityMax: 18
     OverworldAvoidRadius: 5
     OverworldSampleBehaviour: PoissonDisk
+    POIPadding: 1
 
 # List all the subworld files to load
 subworldFiles:
@@ -119,7 +121,7 @@ worldTemplateRules:
   - names:
       - poi/poi_ocean_geyser_saltwater
     listRule: GuaranteeAll
-    useRelaxedFiltering: true # Allow placement in feature-heavy biomes
+    useRelaxedFiltering: true
     priority: 160
     allowedCellsFilter:
       - command: Replace
@@ -154,7 +156,7 @@ worldTemplateRules:
   - names:
       - geysers/chlorine_gas
     listRule: GuaranteeAll
-    useRelaxedFiltering: true # Allow placement in feature-heavy biomes
+    useRelaxedFiltering: true
     priority: 130
     allowedCellsFilter:
       - command: Replace
@@ -168,7 +170,7 @@ worldTemplateRules:
       - geysers/small_volcano
     listRule: TryOne
     times: 2
-    useRelaxedFiltering: true # Allow placement in feature-heavy biomes
+    useRelaxedFiltering: true
     priority: 120
     allowedCellsFilter:
       - command: Replace
@@ -185,7 +187,7 @@ worldTemplateRules:
       - expansion1::geysers/slush_salt_water
     listRule: TryOne
     times: 3
-    useRelaxedFiltering: true # Allow placement in feature-heavy biomes
+    useRelaxedFiltering: true
     priority: 110
     allowedCellsFilter:
       - command: Replace
@@ -197,7 +199,7 @@ worldTemplateRules:
     listRule: TryOne
     times: 2
     ruleId: GenericGeysers
-    useRelaxedFiltering: true # Allow placement in feature-heavy biomes
+    useRelaxedFiltering: true
     allowDuplicates: true
     priority: 100
     allowedCellsFilter:

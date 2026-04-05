@@ -22,7 +22,7 @@ namespace HellsenWorldgen
 		}
 		public static class SUBWORLDS
 		{
-			public static class FERRICCORE
+			public static class FERRIC_CORE
 			{
 				public static LocString NAME = "Ferric Core";
 				public static LocString DESC = ("The Ferric Core Biome consists of extremely hot " + UI.FormatAsLink("Iron", "MOLTENIRON") + ", making it a reliable source of extreme heat that can be exploited for the purposes of producing " + UI.FormatAsLink("Power", "POWER") + " and fuel.");
@@ -242,7 +242,7 @@ namespace HellsenWorldgen
 				public static class MINI_PREHISTORIC
 				{
 					public static LocString NAME = "Hellsen Curio Moonlet";
-					public static LocString DESC = "The smallest endangered starting world with abundant food resources.\n\n<smallcaps>Relica's biodiversity makes reliable food production more attainable for new colonies. Construction materials and fuels are also ample. Surface defence must be prioritized to minimize damage from an incoming impactor asteroid.</smallcaps>";
+					public static LocString DESC = "The smallest endangered starting world with abundant food resources.\n\n<smallcaps>Curio's biodiversity makes reliable food production more attainable for new colonies. Construction materials and fuels are also ample. Surface defence must be prioritized to minimize damage from an incoming impactor asteroid.</smallcaps>";
 				}
 			}
 		}

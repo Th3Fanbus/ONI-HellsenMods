@@ -34,15 +34,13 @@ seasons:
 
 defaultsOverrides:
   data:
-    DrawWorldBorderForce: false
-    DrawWorldBorder: true
-    WorldBorderThickness: 2
-    WorldBorderRange: 0
+    WorldBorderThickness: 3
+    WorldBorderRange: 1
     OverworldDensityMin: 18
     OverworldDensityMax: 18
     OverworldAvoidRadius: 5
     OverworldSampleBehaviour: PoissonDisk
-    poiPadding: 1
+    POIPadding: 1
   startingWorldElements: [] # remove the algae check
 
 startSubworldName: expansion1::subworlds/sandstone/SandstoneStart
@@ -141,10 +139,8 @@ unknownCellsAllowedSubworlds:
       - expansion1::subworlds/sandstone/SandstoneMiniWater
   # START ----------
   # Core Sandstone
-  - tagcommand: DistanceFromTag
+  - tagcommand: AtTag
     tag: AtDepths
-    minDistance: 0
-    maxDistance: 0
     command: Replace
     subworldNames:
       - expansion1::subworlds/sandstone/med_SandstoneResourceful
@@ -189,10 +185,8 @@ worldTemplateRules:
         minDistance: 1
         maxDistance: 2
       - command: ExceptWith
-        tagcommand: DistanceFromTag
+        tagcommand: AtTag
         tag: AtDepths
-        minDistance: 0
-        maxDistance: 0
       - command: ExceptWith
         zoneTypes: [Space, MagmaCore]
       - command: ExceptWith
@@ -237,7 +231,7 @@ worldTemplateRules:
       - geysers/steam
     listRule: TryOne
     times: 3
-    useRelaxedFiltering: true # Allow placement in feature-heavy biomes
+    useRelaxedFiltering: true
     priority: 100
     allowedCellsFilter:
       - command: Replace

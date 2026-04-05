@@ -34,10 +34,8 @@ seasons:
 
 defaultsOverrides:
   data:
-    DrawWorldBorderForce: false
-    DrawWorldBorder: true
-    WorldBorderThickness: 2
-    WorldBorderRange: 0
+    WorldBorderThickness: 3
+    WorldBorderRange: 1
     OverworldDensityMin: 18
     OverworldDensityMax: 18
     OverworldAvoidRadius: 5
@@ -118,10 +116,8 @@ unknownCellsAllowedSubworlds:
       - expansion1::subworlds/oil/OilWells
       - expansion1::subworlds/rust/med_Rust
   # Core
-  - tagcommand: DistanceFromTag
+  - tagcommand: AtTag
     tag: AtDepths
-    minDistance: 0
-    maxDistance: 0
     command: Replace
     subworldNames:
       - expansion1::subworlds/oil/OilWells

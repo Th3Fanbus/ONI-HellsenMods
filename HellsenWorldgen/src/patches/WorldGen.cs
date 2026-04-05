@@ -1,6 +1,5 @@
 using HarmonyLib;
 using ProcGen;
-using System.Collections.Generic;
 using System.Linq;
 using static ProcGen.World;
 using static ProcGen.World.AllowedCellsFilter;
@@ -10,14 +9,14 @@ namespace HellsenWorldgen
 {
 	public static partial class Extensions
 	{
-		public static bool ShouldSkip(this ProcGen.World world) => world.moduleInterior;
+		public static bool ShouldSkip(this ProcGen.World? world) => world is not null && world.moduleInterior;
 
 		public static void InjectTemplateRule(this ProcGen.World world, TemplateSpawnRules template)
 		{
 			if (template.names.Count == 0) {
 				return;
 			}
-			string name = template.names.FirstOrDefault();
+			string name = template.names.First();
 			if (!world.worldTemplateRules.Any(x => x.names.Contains(name))) {
 				world.worldTemplateRules.Add(template);
 			}
@@ -25,6 +24,8 @@ namespace HellsenWorldgen
 
 		public static void InjectCleanNeutroniumEdges(this ProcGen.World world)
 		{
+			world.defaultsOverrides ??= new();
+			world.defaultsOverrides.data ??= [];
 			world.defaultsOverrides.data["WorldBorderThickness"] = 2;
 			world.defaultsOverrides.data["WorldBorderRange"] = 0;
 		}
@@ -33,7 +34,7 @@ namespace HellsenWorldgen
 	public static partial class Patches
 	{
 		private static readonly TemplateSpawnRules EthanolGeyserTemplate = new() {
-			names = ["expansion1::geysers/ethanol_geyser_full"],
+			names = ["geysers/ethanol_geyser_full"],
 			listRule = ListRule.TryOne,
 			times = 2,
 			priority = 75,
@@ -81,7 +82,7 @@ namespace HellsenWorldgen
 				new() {
 					command = Command.Replace,
 					tagcommand = TagCommand.DistanceFromTag,
-					tag = nameof(WorldGenTags.AtSurface),
+					tag = WorldGenTags.AtSurface.name,
 					minDistance = 2,
 					maxDistance = 99,
 				},
@@ -94,7 +95,7 @@ namespace HellsenWorldgen
 				new() {
 					command = Command.ExceptWith,
 					tagcommand = TagCommand.AtTag,
-					tag = nameof(WorldGenTags.NoGlobalFeatureSpawning),
+					tag = WorldGenTags.NoGlobalFeatureSpawning.name,
 				},
 			],
 		};
@@ -104,7 +105,7 @@ namespace HellsenWorldgen
 			if (__instance?.worldCache is null) {
 				return;
 			}
-			foreach (ProcGen.World world in __instance.worldCache.Values) {
+			foreach (ProcGen.World? world in __instance.worldCache.Values) {
 				if (world.ShouldSkip()) {
 					continue;
 				}

@@ -30,10 +30,8 @@ seasons:
 
 defaultsOverrides:
   data:
-    DrawWorldBorderForce: false
-    DrawWorldBorder: true
-    WorldBorderThickness: 2
-    WorldBorderRange: 0
+    WorldBorderThickness: 3
+    WorldBorderRange: 1
     OverworldDensityMin: 18
     OverworldDensityMax: 18
     OverworldAvoidRadius: 5
@@ -142,10 +140,8 @@ unknownCellsAllowedSubworlds:
       - expansion1::subworlds/radioactive/med_Radioactive
       - expansion1::subworlds/radioactive/med_UraniumFields
   # Core
-  - tagcommand: DistanceFromTag
+  - tagcommand: AtTag
     tag: AtDepths
-    minDistance: 0
-    maxDistance: 0
     command: Replace
     subworldNames:
       - expansion1::subworlds/radioactive/med_FrozenUraniumFields
@@ -214,7 +210,7 @@ worldTemplateRules:
       - geysers/molten_gold
       - geysers/molten_iron
     listRule: GuaranteeAll
-    useRelaxedFiltering: true # Allow placement in feature-heavy biomes
+    useRelaxedFiltering: true
     priority: 100
     allowedCellsFilter:
       - command: Replace

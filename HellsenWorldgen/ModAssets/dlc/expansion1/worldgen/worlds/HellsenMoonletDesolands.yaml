@@ -24,17 +24,18 @@ fixedTraits:
   - sunlightMed
   - cosmicRadiationMed
 
+seasons:
+  - MiniBadlandsMeteorShowers
+
 defaultsOverrides:
   data:
-    DrawWorldBorderForce: false
-    DrawWorldBorder: true
-    WorldBorderThickness: 2
-    WorldBorderRange: 0
+    WorldBorderThickness: 3
+    WorldBorderRange: 1
     OverworldDensityMin: 18
     OverworldDensityMax: 18
     OverworldAvoidRadius: 5
     OverworldSampleBehaviour: PoissonDisk
-    poiPadding: 1
+    POIPadding: 1
   startingWorldElements: [] # remove the algae check
 
 # List all the subworld files to load
@@ -121,7 +122,7 @@ worldTemplateRules:
     listRule: GuaranteeSomeTryMore
     someCount: 4
     moreCount: 6
-    useRelaxedFiltering: true # Allow placement in feature-heavy biomes
+    useRelaxedFiltering: true
     allowDuplicates: true
     priority: 120
     allowedCellsFilter:
@@ -129,10 +130,10 @@ worldTemplateRules:
         zoneTypes: [OilField]
   # Guaranteed Lead volcano and Leaky Oil
   - names:
-      - expansion1::geysers/molten_lead
+      - geysers/molten_lead
       - geysers/oil_drip
     listRule: GuaranteeAll
-    useRelaxedFiltering: true # Allow placement in feature-heavy biomes
+    useRelaxedFiltering: true
     priority: 115
     allowedCellsFilter:
       - command: Replace
@@ -143,7 +144,7 @@ worldTemplateRules:
       - geysers/big_volcano
       - geysers/small_volcano
     listRule: GuaranteeOne
-    useRelaxedFiltering: true # Allow placement in feature-heavy biomes
+    useRelaxedFiltering: true
     priority: 110
     allowedCellsFilter:
       - command: Replace
@@ -160,7 +161,7 @@ worldTemplateRules:
       - geysers/oil_drip
     listRule: TryOne
     times: 4
-    useRelaxedFiltering: true # Allow placement in feature-heavy biomes
+    useRelaxedFiltering: true
     priority: 105
     allowedCellsFilter:
       - command: Replace
@@ -172,7 +173,7 @@ worldTemplateRules:
     listRule: TryOne
     times: 2
     ruleId: GenericGeysers
-    useRelaxedFiltering: true # Allow placement in feature-heavy biomes
+    useRelaxedFiltering: true
     allowDuplicates: true
     priority: 100
     allowedCellsFilter:

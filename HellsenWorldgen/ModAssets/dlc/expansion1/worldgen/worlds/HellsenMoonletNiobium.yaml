@@ -38,10 +38,8 @@ seasons:
 
 defaultsOverrides:
   data:
-    DrawWorldBorderForce: false
-    DrawWorldBorder: true
     WorldBorderThickness: 2
-    WorldBorderRange: 0
+    WorldBorderRange: 1
     OverworldDensityMin: 15
     OverworldDensityMax: 15
     OverworldAvoidRadius: 5
@@ -88,10 +86,8 @@ unknownCellsAllowedSubworlds:
     command: Replace
     subworldNames:
       - expansion1::subworlds/niobium/NiobiumPatch
-  - tagcommand: DistanceFromTag
+  - tagcommand: AtTag
     tag: AtDepths
-    minDistance: 0
-    maxDistance: 0
     command: Replace
     subworldNames:
       - expansion1::subworlds/magma/BottomSmallNoUnobtanium
@@ -132,8 +128,7 @@ worldTemplateRules:
         tagcommand: AtTag
         tag: NoGravitasFeatures
   - names:
-      - expansion1::geysers/molten_niobium      
-      #- expansion1::geysers/molten_niobium_twins_2 # - expansion1::geysers/molten_niobium_twins
+      - expansion1::geysers/molten_niobium
     listRule: GuaranteeAll
     priority: 100 # placed later than the mining room since this is easier to fit
     allowedCellsFilter:

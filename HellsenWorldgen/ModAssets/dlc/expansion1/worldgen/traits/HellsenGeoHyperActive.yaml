@@ -16,9 +16,9 @@ additionalWorldTemplateRules:
     listRule: TryOne
     times: 20
     ruleId: GenericGeysers
-    useRelaxedFiltering: true # Allow placement in feature-heavy biomes
+    useRelaxedFiltering: true
     allowDuplicates: true
-    priority: 1
+    priority: 10
     allowedCellsFilter:
       - command: Replace
         tagcommand: NotAtTag

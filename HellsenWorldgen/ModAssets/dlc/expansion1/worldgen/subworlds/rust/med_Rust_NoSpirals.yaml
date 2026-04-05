@@ -4,7 +4,7 @@ density:
   min: 10
   max: 15
 avoidRadius: 20.0
-minChildCount: 4
+minChildCount: 6
 extraBiomeChildren: 1
 sampleBehaviour: PoissonDisk
 biomes:

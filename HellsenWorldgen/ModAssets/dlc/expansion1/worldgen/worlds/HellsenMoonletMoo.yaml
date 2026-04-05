@@ -37,14 +37,13 @@ seasons:
 
 defaultsOverrides:
   data:
-    DrawWorldBorderForce: false
-    DrawWorldBorder: true
     WorldBorderThickness: 2
-    WorldBorderRange: 0
+    WorldBorderRange: 1
     OverworldDensityMin: 15
     OverworldDensityMax: 15
     OverworldAvoidRadius: 5
     OverworldSampleBehaviour: PoissonDisk
+    POIPadding: 1
 
 # List all the subworld files to load
 subworldFiles:
@@ -58,11 +57,9 @@ unknownCellsAllowedSubworlds:
     command: Replace
     subworldNames:
       - expansion1::subworlds/moo/MooCaverns
-  - tagcommand: DistanceFromTag
+  - tagcommand: AtTag
     tag: AtEdge
     command: Replace
-    minDistance: 0
-    maxDistance: 0
     subworldNames:
       - expansion1::subworlds/moo/MooChasms
   - tagcommand: AtTag
@@ -77,10 +74,8 @@ unknownCellsAllowedSubworlds:
     command: Replace
     subworldNames:
       - subworlds/space/Space
-  - tagcommand: DistanceFromTag
+  - tagcommand: AtTag
     tag: AtDepths
-    minDistance: 0
-    maxDistance: 0
     command: Replace
     subworldNames:
       - expansion1::subworlds/moo/MooCore
@@ -107,7 +102,7 @@ worldTemplateRules:
   # Chlorine sources
   - names:
       - geysers/chlorine_gas # supports 100+ plants
-      - expansion1::geysers/liquid_chlorine
+      - geysers/liquid_chlorine
     listRule: GuaranteeAll
     priority: 100
     allowedCellsFilter:
@@ -126,7 +121,7 @@ worldTemplateRules:
       - expansion1::poi/crashed_satellite_abyssalite
     listRule: GuaranteeAll
     priority: 90
-    useRelaxedFiltering: true # Allow placement in feature-heavy biomes
+    useRelaxedFiltering: true
     allowedCellsFilter:
       - command: Replace
         tagcommand: DistanceFromTag

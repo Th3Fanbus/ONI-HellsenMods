@@ -24,6 +24,11 @@
 		<SupportedContent>EXPANSION1_ID</SupportedContent>
 		<MinimumSupportedBuild>$(TargetGameVersion)</MinimumSupportedBuild>
 	</PropertyGroup>
+	<ItemGroup>
+	  <Compile Remove="ModAssets\templates\**" />
+	  <EmbeddedResource Remove="ModAssets\templates\**" />
+	  <None Remove="ModAssets\templates\**" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\RexLib\RexLib.csproj" />

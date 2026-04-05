@@ -24,13 +24,6 @@ seasons:
   - ClassicStyleStartMeteorShowers
   - VanillaSandstoneFrozenMeteorShowers # unused
 
-defaultsOverrides:
-  data:
-    DrawWorldBorderForce: false
-    DrawWorldBorder: true
-    WorldBorderThickness: 2
-    WorldBorderRange: 0
-
 startSubworldName: subworlds/sandstone/SandstoneStartCold
 startingBaseTemplate: bases/sandstoneBase
 startingBasePositionHorizontal:
@@ -76,8 +69,8 @@ subworldFiles:
     minCount: 5
   - name: subworlds/frozen/CO2Lakes
   - name: expansion1::subworlds/magma/BottomNoUnobtanium
-  - name: expansion1::subworlds/magma/VolcanoHoleNoUnobtanium
   - name: expansion1::subworlds/magma/SolidMagmaNoUnobtanium
+  - name: expansion1::subworlds/magma/VolcanoHoleNoUnobtanium
   - name: subworlds/oil/OilPocketsFrozen
   - name: expansion1::subworlds/space/SpaceWithNoBorder
   - name: expansion1::subworlds/space/HospitableClassicSurface
@@ -284,7 +277,7 @@ worldTemplateRules:
       - poi/oil/small_oilpockets_geyser_g
       - poi/oil/small_oilpockets_geyser_h
     listRule: TryOne
-    times: 8
+    times: 12
     allowDuplicates: true # be more flexible due to high temperature borders
     priority: 100
     allowedCellsFilter:
@@ -351,7 +344,7 @@ worldTemplateRules:
       - geysers/molten_gold
       - geysers/molten_iron
     listRule: GuaranteeAll
-    useRelaxedFiltering: true # Allow placement in feature-heavy biomes
+    useRelaxedFiltering: true
     priority: 100
     allowedCellsFilter:
       - command: Replace
@@ -394,9 +387,6 @@ worldTemplateRules:
       - command: Replace
         subworldNames:
           - expansion1::subworlds/magma/VolcanoHoleNoUnobtanium
-          #- expansion1::subworlds/magma/BottomNoUnobtanium
       - command: ExceptWith
-        tagcommand: DistanceFromTag
+        tagcommand: AtTag
         tag: AtEdge
-        minDistance: 0
-        maxDistance: 0

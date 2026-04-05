@@ -14,13 +14,16 @@ worldTraitRules:
     max: 3
     forbiddenTags:
       - StartWorldOnly
+      - Geodes
       - Oil
       - LargeWorld
       - Core
       - Surface
       - AboveCore # causes worldgen failures
     forbiddenTraits:
-      - expansion1::traits/Volcanoes
+      - traits/MagmaVents # difficult to place guaranteed POIs
+      - expansion1::traits/Volcanoes # Takes up too much space
+      - expansion1::traits/MetalCaves
 
 fixedTraits:
   - sunlightVeryLow
@@ -28,15 +31,13 @@ fixedTraits:
 
 defaultsOverrides:
   data:
-    DrawWorldBorderForce: false
-    DrawWorldBorder: true
-    WorldBorderThickness: 2
-    WorldBorderRange: 0
+    WorldBorderThickness: 3
+    WorldBorderRange: 1
     OverworldDensityMin: 18
     OverworldDensityMax: 18
     OverworldAvoidRadius: 5
     OverworldSampleBehaviour: PoissonDisk
-    poiPadding: 1
+    POIPadding: 1
   startingWorldElements: [] # remove the algae check
 
 startSubworldName: expansion1::subworlds/sandstone/SandstoneStart
@@ -128,10 +129,8 @@ worldTemplateRules:
         minDistance: 1
         maxDistance: 4
       - command: ExceptWith
-        tagcommand: DistanceFromTag
+        tagcommand: AtTag
         tag: AtDepths
-        minDistance: 0
-        maxDistance: 0
       - command: ExceptWith
         zoneTypes: [Space, MagmaCore]
       - command: ExceptWith
@@ -142,7 +141,7 @@ worldTemplateRules:
       - geysers/volcanohole
     listRule: TryOne
     times: 3
-    useRelaxedFiltering: true # Allow placement in feature-heavy biomes
+    useRelaxedFiltering: true
     priority: 120
     allowDuplicates: true
     allowedCellsFilter:
@@ -150,10 +149,8 @@ worldTemplateRules:
         subworldNames:
           - expansion1::subworlds/magma/BottomSmallNoUnobtanium
       - command: ExceptWith
-        tagcommand: DistanceFromTag
+        tagcommand: AtTag
         tag: AtEdge
-        minDistance: 0
-        maxDistance: 0
   # Guaranteed water geyser
   - names:
       - geysers/hot_steam
@@ -164,7 +161,7 @@ worldTemplateRules:
       - geysers/slush_water
       - expansion1::geysers/slush_salt_water
     listRule: GuaranteeOne
-    useRelaxedFiltering: true # Allow placement in feature-heavy biomes
+    useRelaxedFiltering: true
     priority: 100
     allowedCellsFilter:
       - command: Replace

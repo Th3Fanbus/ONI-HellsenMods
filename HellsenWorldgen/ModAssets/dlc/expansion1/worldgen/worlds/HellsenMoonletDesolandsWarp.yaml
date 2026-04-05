@@ -25,17 +25,18 @@ fixedTraits:
   - sunlightMed
   - cosmicRadiationMed
 
+seasons:
+  - MiniBadlandsMeteorShowers
+
 defaultsOverrides:
   data:
-    DrawWorldBorderForce: false
-    DrawWorldBorder: true
-    WorldBorderThickness: 2
-    WorldBorderRange: 0
+    WorldBorderThickness: 3
+    WorldBorderRange: 1
     OverworldDensityMin: 18
     OverworldDensityMax: 18
     OverworldAvoidRadius: 5
     OverworldSampleBehaviour: PoissonDisk
-    poiPadding: 1
+    POIPadding: 1
   startingWorldElements: [] # remove the algae check
 
 startSubworldName: expansion1::subworlds/sandstone/SandstoneStart
@@ -55,6 +56,7 @@ subworldFiles:
     minCount: 3
   - name: expansion1::subworlds/sandstone/SandstoneStart
     overridePower: 4
+    minCount: 1
   - name: subworlds/barren/BarrenGranite
     overridePower: 1.25 # Reset their pdWeight
     minCount: 3
@@ -63,7 +65,7 @@ subworldFiles:
     overridePower: 1.5 # Reset their pdWeight
     weight: 2
     minCount: 5
-    maxCount: 6
+    maxCount: 7
 
 unknownCellsAllowedSubworlds:
   # Fill
@@ -117,9 +119,9 @@ worldTemplateRules:
     listRule: GuaranteeSomeTryMore
     someCount: 4
     moreCount: 8
-    useRelaxedFiltering: true # Allow placement in feature-heavy biomes
+    useRelaxedFiltering: true
     allowDuplicates: true
-    priority: 160
+    priority: 250
     allowedCellsFilter:
       - command: Replace
         zoneTypes: [OilField]
@@ -128,7 +130,7 @@ worldTemplateRules:
       - expansion1::poi/warp/sender_mini
       - expansion1::poi/warp/receiver_mini
     listRule: GuaranteeAll
-    priority: 150
+    priority: 200
     allowedCellsFilter:
       - command: Replace
         tagcommand: DistanceFromTag
@@ -147,7 +149,7 @@ worldTemplateRules:
   - names:
       - poi/jungle/geyser_steam
     listRule: GuaranteeAll
-    priority: 140
+    priority: 150
     allowedCellsFilter:
       - command: Replace
         zoneTypes: [ToxicJungle]
@@ -155,18 +157,18 @@ worldTemplateRules:
   - names:
       - poi/jungle/geyser_methane
       - poi/jungle/geyser_chlorine
-    listRule: TryOne
-    priority: 130
+    listRule: TryAll
+    priority: 140
     allowedCellsFilter:
       - command: Replace
         zoneTypes: [ToxicJungle]
   # Guaranteed Lead volcano and Leaky Oil
   - names:
-      - expansion1::geysers/molten_lead
+      - geysers/molten_lead
       - geysers/oil_drip
     listRule: GuaranteeAll
-    useRelaxedFiltering: true # Allow placement in feature-heavy biomes
-    priority: 120
+    useRelaxedFiltering: true
+    priority: 130
     allowedCellsFilter:
       - command: Replace
         tagcommand: NotAtTag
@@ -176,8 +178,8 @@ worldTemplateRules:
       - geysers/big_volcano
       - geysers/small_volcano
     listRule: GuaranteeOne
-    useRelaxedFiltering: true # Allow placement in feature-heavy biomes
-    priority: 110
+    useRelaxedFiltering: true
+    priority: 120
     allowedCellsFilter:
       - command: Replace
         tagcommand: NotAtTag
@@ -193,8 +195,8 @@ worldTemplateRules:
       - expansion1::geysers/slush_salt_water
     listRule: TryOne
     times: 3
-    useRelaxedFiltering: true # Allow placement in feature-heavy biomes
-    priority: 105
+    useRelaxedFiltering: true
+    priority: 110
     allowedCellsFilter:
       - command: Replace
         tagcommand: NotAtTag
@@ -205,7 +207,7 @@ worldTemplateRules:
     listRule: TryOne
     times: 2
     ruleId: GenericGeysers
-    useRelaxedFiltering: true # Allow placement in feature-heavy biomes
+    useRelaxedFiltering: true
     allowDuplicates: true
     priority: 100
     allowedCellsFilter:

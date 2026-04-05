@@ -38,15 +38,13 @@ seasons:
 
 defaultsOverrides:
   data:
-    DrawWorldBorderForce: false
-    DrawWorldBorder: true
-    WorldBorderThickness: 2
-    WorldBorderRange: 0
+    WorldBorderThickness: 3
+    WorldBorderRange: 1
     OverworldDensityMin: 18
     OverworldDensityMax: 18
     OverworldAvoidRadius: 5
     OverworldSampleBehaviour: PoissonDisk
-    poiPadding: 1
+    POIPadding: 1
 
 startSubworldName: expansion1::subworlds/swamp/SwampyChasmStart
 startingBaseTemplate: poi/poi_satellite_3_a
@@ -121,10 +119,8 @@ unknownCellsAllowedSubworlds:
     subworldNames:
       - expansion1::subworlds/swamp/med_SwampSurface
       - (Mixing1)
-  - tagcommand: DistanceFromTag
+  - tagcommand: AtTag
     tag: AtDepths
-    minDistance: 0
-    maxDistance: 0
     command: Replace
     subworldNames:
       - expansion1::subworlds/frozen/FrozenCore
@@ -148,7 +144,7 @@ worldTemplateRules:
       - geysers/molten_gold
       - geysers/molten_iron
     listRule: GuaranteeAll
-    useRelaxedFiltering: true # Allow placement in feature-heavy biomes
+    useRelaxedFiltering: true
     priority: 150
     allowedCellsFilter:
       - command: Replace

@@ -46,10 +46,8 @@ seasons:
 
 defaultsOverrides:
   data:
-    DrawWorldBorderForce: false
-    DrawWorldBorder: true
-    WorldBorderThickness: 2
-    WorldBorderRange: 0
+    WorldBorderThickness: 5
+    WorldBorderRange: 2
     OverworldDensityMin: 18
     OverworldDensityMax: 18
     OverworldSampleBehaviour: PoissonDisk
@@ -357,24 +355,22 @@ worldTemplateRules:
     listRule: TryOne
     times: 3
     priority: 50
-    useRelaxedFiltering: true # Allow placement in feature-heavy biomes
+    useRelaxedFiltering: true
     allowDuplicates: true
     allowedCellsFilter:
       - command: Replace
         subworldNames:
           - expansion1::subworlds/magma/BottomNoUnobtanium
       - command: ExceptWith
-        tagcommand: DistanceFromTag
+        tagcommand: AtTag
         tag: AtEdge
-        minDistance: 0
-        maxDistance: 0
   # More Geysers
   - names:
       - dlc4::geysers/molten_nickel
-      - expansion1::geysers/liquid_chlorine
+      - geysers/liquid_chlorine
       - geysers/oil_drip
     listRule: GuaranteeAll
-    useRelaxedFiltering: true # Allow placement in feature-heavy biomes
+    useRelaxedFiltering: true
     priority: 150
     allowedCellsFilter:
       - command: Replace
@@ -388,7 +384,7 @@ worldTemplateRules:
       - expansion1::geysers/molten_cobalt
     listRule: TryOne
     times: 3
-    useRelaxedFiltering: true # Allow placement in feature-heavy biomes
+    useRelaxedFiltering: true
     priority: 125
     allowedCellsFilter:
       - command: Replace

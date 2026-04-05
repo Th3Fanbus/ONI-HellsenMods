@@ -34,10 +34,8 @@ seasons:
 
 defaultsOverrides:
   data:
-    DrawWorldBorderForce: false
-    DrawWorldBorder: true
     WorldBorderThickness: 2
-    WorldBorderRange: 0
+    WorldBorderRange: 1
     OverworldDensityMin: 15
     OverworldDensityMax: 15
     OverworldAvoidRadius: 5
@@ -118,13 +116,33 @@ worldTemplateRules:
     allowExtremeTemperatureOverlap: true
     someCount: 2
     moreCount: 2
-    priority: 100
+    priority: 150
     allowedCellsFilter:
       - command: Replace
         tagcommand: DistanceFromTag
         tag: AtSurface
         minDistance: 3
-        maxDistance: 6
+        maxDistance: 99
+      - command: IntersectWith
+        zoneTypes: [FrozenWastes]
+      - command: ExceptWith
+        tagcommand: AtTag
+        tag: NoGravitasFeatures
+  - names:
+      - expansion1::poi/frozen/lab_basement_small
+      - expansion1::poi/frozen/frag_neuro
+      - expansion1::poi/frozen/frag_breakroom
+      - poi/frozen/frag_vendingmachine
+      - poi/frozen/frag_lockers
+    listRule: TrySome
+    someCount: 3
+    priority: 50
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: DistanceFromTag
+        tag: AtSurface
+        minDistance: 3
+        maxDistance: 99
       - command: IntersectWith
         zoneTypes: [FrozenWastes]
       - command: ExceptWith

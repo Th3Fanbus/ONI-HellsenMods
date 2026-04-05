@@ -25,11 +25,6 @@ seasons:
   - VanillaAridioMeteorShowers # unused
 
 defaultsOverrides:
-  data:
-    DrawWorldBorderForce: false
-    DrawWorldBorder: true
-    WorldBorderThickness: 2
-    WorldBorderRange: 0
   startingWorldElements: [] # remove the algae check
 
 startSubworldName: subworlds/forest/ForestStartHot
@@ -82,8 +77,8 @@ subworldFiles:
   - name: subworlds/rust/RustWarm
     minCount: 5
   - name: expansion1::subworlds/magma/BottomNoUnobtanium
-  - name: expansion1::subworlds/magma/VolcanoHoleNoUnobtanium
   - name: expansion1::subworlds/magma/SolidMagmaNoUnobtanium
+  - name: expansion1::subworlds/magma/VolcanoHoleNoUnobtanium
   - name: subworlds/oil/OilPockets
   - name: expansion1::subworlds/space/SpaceWithNoBorder
   - name: expansion1::subworlds/space/HospitableClassicSurface
@@ -325,15 +320,12 @@ worldTemplateRules:
     listRule: TryOne
     times: 5
     priority: 50
-    useRelaxedFiltering: true # Allow placement in feature-heavy biomes
+    useRelaxedFiltering: true
     allowDuplicates: true
     allowedCellsFilter:
       - command: Replace
         subworldNames:
           - expansion1::subworlds/magma/VolcanoHoleNoUnobtanium
-          #- expansion1::subworlds/magma/BottomNoUnobtanium
       - command: ExceptWith
-        tagcommand: DistanceFromTag
+        tagcommand: AtTag
         tag: AtEdge
-        minDistance: 0
-        maxDistance: 0

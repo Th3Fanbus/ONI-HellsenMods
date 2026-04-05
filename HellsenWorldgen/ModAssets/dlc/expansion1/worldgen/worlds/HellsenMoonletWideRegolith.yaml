@@ -35,14 +35,13 @@ seasons:
 
 defaultsOverrides:
   data:
-    DrawWorldBorderForce: false
-    DrawWorldBorder: true
     WorldBorderThickness: 2
-    WorldBorderRange: 0
+    WorldBorderRange: 1
     OverworldDensityMin: 15
     OverworldDensityMax: 15
     OverworldAvoidRadius: 5
     OverworldSampleBehaviour: PoissonDisk
+    POIPadding: 1
 
 subworldMixingRules:
   - name: (CoreMixing)
@@ -93,10 +92,8 @@ unknownCellsAllowedSubworlds:
     command: Replace
     subworldNames:
       - subworlds/space/Space
-  - tagcommand: DistanceFromTag
+  - tagcommand: AtTag
     tag: AtDepths
-    minDistance: 0
-    maxDistance: 0
     command: Replace
     subworldNames:
       - expansion1::subworlds/regolith/DeadOasis
@@ -143,9 +140,7 @@ worldTemplateRules:
     priority: 100
     allowedCellsFilter:
       - command: Replace
-        tagcommand: DistanceFromTag
+        tagcommand: AtTag
         tag: AtDepths
-        minDistance: 0
-        maxDistance: 0
       - command: IntersectWith
         zoneTypes: [FrozenWastes]

@@ -14,7 +14,7 @@ layoutMethod: PowerTree # Note: We need to add weights to the items in the layer
 
 worldTraitRules:
   - min: 1
-    max: 2
+    max: 3
     forbiddenTags:
       - Surface
       - Oil
@@ -34,10 +34,8 @@ seasons:
 
 defaultsOverrides:
   data:
-    DrawWorldBorderForce: false
-    DrawWorldBorder: true
-    WorldBorderThickness: 2
-    WorldBorderRange: 0
+    WorldBorderThickness: 3
+    WorldBorderRange: 1
     OverworldDensityMin: 18
     OverworldDensityMax: 18
     OverworldAvoidRadius: 5
@@ -143,10 +141,8 @@ worldTemplateRules:
         minDistance: 1
         maxDistance: 1
       - command: ExceptWith
-        tagcommand: DistanceFromTag
+        tagcommand: AtTag
         tag: AtEdge
-        minDistance: 0
-        maxDistance: 0
   - names:
       - dlc2::poi/geothermal/geothermal_vent_1
       - dlc2::poi/geothermal/geothermal_vent_2
@@ -166,11 +162,6 @@ worldTemplateRules:
       - command: Replace
         tagcommand: AtTag
         tag: AtDepths
-      #- command: ExceptWith
-      #  tagcommand: DistanceFromTag
-      #  tag: AtEdge
-      #  minDistance: 0
-      #  maxDistance: 0
   # Ice Caves - Start
   - names:
       - dlc2::poi/icecaves/ceres_research_unlock
@@ -188,26 +179,12 @@ worldTemplateRules:
       - poi/frozen/heatsink_c
       - poi/frozen/heatsink_d
     listRule: GuaranteeSomeTryMore
-    someCount: 1
+    someCount: 2
     moreCount: 2
     priority: 140
     allowedCellsFilter:
       - command: Replace
         zoneTypes: [FrozenWastes]
-  # Ceres Showroom
-  - names:
-      - dlc2::poi/ceres/showroom
-    listRule: GuaranteeAll
-    priority: 130
-    allowedCellsFilter:
-      - command: Replace
-        subworldNames:
-          - dlc2::subworlds/sugarwoods/SugarWoodsBasic
-      - command: IntersectWith
-        tagcommand: DistanceFromTag
-        tag: AtSurface
-        minDistance: 2
-        maxDistance: 4
   # POIs
   - names:
       - expansion1::poi/boon/hellsen_greathall
@@ -231,11 +208,11 @@ worldTemplateRules:
   # Curated Geysers
   - names:
       - expansion1::geysers/liquid_sulfur
-      - expansion1::geysers/liquid_chlorine
+      - geysers/liquid_chlorine
       - geysers/liquid_co2
       - geysers/oil_drip
     listRule: GuaranteeAll
-    useRelaxedFiltering: true # Allow placement in feature-heavy biomes
+    useRelaxedFiltering: true
     priority: 110
     allowedCellsFilter:
       - command: Replace
@@ -263,7 +240,7 @@ worldTemplateRules:
     listRule: TryOne
     times: 2
     ruleId: GenericGeysers
-    useRelaxedFiltering: true # Allow placement in feature-heavy biomes
+    useRelaxedFiltering: true
     allowDuplicates: true
     priority: 100
     allowedCellsFilter:

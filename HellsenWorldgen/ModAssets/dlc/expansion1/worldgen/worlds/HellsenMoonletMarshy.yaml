@@ -39,10 +39,8 @@ seasons:
 
 defaultsOverrides:
   data:
-    DrawWorldBorderForce: false
-    DrawWorldBorder: true
     WorldBorderThickness: 2
-    WorldBorderRange: 0
+    WorldBorderRange: 1
     OverworldDensityMin: 15
     OverworldDensityMax: 15
     OverworldAvoidRadius: 5
@@ -66,7 +64,10 @@ subworldFiles:
   - name: expansion1::subworlds/marsh/med_HotMarshLandingSite
   - name: expansion1::subworlds/marsh/med_HotMarshInactive
   - name: expansion1::subworlds/jungle/med_JungleInactive
-    minCount: 1
+    minCount: 2
+  - name: expansion1::subworlds/wasteland/WastelandBeetle
+    minCount: 2
+    maxCount: 3
   - name: expansion1::subworlds/magma/BottomSmallNoUnobtanium
 
 unknownCellsAllowedSubworlds:
@@ -75,6 +76,7 @@ unknownCellsAllowedSubworlds:
     subworldNames:
       - expansion1::subworlds/marsh/med_HotMarshInactive
       - expansion1::subworlds/jungle/med_JungleInactive
+      - expansion1::subworlds/wasteland/WastelandBeetle
   - tagcommand: AtTag
     tag: AtSurface
     command: Replace
@@ -102,10 +104,9 @@ unknownCellsAllowedSubworlds:
     subworldNames:
       - expansion1::subworlds/marsh/med_HotMarshInactive
       - expansion1::subworlds/jungle/med_JungleInactive
-  - tagcommand: DistanceFromTag
+      - expansion1::subworlds/wasteland/WastelandBeetle
+  - tagcommand: AtTag
     tag: AtDepths
-    minDistance: 0
-    maxDistance: 0
     command: Replace
     subworldNames:
       - expansion1::subworlds/magma/BottomSmallNoUnobtanium
@@ -117,7 +118,7 @@ worldTemplateRules:
     listRule: GuaranteeAll
     times: 1
     priority: 150
-    useRelaxedFiltering: true # Marsh contains a lot of features, this means they can be replaced
+    useRelaxedFiltering: true
     allowedCellsFilter:
       - command: Replace
         tagcommand: DistanceFromTag
@@ -135,16 +136,14 @@ worldTemplateRules:
     priority: 140
     allowedCellsFilter:
       - command: Replace
-        tagcommand: DistanceFromTag
+        tagcommand: AtTag
         tag: AtDepths
-        minDistance: 0
-        maxDistance: 0
   # Crashed satellites
   - names:
       - expansion1::poi/crashed_satellite_abyssalite
     listRule: GuaranteeAll
     priority: 120
-    useRelaxedFiltering: true # Marsh contains a lot of features, this means they can be replaced
+    useRelaxedFiltering: true
     allowedCellsFilter:
       - command: Replace
         tagcommand: DistanceFromTag
@@ -153,6 +152,16 @@ worldTemplateRules:
         maxDistance: 99
       - command: ExceptWith
         zoneTypes: [Space]
+  # Guaranteed Sulfur Geyser
+  - names:
+      - expansion1::geysers/liquid_sulfur
+    listRule: GuaranteeAll
+    useRelaxedFiltering: true
+    priority: 110
+    allowedCellsFilter:
+      - command: Replace
+        tagcommand: NotAtTag
+        tag: NoGlobalFeatureSpawning
   # Curated Geysers
   - names:
       - geysers/methane
@@ -163,7 +172,7 @@ worldTemplateRules:
     listRule: TryOne
     times: 3
     priority: 100
-    useRelaxedFiltering: true # Marsh contains a lot of features, this means they can be replaced
+    useRelaxedFiltering: true
     allowedCellsFilter:
       - command: Replace
         tagcommand: DistanceFromTag
@@ -174,4 +183,4 @@ worldTemplateRules:
         zoneTypes: [Space]
       - command: ExceptWith
         tagcommand: AtTag
-        tag: NoGravitasFeatures
+        tag: NoGlobalFeatureSpawning

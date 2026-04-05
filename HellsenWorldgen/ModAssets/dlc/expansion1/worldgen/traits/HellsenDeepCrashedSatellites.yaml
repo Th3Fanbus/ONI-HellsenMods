@@ -3,7 +3,7 @@ description: STRINGS.HELLSEN.WORLD_TRAITS.DEEP_CRASHED_SATELLITES.DESC
 colorHex: 12D1F4
 
 traitTags:
-  - DeepCrashedSatellites
+  - Radiation
 
 additionalWorldTemplateRules:
   - names:

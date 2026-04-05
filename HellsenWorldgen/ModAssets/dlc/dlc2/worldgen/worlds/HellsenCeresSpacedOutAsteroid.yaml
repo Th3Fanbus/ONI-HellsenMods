@@ -44,10 +44,8 @@ seasons:
 
 defaultsOverrides:
   data:
-    DrawWorldBorderForce: false
-    DrawWorldBorder: true
-    WorldBorderThickness: 2
-    WorldBorderRange: 0
+    WorldBorderThickness: 5
+    WorldBorderRange: 2
     OverworldDensityMin: 18
     OverworldDensityMax: 18
     OverworldSampleBehaviour: PoissonDisk
@@ -208,15 +206,11 @@ worldTemplateRules:
     priority: 250
     allowedCellsFilter:
       - command: Replace
-        tagcommand: DistanceFromTag
+        tagcommand: AtTag
         tag: AtDepths
-        minDistance: 0
-        maxDistance: 0
       - command: ExceptWith
-        tagcommand: DistanceFromTag
+        tagcommand: AtTag
         tag: AtEdge
-        minDistance: 0
-        maxDistance: 0
   # Ice Caves - Start
   - names:
       - dlc2::poi/icecaves/ceres_research_unlock
@@ -375,10 +369,10 @@ worldTemplateRules:
         zoneTypes: [CarrotQuarry]
   # Curated Geysers
   - names:
-      - expansion1::geysers/liquid_chlorine
+      - geysers/liquid_chlorine
       - geysers/oil_drip
     listRule: GuaranteeAll
-    useRelaxedFiltering: true # Allow placement in feature-heavy biomes
+    useRelaxedFiltering: true
     priority: 102
     allowedCellsFilter:
       - command: Replace
@@ -392,7 +386,7 @@ worldTemplateRules:
       - geysers/molten_iron
     listRule: TryOne
     times: 2
-    useRelaxedFiltering: true # Allow placement in feature-heavy biomes
+    useRelaxedFiltering: true
     allowDuplicates: true
     priority: 101
     allowedCellsFilter:
@@ -427,7 +421,7 @@ worldTemplateRules:
     listRule: TryOne
     times: 6
     ruleId: GenericGeysers
-    useRelaxedFiltering: true # Allow placement in feature-heavy biomes
+    useRelaxedFiltering: true
     allowDuplicates: true
     priority: 20
     allowedCellsFilter:
