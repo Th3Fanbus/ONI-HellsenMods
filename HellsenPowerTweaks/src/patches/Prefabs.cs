@@ -30,37 +30,38 @@ namespace HellsenPowerTweaks
 			}
 		}
 
-		public static void RelaxBuildingConstraints(ref BuildingDef __result)
+		public static void RelaxBuildingConstraints(ref BuildingDef __result, bool relax_rotation)
 		{
 			__result.ContinuouslyCheckFoundation = false;
 			__result.BuildLocationRule = BuildLocationRule.Anywhere;
 			__result.Floodable = false;
 			__result.Entombable = false;
+			if (relax_rotation) {
+				__result.PermittedRotations = PermittedRotations.R360;
+			}
 		}
 
 		public static void RemoveIndustrialMachinery(GameObject go)
 			=> go.GetComponent<KPrefabID>().RemoveTag(RoomConstraints.ConstraintTags.IndustrialMachinery);
 
+		[HarmonyPatch(typeof(GasPumpConfig), nameof(GasPumpConfig.CreateBuildingDef))]
+		public static class GasPumpConfig_CreateBuildingDef_Patch
+		{
+			public static void Postfix(ref BuildingDef __result) => __result.EnergyConsumptionWhenActive /= 2;
+		}
+
 		/* Patch the overloaded non-virtual helper method */
 		[HarmonyPatch(typeof(BaseBatteryConfig), nameof(BaseBatteryConfig.CreateBuildingDef))]
 		public static class BaseBatteryConfig_CreateBuildingDef_Patch
 		{
-			public static void Postfix(ref BuildingDef __result)
-			{
-				RelaxBuildingConstraints(ref __result);
-				__result.PermittedRotations = PermittedRotations.R360;
-			}
+			public static void Postfix(ref BuildingDef __result) => RelaxBuildingConstraints(ref __result, true);
 		}
 
 		/* Patch the overloaded non-virtual helper method */
 		[HarmonyPatch(typeof(ElectrobankChargerConfig), nameof(ElectrobankChargerConfig.CreateBuildingDef))]
 		public static class ElectrobankChargerConfig_CreateBuildingDef_Patch
 		{
-			public static void Postfix(ref BuildingDef __result)
-			{
-				RelaxBuildingConstraints(ref __result);
-				__result.PermittedRotations = PermittedRotations.R360;
-			}
+			public static void Postfix(ref BuildingDef __result) => RelaxBuildingConstraints(ref __result, true);
 		}
 
 		[HarmonyPatch]
@@ -73,7 +74,7 @@ namespace HellsenPowerTweaks
 					typeof(HydrogenGeneratorConfig)
 				);
 
-			public static void Postfix(ref BuildingDef __result) => RelaxBuildingConstraints(ref __result);
+			public static void Postfix(ref BuildingDef __result) => RelaxBuildingConstraints(ref __result, false);
 		}
 
 #if false
@@ -86,7 +87,7 @@ namespace HellsenPowerTweaks
 		public static class VariousPrefabs_RemoveIndustrialMachinery_Patch
 		{
 			public static IEnumerable<MethodBase> TargetMethods()
-				=> RexUtils.MethodFromTypes("DoPostConfigureComplete",
+				=> RexUtils.MethodFromTypes(nameof(IBuildingConfig.DoPostConfigureComplete), // "DoPostConfigureComplete"
 					typeof(GasFilterConfig),
 					typeof(GasMiniPumpConfig),
 					typeof(GasPumpConfig),
@@ -105,16 +106,16 @@ namespace HellsenPowerTweaks
 
 		public static class MicroTransformerPatches
 		{
-			private static void PatchPostfix(Harmony harmony, Type? tgt, string targetName, string postfixName)
+			private static void PatchPostfix(Harmony harmony, Type? tgt, string target_name, string postfix_name)
 			{
-				MethodInfo? m_TargetMethod = AccessTools.Method(tgt, targetName);
-				MethodInfo? m_Postfix = AccessTools.Method(typeof(MicroTransformerPatches), postfixName);
-				if (m_TargetMethod is not null) {
-					harmony.Patch(m_TargetMethod, postfix: new HarmonyMethod(m_Postfix));
+				MethodInfo? target_method = AccessTools.Method(tgt, target_name);
+				MethodInfo postfix = AccessTools.Method(typeof(MicroTransformerPatches), postfix_name);
+				if (target_method is not null) {
+					harmony.Patch(target_method, postfix: new HarmonyMethod(postfix));
 				}
 			}
 
-			private static void Postfix_CreateBuildingDef(ref BuildingDef __result) => RelaxBuildingConstraints(ref __result);
+			private static void Postfix_CreateBuildingDef(ref BuildingDef __result) => RelaxBuildingConstraints(ref __result, false);
 
 			private static void Postfix_DoPostConfigureComplete(GameObject go) => RemoveIndustrialMachinery(go);
 
