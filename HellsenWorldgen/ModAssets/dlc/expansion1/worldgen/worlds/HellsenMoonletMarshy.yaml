@@ -18,15 +18,16 @@ worldTraitRules:
     forbiddenTags:
       - StartWorldOnly
       - Geodes
+      - Core
+      - AboveCore
       - LargeWorld
       - Oil
       - GenericGeysers
       - StartChange
     forbiddenTraits:
       - traits/MagmaVents
-      - expansion1::traits/Volcanoes
       - traits/SlimeSplats
-      - expansion1::traits/LushCore # excluded by design
+      - expansion1::traits/Volcanoes
       - expansion1::traits/MetalCaves
 
 fixedTraits:
