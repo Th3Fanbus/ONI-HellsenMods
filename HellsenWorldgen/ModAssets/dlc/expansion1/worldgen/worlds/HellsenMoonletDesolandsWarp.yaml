@@ -75,6 +75,12 @@ unknownCellsAllowedSubworlds:
       - subworlds/barren/BarrenGranite
       - expansion1::subworlds/jungle/med_JungleInactive
       - expansion1::subworlds/oil/OilPatchTriple
+  # START
+  - tagcommand: AtTag
+    tag: AtStart
+    command: Replace
+    subworldNames:
+      - expansion1::subworlds/sandstone/SandstoneStart
   # Space
   - tagcommand: AtTag
     tag: AtSurface

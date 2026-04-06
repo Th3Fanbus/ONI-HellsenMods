@@ -163,6 +163,9 @@ worldTemplateRules:
       - command: Replace
         tagcommand: NotAtTag
         tag: NoGlobalFeatureSpawning
+      - command: ExceptWith
+        tagcommand: AtTag
+        tag: AtDepths
   # Curated Geysers
   - names:
       - geysers/methane

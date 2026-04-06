@@ -50,7 +50,7 @@ subworldFiles:
     minCount: 2
   - name: expansion1::subworlds/metallic/SwampyRenewableMetallicCold
     minCount: 4
-  - name: expansion1::subworlds/ferric_core/FerricCoreSmall
+  - name: expansion1::subworlds/ferricore/FerricoreSmall
 
 unknownCellsAllowedSubworlds:
   # Fill
@@ -95,7 +95,7 @@ unknownCellsAllowedSubworlds:
     tag: AtDepths
     command: Replace
     subworldNames:
-      - expansion1::subworlds/ferric_core/FerricCoreSmall
+      - expansion1::subworlds/ferricore/FerricoreSmall
 
 worldTemplateRules:
   # Surface Ice Chunks
@@ -138,7 +138,7 @@ worldTemplateRules:
     allowedCellsFilter:
       - command: Replace
         subworldNames:
-          - expansion1::subworlds/ferric_core/FerricCoreSmall
+          - expansion1::subworlds/ferricore/FerricoreSmall
       - command: ExceptWith
         tagcommand: AtTag
         tag: AtEdge

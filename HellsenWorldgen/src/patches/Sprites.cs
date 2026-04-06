@@ -10,7 +10,7 @@ namespace HellsenWorldgen
 		{
 			public static void Postfix()
 			{
-				RexUtils.RegisterSprite("biomeIconFerric_Core");
+				RexUtils.RegisterSprite("biomeIconFerricore");
 				RexUtils.RegisterSprite("HellsenGeoHyperActive");
 				RexUtils.RegisterSprite("HellsenDeepCrashedSatellites");
 			}

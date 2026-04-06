@@ -22,10 +22,10 @@ namespace HellsenWorldgen
 		}
 		public static class SUBWORLDS
 		{
-			public static class FERRIC_CORE
+			public static class FERRICORE
 			{
-				public static LocString NAME = "Ferric Core";
-				public static LocString DESC = ("The Ferric Core Biome consists of extremely hot " + UI.FormatAsLink("Iron", "MOLTENIRON") + ", making it a reliable source of extreme heat that can be exploited for the purposes of producing " + UI.FormatAsLink("Power", "POWER") + " and fuel.");
+				public static LocString NAME = "Ferricore";
+				public static LocString DESC = ("The Ferricore Biome consists of extremely hot " + UI.FormatAsLink("Iron", "MOLTENIRON") + ", making it a reliable source of extreme heat that can be exploited for the purposes of producing " + UI.FormatAsLink("Power", "POWER") + " and fuel.");
 				public static LocString UTILITY = (UI.FormatAsLink("Iron", "MOLTENIRON") + " is source of extreme " + UI.FormatAsLink("Heat", "HEAT") + " which can be used to transform " + UI.FormatAsLink("Water", "WATER") + " into " + UI.FormatAsLink("Steam", "STEAM") + " or " + UI.FormatAsLink("Crude Oil", "CRUDEOIL") + " into " + UI.FormatAsLink("Petroleum", "PETROLEUM") + ". In order to prevent the extreme temperatures of this biome invading other parts of my base, suitable insulation must be constructed using materials with high melting points like " + UI.FormatAsLink("Ceramic", "CERAMIC") + " or " + UI.FormatAsLink("Obsidian", "OBSIDIAN") + ".\n\nThough " + UI.FormatAsLink("Atmo Suits", "ATMO_SUIT") + " will provide some protection for my Duplicants, there is still a danger they will overheat if spending an extended amount of time in this Biome. I should ensure that suitable medical facilities have been constructed nearby to take care of any medical emergencies.");
 			}
 		}
