@@ -10,7 +10,8 @@ namespace TeleStorage
 	[SerializationConfig(MemberSerialization.OptIn)]
 	public class TeleStorage : KMonoBehaviour
 	{
-		private static readonly StringBuilder builder = new(256);
+		private static readonly StringBuilder CACHED_BUILDER = new(256);
+
 		private static StatusItem? filterStatusItem;
 
 		public ConduitType Type;
@@ -145,23 +146,22 @@ namespace TeleStorage
 			foreach (KeyValuePair<SimHashes, StoredItem> pair in TeleStorageData.Instance?.GetStoredElements(Type) ?? new()) {
 				SimHashes element = pair.Key;
 				StoredItem item = pair.Value;
+				var text = CACHED_BUILDER;
 				if (item.mass > 0.0f) {
-					builder.Clear();
-					Element elementObj = ElementLoader.FindElementByHash(element);
-					builder.Append(elementObj.name);
-					builder.Append(": ");
-					builder.Append(GameUtil.GetFormattedMass(item.mass));
-					builder.Append(" at ");
-					builder.Append(GameUtil.GetFormattedTemperature(item.temperature));
-					builder.Append(" state ");
-					builder.Append(elementObj.state);
+					string at_word = STRINGS.UI.DETAILTABS.DETAILS.CONTENTS_TEMPERATURE.Replace("{0}", "").Replace("{1}", "");
+					text.Clear();
+					text.Append(GameUtil.GetElementNameByElementHash(element));
+					text.Append(": ");
+					text.Append(GameUtil.GetFormattedMass(item.mass));
+					text.Append(at_word);
+					text.Append(GameUtil.GetFormattedTemperature(item.temperature));
 					string tooltip = "";
 					if (item.diseaseIdx != byte.MaxValue) {
-						builder.Append("\n • ");
-						builder.Append(GameUtil.GetFormattedDisease(item.diseaseIdx, item.diseaseCount, false));
+						text.Append("\n " + Constants.BULLETSTRING);
+						text.Append(GameUtil.GetFormattedDisease(item.diseaseIdx, item.diseaseCount, false));
 						tooltip = GameUtil.GetFormattedDisease(item.diseaseIdx, item.diseaseCount, true);
 					}
-					targetPanel.SetLabel("storage_" + num.ToString(), builder.ToString(), tooltip);
+					targetPanel.SetLabel("storage_" + num.ToString(), text.ToString(), tooltip);
 					++num;
 				}
 			}
